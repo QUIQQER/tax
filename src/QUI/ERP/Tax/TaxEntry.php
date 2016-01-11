@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file contains QUI\ERP\Tax\Tax
+ * This file contains QUI\ERP\Tax\TaxEntry
  */
 namespace QUI\ERP\Tax;
 
@@ -9,11 +9,12 @@ use QUI;
 use QUI\Rights\Permission;
 
 /**
- * Class Handler
+ * Class Tax
+ * Steuersatz
  *
  * @package QUI\ERP\Areas
  */
-class Tax extends QUI\CRUD\Child
+class TaxEntry extends QUI\CRUD\Child
 {
     /**
      * @var null|QUI\ERP\Areas\Area

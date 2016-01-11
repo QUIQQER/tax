@@ -8,7 +8,7 @@
     </item>
     <item parent="/extras/erm/"
           name="tax"
-          require="package/quiqqer/areas/bin/controls/Tax"
+          require="package/quiqqer/tax/bin/controls/Panel"
           icon="fa fa-percent"
     >
         <locale group="quiqqer/tax" var="menu.erm.tax.title" />
