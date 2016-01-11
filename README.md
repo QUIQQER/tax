@@ -5,7 +5,7 @@ QUIQQER Areas
 
 Paketname:
 
-    quiqqer/vat
+    quiqqer/tax
 
 
 Features (Funktionen)
@@ -16,14 +16,14 @@ Features (Funktionen)
 Installation
 ------------
 
-Der Paketname ist: quiqqer/vat
+Der Paketname ist: quiqqer/tax
 
 
 Mitwirken
 ----------
 
-- Issue Tracker: https://dev.quiqqer.com/quiqqer/vat/issues
-- Source Code: https://dev.quiqqer.com/quiqqer/vat
+- Issue Tracker: https://dev.quiqqer.com/quiqqer/tax/issues
+- Source Code: https://dev.quiqqer.com/quiqqer/tax
 
 
 Support

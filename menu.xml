@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <item parent="/extras/"
+          name="erm"
+          icon="icon-sun"
+    >
+        <locale group="quiqqer/tax" var="menu.erm.title" />
+    </item>
+    <item parent="/extras/erm/"
+          name="tax"
+          require="package/quiqqer/areas/bin/controls/Tax"
+          icon="fa fa-percent"
+    >
+        <locale group="quiqqer/tax" var="menu.erm.tax.title" />
+    </item>
+
+</menu>

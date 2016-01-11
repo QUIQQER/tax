@@ -1,0 +1,12 @@
+
+<permissions>
+    <permission name="quiqqer.tax.create" type="bool">
+        <defaultvalue>1</defaultvalue>
+    </permission>
+    <permission name="quiqqer.tax.edit" type="bool">
+        <defaultvalue>1</defaultvalue>
+    </permission>
+    <permission name="quiqqer.tax.delete" type="bool">
+        <defaultvalue>1</defaultvalue>
+    </permission>
+</permissions>

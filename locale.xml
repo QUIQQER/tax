@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales>
+    <groups name="quiqqer/tax" datatype="php,js">
+
+        <locale name="menu.erm.title">
+            <de><![CDATA[ERM]]></de>
+            <en><![CDATA[ERM]]></en>
+        </locale>
+        <locale name="menu.erm.tax.title">
+            <de><![CDATA[Steuergruppen]]></de>
+            <en><![CDATA[Tax groups]]></en>
+        </locale>
+
+        <locale name="menu.erm.tax.panel.title">
+            <de><![CDATA[Steuergruppen]]></de>
+            <en><![CDATA[Tax groups]]></en>
+        </locale>
+
+    </groups>
+
+    <groups name="quiqqer/tax" datatype="js">
+
+    </groups>
+</locales>
