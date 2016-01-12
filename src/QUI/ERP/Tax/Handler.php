@@ -127,6 +127,10 @@ class Handler extends QUI\CRUD\Factory
         $groups = $Config->getSection('taxgroups');
         $result = array();
 
+        if (!$groups) {
+            $groups = array();
+        }
+
         foreach ($groups as $key => $var) {
             $result[] = $this->getTaxGroup($key);
         }
@@ -200,6 +204,28 @@ class Handler extends QUI\CRUD\Factory
         $Config->save();
 
         return $this->getTaxType($newId);
+    }
+
+    /**
+     * Return all tax types
+     *
+     * @return array
+     */
+    public function getTaxTypes()
+    {
+        $Config = $this->getConfig();
+        $types  = $Config->getSection('taxtypes');
+        $result = array();
+
+        if (!$types) {
+            $types = array();
+        }
+
+        foreach ($types as $key => $var) {
+            $result[] = $this->getTaxType($key);
+        }
+
+        return $result;
     }
 
     /**

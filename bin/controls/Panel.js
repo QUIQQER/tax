@@ -66,7 +66,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          */
         openTaxGroups: function () {
 
-            var self = this,
+            var self    = this,
                 Content = this.getContent();
 
             this.Loader.show();
