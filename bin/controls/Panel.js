@@ -23,8 +23,11 @@ define('package/quiqqer/tax/bin/controls/Panel', [
         Type   : 'package/quiqqer/tax/bin/controls/Panel',
 
         Binds: [
+            'openTaxEntries',
+            'openTaxTypes',
             'openTaxGroups',
-            '$onCreate'
+            '$onCreate',
+            '$onInject'
         ],
 
         initialize: function (options) {
@@ -35,7 +38,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             this.parent(options);
 
             this.addEvents({
-                onCreate: this.$onCreate
+                onCreate: this.$onCreate,
+                onInject: this.$onInject
             });
         },
 
@@ -45,20 +49,89 @@ define('package/quiqqer/tax/bin/controls/Panel', [
         $onCreate: function () {
 
             this.addCategory({
-                text: 'Steuersatz'
+                name  : 'taxentries',
+                text  : 'Steuersatz',
+                events: {
+                    click: this.openTaxEntries
+                }
             });
 
             this.addCategory({
-                text: 'Steuerarten'
+                name  : 'taxtypes',
+                text  : 'Steuerarten',
+                events: {
+                    click: this.openTaxTypes
+                }
             });
 
             this.addCategory({
+                name  : 'taxgroups',
                 text  : 'Steuergruppen',
                 events: {
                     click: this.openTaxGroups
                 }
             });
+        },
 
+        /**
+         * event : on create
+         */
+        $onInject: function () {
+            (function () {
+                this.getCategory('taxentries').click();
+            }).delay(750, this);
+        },
+
+        /**
+         * open the tax groups
+         */
+        openTaxEntries: function () {
+
+            var self    = this,
+                Content = this.getContent();
+
+            this.Loader.show();
+
+            Content.set('html', '');
+
+            require([
+                'package/quiqqer/tax/bin/controls/TaxEntries'
+            ], function (TaxEntries) {
+                new TaxEntries({
+                    Panel : self,
+                    events: {
+                        onLoaded: function () {
+                            self.Loader.hide();
+                        }
+                    }
+                }).inject(Content);
+            });
+        },
+
+        /**
+         * open the tax groups
+         */
+        openTaxTypes: function () {
+
+            var self    = this,
+                Content = this.getContent();
+
+            this.Loader.show();
+
+            Content.set('html', '');
+
+            require([
+                'package/quiqqer/tax/bin/controls/TaxTypes'
+            ], function (TaxTypes) {
+                new TaxTypes({
+                    Panel : self,
+                    events: {
+                        onLoaded: function () {
+                            self.Loader.hide();
+                        }
+                    }
+                }).inject(Content);
+            });
         },
 
         /**
@@ -71,10 +144,13 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.Loader.show();
 
+            Content.set('html', '');
+
             require([
                 'package/quiqqer/tax/bin/controls/TaxGroups'
             ], function (TaxGroups) {
                 new TaxGroups({
+                    Panel : self,
                     events: {
                         onLoaded: function () {
                             self.Loader.hide();

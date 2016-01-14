@@ -41,7 +41,7 @@ class Handler extends QUI\CRUD\Factory
             Permission::checkPermission('quiqqer.tax.create');
         });
 
-        // create new translation var for the area
+        // create new translation var for the tax
         $this->Events->addEvent('onCreateEnd', function ($NewArea) {
 
         });
@@ -77,12 +77,13 @@ class Handler extends QUI\CRUD\Factory
         return array(
             'taxTypeId',
             'taxGroupId',
-            'tax',
+            'vat',
             'areaId',
             'active',
             'euvat'
         );
     }
+
 
     /**
      * Tax groups
@@ -102,16 +103,24 @@ class Handler extends QUI\CRUD\Factory
 
         $groups = $Config->getSection('taxgroups');
 
-        if (is_array($groups)) {
+        if (is_array($groups) && count($groups)) {
             $newId = max(array_keys($groups)) + 1;
         } else {
             $newId = 0;
         }
 
-        $groups[$newId] = 'taxGroup.' . $newId . '.title';
+        $groups[$newId] = '';
 
         $Config->setSection('taxgroups', $groups);
         $Config->save();
+
+        $current = QUI::getLocale()->getCurrent();
+
+        // create locale
+        QUI\Translator::addUserVar('quiqqer/tax', $groups[$newId], array(
+            $current => '',
+            'datatype' => 'php,js'
+        ));
 
         return $this->getTaxGroup($newId);
     }
@@ -119,19 +128,28 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return all tax groups
      *
+     * @param array|boolean $ids - optional, list of wanted ids, default = all
      * @return array
      */
-    public function getTaxGroups()
+    public function getTaxGroups($ids = false)
     {
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
         $result = array();
+
+        if (!is_array($ids)) {
+            $ids = false;
+        }
 
         if (!$groups) {
             $groups = array();
         }
 
         foreach ($groups as $key => $var) {
+            if ($ids && !in_array($key, $ids)) {
+                continue;
+            }
+
             $result[] = $this->getTaxGroup($key);
         }
 
@@ -171,8 +189,24 @@ class Handler extends QUI\CRUD\Factory
             unset($groups[$taxGroupId]);
         }
 
-        $Config->setSection($groups);
+        $Config->setSection('taxgroups', $groups);
         $Config->save();
+
+
+        QUI\Translator::delete(
+            'quiqqer/tax',
+            'taxGroup.' . $taxGroupId . '.title'
+        );
+    }
+
+    /**
+     * @todo
+     */
+    public function updateTaxGroup()
+    {
+        $Config = $this->getConfig();
+        $groups = $Config->getSection('taxgroups');
+
     }
 
 
@@ -192,7 +226,7 @@ class Handler extends QUI\CRUD\Factory
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
 
-        if (is_array($types)) {
+        if (is_array($types) && count($types)) {
             $newId = max(array_keys($types)) + 1;
         } else {
             $newId = 0;
@@ -203,25 +237,43 @@ class Handler extends QUI\CRUD\Factory
         $Config->setSection('taxtypes', $types);
         $Config->save();
 
+        $current = QUI::getLocale()->getCurrent();
+
+        // create locale
+        QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], array(
+            $current => '',
+            'datatype' => 'php,js'
+        ));
+
+
         return $this->getTaxType($newId);
     }
 
     /**
      * Return all tax types
      *
+     * @param array|boolean $ids - optional, list of wanted ids, default = all
      * @return array
      */
-    public function getTaxTypes()
+    public function getTaxTypes($ids = false)
     {
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
         $result = array();
+
+        if (!is_array($ids)) {
+            $ids = false;
+        }
 
         if (!$types) {
             $types = array();
         }
 
         foreach ($types as $key => $var) {
+            if ($ids && !in_array($key, $ids)) {
+                continue;
+            }
+
             $result[] = $this->getTaxType($key);
         }
 
@@ -261,8 +313,13 @@ class Handler extends QUI\CRUD\Factory
             unset($types[$taxTypeId]);
         }
 
-        $Config->setSection($types);
+        $Config->setSection('taxtypes', $types);
         $Config->save();
+
+        QUI\Translator::delete(
+            'quiqqer/tax',
+            'taxType.' . $taxTypeId . '.title'
+        );
     }
 
 
@@ -272,11 +329,11 @@ class Handler extends QUI\CRUD\Factory
 
     /**
      * Return tax config
+     *
      * @return bool|QUI\Config
      */
-    protected function getConfig()
+    public function getConfig()
     {
-        $Tax = QUI::getPackage('quiqqer/tax');
-        return $Tax->getConfig();
+        return QUI::getPackage('quiqqer/tax')->getConfig();
     }
 }

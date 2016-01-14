@@ -5,6 +5,7 @@
  *
  * @require qui/QUI
  * @require qui/classes/DOM
+ * @require Ajax
  */
 define('package/quiqqer/tax/bin/classes/TaxGroups', [
 
@@ -28,15 +29,86 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          *
          * @returns {Promise}
          */
-        getList: function () {
+        getList: function (ids) {
             return new Promise(function (resolve, reject) {
                 QUIAjax.get(
                     'package_quiqqer_tax_ajax_groups_getList',
-                    function (result) {
-                        resolve(result);
-                    }, {
+                    resolve, {
+                        'package': 'quiqqer/tax',
+                        onError  : reject,
+                        ids      : JSON.decode(ids || [])
+                    });
+            });
+        },
+
+        /**
+         * Return the tax group data
+         *
+         * @param {Number} taxGroupId
+         * @returns {Promise}
+         */
+        get: function (taxGroupId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.get(
+                    'package_quiqqer_tax_ajax_groups_get',
+                    resolve, {
+                        'package' : 'quiqqer/tax',
+                        onError   : reject,
+                        taxGroupId: taxGroupId
+                    });
+            });
+        },
+
+        /**
+         * Create a new tax group
+         *
+         * @returns {Promise}
+         */
+        createChild: function () {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_groups_create',
+                    resolve, {
                         'package': 'quiqqer/tax',
                         onError  : reject
+                    });
+            });
+        },
+
+        /**
+         * Create a new tax group
+         *
+         * @param {Number} taxGroupId
+         * @param {Object} data
+         *
+         * @returns {Promise}
+         */
+        updateChild: function (taxGroupId, data) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_groups_create',
+                    resolve, {
+                        'package' : 'quiqqer/tax',
+                        taxGroupId: taxGroupId,
+                        data      : JSON.encode(data),
+                        onError   : reject
+                    });
+            });
+        },
+
+        /**
+         * Delete a tax group
+         *
+         * @param {Number} taxGroupId
+         */
+        deleteChild: function (taxGroupId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_groups_delete',
+                    resolve, {
+                        'package' : 'quiqqer/tax',
+                        taxGroupId: taxGroupId,
+                        onError   : reject
                     });
             });
         }

@@ -1,0 +1,57 @@
+<table class="data-table">
+    <thead>
+    <tr>
+        <th colspan="2">
+            Eigenschaften
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr class="odd">
+        <td style="width:120px">Mehrwertsteuer</td>
+        <td>
+            <input type="text" style="width: 50px" value="" name="vat"> %
+        </td>
+    </tr>
+    <tr class="even">
+        <td>Titel</td>
+        <td>
+            <input type="text" style="width: 150px" value="" name="title">
+        </td>
+    </tr>
+    <tr class="odd">
+        <td>Zone</td>
+        <td>
+            <select style="width: 150px" name="area">
+            </select>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="data-table">
+    <thead>
+    <tr>
+        <th colspan="2">
+            EU-Umsatzsteuer
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr class="odd">
+        <td>
+            <label style="width: 100%;">
+                <input type="checkbox" style="float: left; margin-right: 10px;" id="eu_vat" name="eu_vat" />
+                <p style="width: calc(100% - 40px); clear: none;">
+                    Beim Export in ein anderes Land der EU wird keine Umsatzsteuer
+                    berechnet (steuerfreie innergemeinschaftliche Lieferung),
+                    wenn der gewerbliche Abnehmer im Empfängerland eine
+                    Umsatzbesteuerung mit dem Steuersatz des Ziellandes vornimmt.
+                </p>
+            </label>
+        </td>
+    </tr>
+    </tbody>
+</table>

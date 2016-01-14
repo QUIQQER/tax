@@ -11,17 +11,29 @@
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_getList',
-    function () {
+    function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $groups  = $Handler->getTaxGroups();
+        $groups  = $Handler->getTaxGroups(json_decode($ids, true));
         $result  = array();
 
+        /* @var $TaxGroup \QUI\ERP\Tax\TaxGroup */
         foreach ($groups as $TaxGroup) {
-            $result[] = $TaxGroup->toArray();
+            $attributes    = $TaxGroup->toArray();
+            $taxTypes      = $TaxGroup->getTaxTypes();
+            $taxTypyeNames = array();
+
+            /* @var $TaxType \QUI\ERP\Tax\TaxType */
+            foreach ($taxTypes as $TaxType) {
+                $taxTypyeNames[] = $TaxType->getTitle();
+            }
+
+            $attributes['taxTypeNames'] = implode(', ', $taxTypyeNames);
+
+            $result[] = $attributes;
         }
 
         return $result;
     },
-    array(),
+    array('ids'),
     'Permission::checkAdminUser'
 );

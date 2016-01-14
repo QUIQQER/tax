@@ -21,6 +21,12 @@ class TaxType
     protected $id;
 
     /**
+     * tax Handler
+     * @var QUI\ERP\Tax\Handler
+     */
+    protected $Handler;
+
+    /**
      * TaxGroup constructor.
      *
      * @param integer $taxTypeId
@@ -28,8 +34,8 @@ class TaxType
      */
     public function __construct($taxTypeId)
     {
-        $Tax    = QUI::getPackage('quiqqer/tax');
-        $Config = $Tax->getConfig();
+        $Handler = new QUI\ERP\Tax\Handler();
+        $Config  = $Handler->getConfig();
 
         if (!$Config->get('taxtypes', $taxTypeId)) {
             throw new QUI\Exception(array(
@@ -38,7 +44,8 @@ class TaxType
             ));
         };
 
-        $this->id = (int)$taxTypeId;
+        $this->id      = (int)$taxTypeId;
+        $this->Handler = $Handler;
     }
 
     /**
@@ -50,23 +57,56 @@ class TaxType
     }
 
     /**
+     * Return the tax type title
+     *
      * @return array|string
      */
     public function getTitle()
     {
         return QUI::getLocale()->get(
-            'quiqqer/areas',
-            'taxtype.' . $this->getId() . '.title'
+            'quiqqer/tax',
+            'taxType.' . $this->getId() . '.title'
         );
     }
 
     /**
+     * Return the task group
      *
+     * @return TaxGroup|boolean
+     */
+    public function getGroup()
+    {
+        $groups = $this->Handler->getTaxGroups();
+
+        /* @var $Group TaxGroup */
+        foreach ($groups as $Group) {
+            if ($Group->isTaxTypeInGroup($this)) {
+                return $Group;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return the tax type as array
      * @return array
      */
-    public function getTax()
+    public function toArray()
     {
+        $groupId    = '';
+        $groupTitle = '';
 
-        return array();
+        if ($this->getGroup()) {
+            $groupId    = $this->getGroup()->getId();
+            $groupTitle = $this->getGroup()->getTitle();
+        }
+
+        return array(
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'groupId' => $groupId,
+            'groupTitle' => $groupTitle
+        );
     }
 }

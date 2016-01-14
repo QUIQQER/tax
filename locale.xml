@@ -16,9 +16,129 @@
             <en><![CDATA[Tax groups]]></en>
         </locale>
 
+        <locale name="exception.taxtype.not.found">
+            <de><![CDATA[Steuerart nicht gefunden]]></de>
+            <en><![CDATA[Tax type not found]]></en>
+        </locale>
+        <locale name="exception.taxgroup.not.found">
+            <de><![CDATA[Steuergruppe nicht gefunden]]></de>
+            <en><![CDATA[Tax group not found]]></en>
+        </locale>
+
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">
+        <locale name="panel.title">
+            <de><![CDATA[Steuergruppen]]></de>
+            <en><![CDATA[Tax groups]]></en>
+        </locale>
+
+        <!-- tax entry - steuerart -->
+        <locale name="tax.grid.taxentries.title">
+            <de><![CDATA[Steuersatz]]></de>
+            <en><![CDATA[Tax]]></en>
+        </locale>
+        <locale name="tax.grid.taxentries.active.title">
+            <de><![CDATA[Status]]></de>
+            <en><![CDATA[Status]]></en>
+        </locale>
+        <locale name="tax.grid.taxentries.area.title">
+            <de><![CDATA[Zone]]></de>
+            <en><![CDATA[Area]]></en>
+        </locale>
+        <locale name="tax.grid.taxentries.vat.title">
+            <de><![CDATA[Zone]]></de>
+            <en><![CDATA[Area]]></en>
+        </locale>
+        <locale name="tax.grid.taxentries.euvat.title">
+            <de><![CDATA[EU-Vat]]></de>
+            <en><![CDATA[EU-Vat]]></en>
+        </locale>
+
+
+        <!-- tax groups -->
+        <locale name="tax.grid.taxgroup.title">
+            <de><![CDATA[Steuergruppe]]></de>
+            <en><![CDATA[Tax group]]></en>
+        </locale>
+        <locale name="tax.grid.taxgroup.taxtypes.title">
+            <de><![CDATA[Steuertypen]]></de>
+            <en><![CDATA[Tax types]]></en>
+        </locale>
+
+        <locale name="taxgroup.window.create.title">
+            <de><![CDATA[Neue Steuergruppe anlegen]]></de>
+            <en><![CDATA[Create a new tax group]]></en>
+        </locale>
+        <locale name="taxgroup.window.create.text" html="true">
+            <de><![CDATA[Namen der neuen Steuergruppe]]></de>
+            <en><![CDATA[Name of the new tax group]]></en>
+        </locale>
+        <locale name="taxgroup.window.create.information" html="true">
+            <de><![CDATA[Bitte geben Sie einen Namen für die neue Steuergruppe an]]></de>
+            <en><![CDATA[Please insert a new name of the new tax group]]></en>
+        </locale>
+
+        <locale name="taxgroup.window.delete.title">
+            <de><![CDATA[Steuergruppe löschen]]></de>
+            <en><![CDATA[Delete the tax group]]></en>
+        </locale>
+        <locale name="taxgroup.window.delete.text" html="true">
+            <de><![CDATA[Möchten Sie wirklich die Steuergruppe #[taxGroupId] löschen?]]></de>
+            <en><![CDATA[Do you really want to delete the tax group #[taxGroupId]?]]></en>
+        </locale>
+        <locale name="taxgroup.window.delete.information" html="true">
+            <de><![CDATA[Die Steuergruppe ist nicht wiederherstellbar und alle Beziehungen gehen verloren.]]></de>
+            <en><![CDATA[The tax group is not recoverable and all relationships will be lost.]]></en>
+        </locale>
+
+        <locale name="taxgroup.edit.title">
+            <de><![CDATA[Steuergruppe #[taxGroupdId]]]></de>
+            <en><![CDATA[Tax group #[taxGroupdId]]]></en>
+        </locale>
+
+
+        <!-- tax types -->
+        <locale name="tax.grid.taxtype.title">
+            <de><![CDATA[Steuerart]]></de>
+            <en><![CDATA[Tax type]]></en>
+        </locale>
+        <locale name="tax.grid.taxtype.taxgroup.title">
+            <de><![CDATA[Steuergruppe]]></de>
+            <en><![CDATA[Tax group]]></en>
+        </locale>
+
+        <locale name="taxtype.window.create.title">
+            <de><![CDATA[Neuen Steuertyp anlegen]]></de>
+            <en><![CDATA[Create a new tax type]]></en>
+        </locale>
+        <locale name="taxtype.window.create.text" html="true">
+            <de><![CDATA[Namen des neuen Steuertyp]]></de>
+            <en><![CDATA[Name of the new tax type]]></en>
+        </locale>
+        <locale name="taxtype.window.create.information" html="true">
+            <de><![CDATA[Bitte geben Sie einen Namen für den neue Steuertyp an]]></de>
+            <en><![CDATA[Please insert a new name of the new tax type]]></en>
+        </locale>
+
+        <locale name="taxtype.window.delete.title">
+            <de><![CDATA[Steuertyp löschen]]></de>
+            <en><![CDATA[Delete the tax type]]></en>
+        </locale>
+        <locale name="taxtype.window.delete.text" html="true">
+            <de><![CDATA[Möchten Sie wirklich den Steuertyp #[taxTypeId] löschen?]]></de>
+            <en><![CDATA[Do you really want to delete the tax type #[taxTypeId]?]]></en>
+        </locale>
+        <locale name="taxtype.window.delete.information" html="true">
+            <de><![CDATA[Der Steuertyp ist nicht wiederherstellbar und alle Beziehungen gehen verloren.]]></de>
+            <en><![CDATA[The tax group is not recoverable and all relationships will be lost.]]></en>
+        </locale>
+
+
+        <locale name="taxgroup.edit.title">
+            <de><![CDATA[Steuertyp #[taxGroupdId]]]></de>
+            <en><![CDATA[Tax type #[taxGroupdId]]]></en>
+        </locale>
 
     </groups>
 </locales>

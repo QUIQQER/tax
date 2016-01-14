@@ -21,6 +21,17 @@ class TaxGroup
     protected $id;
 
     /**
+     * @var array
+     */
+    protected $taxtypes = array();
+
+    /**
+     * tax Handler
+     * @var QUI\ERP\Tax\Handler
+     */
+    protected $Handler;
+
+    /**
      * TaxGroup constructor.
      *
      * @param integer $taxGroupId
@@ -28,8 +39,8 @@ class TaxGroup
      */
     public function __construct($taxGroupId)
     {
-        $Tax    = QUI::getPackage('quiqqer/tax');
-        $Config = $Tax->getConfig();
+        $Handler = new QUI\ERP\Tax\Handler();
+        $Config  = $Handler->getConfig();
 
         if (!$Config->get('taxgroups', $taxGroupId)) {
             throw new QUI\Exception(array(
@@ -38,8 +49,18 @@ class TaxGroup
             ));
         };
 
-        $this->id       = (int)$taxGroupId;
-        $this->taxtypes = $Config->get('taxgroups', $taxGroupId);
+        $this->id      = (int)$taxGroupId;
+        $this->Handler = $Handler;
+
+        $taxtypes = $Config->get('taxgroups', $taxGroupId);
+        $taxtypes = explode(',', $taxtypes);
+
+        foreach ($taxtypes as $taxTypeId) {
+            try {
+                $this->taxtypes[] = $this->Handler->getTaxType($taxTypeId);
+            } catch (QUI\Exception $Exception) {
+            }
+        }
     }
 
     /**
@@ -56,7 +77,7 @@ class TaxGroup
     public function getTitle()
     {
         return QUI::getLocale()->get(
-            'quiqqer/areas',
+            'quiqqer/tax',
             'taxGroup.' . $this->getId() . '.title'
         );
     }
@@ -68,16 +89,93 @@ class TaxGroup
      */
     public function getTaxTypes()
     {
-        $result = array();
-        $types  = explode(',', $this->taxtypes);
+        return $this->taxtypes;
+    }
+
+    /**
+     * Is the TaxType in the Groups
+     *
+     * @param TaxType $TaxType
+     * @return boolean
+     */
+    public function isTaxTypeInGroup(TaxType $TaxType)
+    {
+        /* @var $Tax TaxType */
+        foreach ($this->taxtypes as $Tax) {
+            if ($Tax->getId() == $TaxType->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set the tax types list to the tax group
+     * the current list would be overwritten
+     *
+     * @param array $types
+     */
+    public function setTaxTypes($types = array())
+    {
+        if (!is_array($types)) {
+            return;
+        }
+
+        $list = array();
 
         foreach ($types as $taxTypeId) {
             try {
-                $result[] = new TaxType($taxTypeId);
+                $list[] = $this->Handler->getTaxType($taxTypeId);
             } catch (QUI\Exception $Exception) {
             }
         }
 
-        return $result;
+        $this->taxtypes = $list;
+    }
+
+    /**
+     * Add a tax type to the tax group
+     *
+     * @param TaxType $TaxType
+     */
+    public function addTaxType(TaxType $TaxType)
+    {
+        if (!$this->isTaxTypeInGroup($TaxType)) {
+            $this->taxtypes[] = $TaxType;
+        }
+    }
+
+    /**
+     * Return the tax group as array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $types = array();
+
+        /* @var $TaxType TaxType */
+        foreach ($this->taxtypes as $TaxType) {
+            $types[] = $TaxType->getId();
+        }
+
+        return array(
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'taxtypes' => implode(',', $types)
+        );
+    }
+
+    /**
+     * Saves / Update the tax group
+     */
+    public function update()
+    {
+        $data   = $this->toArray();
+        $Config = $this->Handler->getConfig();
+
+        $Config->set('taxgroups', $this->getId(), $data['taxtypes']);
+        $Config->save();
     }
 }

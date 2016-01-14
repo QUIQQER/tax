@@ -5,7 +5,7 @@
             <field type="INT( 10 ) NOT NULL PRIMARY KEY">id</field>
             <field type="text NULL">taxTypeId</field>
             <field type="INT( 10 ) NULL">taxGroupId</field>
-            <field type="FLOAT NULL">tax</field>
+            <field type="FLOAT NULL">vat</field>
             <field type="INT( 10 ) NULL">areaId</field>
             <field type="INT( 1 ) NULL">active</field>
             <field type="INT( 1 ) NULL">euvat</field>
