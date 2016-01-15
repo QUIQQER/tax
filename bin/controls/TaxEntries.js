@@ -8,8 +8,12 @@
  * @require qui/QUI
  * @require qui/controls/Control
  * @require qui/controls/windows/Confirm
+ * @require qui/controls/buttons/Select
  * @require controls/grid/Grid
  * @require package/quiqqer/tax/bin/classes/TaxEntries
+ * @require package/quiqqer/tax/bin/classes/TaxGroups
+ * @require package/quiqqer/tax/bin/classes/TaxTypes
+ * @require package/quiqqer/areas/bin/classes/Handler
  * @require Locale
  *
  * @event onLoaded
@@ -79,7 +83,13 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             });
 
 
-            var SelectContainer = new Element('div').inject(Elm);
+            var SelectContainer = new Element('div', {
+                styles: {
+                    'float'      : 'left',
+                    paddingBottom: 20,
+                    width        : '100%'
+                }
+            }).inject(Elm);
 
             this.$Select = new QUISelect({
                 showIcons: false,
@@ -93,8 +103,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
             var Container = new Element('div', {
                 styles: {
-                    paddingTop: 20,
-                    width     : '100%'
+                    width: '100%'
                 }
             }).inject(Elm);
 
@@ -102,7 +111,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 multipleSelection: true,
                 columnModel      : [{
                     header   : QUILocale.get(lg, 'tax.grid.taxentries.active.title'),
-                    dataIndex: 'active',
+                    dataIndex: 'activeButton',
                     dataType : 'button',
                     width    : 60
                 }, {
@@ -114,17 +123,17 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                     header   : QUILocale.get(lg, 'tax.grid.taxentries.area.title'),
                     dataIndex: 'area',
                     dataType : 'string',
-                    width    : 300
+                    width    : 200
                 }, {
                     header   : QUILocale.get(lg, 'tax.grid.taxentries.vat.title'),
                     dataIndex: 'vat',
                     dataType : 'string',
-                    width    : 100
+                    width    : 80
                 }, {
                     header   : QUILocale.get(lg, 'tax.grid.taxentries.euvat.title'),
-                    dataIndex: 'euvat',
+                    dataIndex: 'euvatIcon',
                     dataType : 'node',
-                    width    : 300
+                    width    : 60
                 }],
                 buttons          : [{
                     name     : 'add',
@@ -139,7 +148,11 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                     textimage: 'icon-edit fa fa-edit',
                     disabled : true,
                     events   : {
-                        click: this.updateChild
+                        click: function () {
+                            this.updateChild(
+                                this.$Grid.getSelectedData()[0].id
+                            );
+                        }.bind(this)
                     }
                 }, {
                     type: 'seperator'
@@ -150,14 +163,16 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                     disabled : true,
                     events   : {
                         click: function () {
-                            this.deleteChild();
+                            this.deleteChild(
+                                this.$Grid.getSelectedData()[0].id
+                            );
                         }.bind(this)
                     }
                 }]
             });
 
             this.$Grid.addEvents({
-                click: function () {
+                onClick: function () {
                     var selecteData = self.$Grid.getSelectedData(),
                         buttons     = self.$Grid.getButtons();
 
@@ -182,18 +197,21 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         return;
                     }
 
-                    Delete.enable();
-
                     if (selecteData.length == 1) {
+                        Delete.enable();
                         Edit.enable();
-                    } else {
-                        Edit.disable();
+                        return;
                     }
+
+                    Delete.disable();
+                    Edit.disable();
                 },
 
-                dblclick: function () {
-
-                }
+                onDblClick: function () {
+                    this.updateChild(
+                        this.$Grid.getSelectedData()[0].id
+                    );
+                }.bind(this)
             });
 
             return Elm;
@@ -234,7 +252,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * event : on resize
          */
         $onResize: function () {
-            this.$Grid.setHeight(this.getElm().getSize().y - 40);
+            this.$Grid.setHeight(this.getElm().getSize().y - 60);
             this.$Grid.resize();
         },
 
@@ -245,29 +263,16 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         refresh: function () {
             return new Promise(function (resolve, reject) {
-
                 var value = this.$Select.getValue();
 
-                if (!value || value === '' || this.$current == value) {
+                if (!value || value === '') {
                     resolve();
                     return;
                 }
 
-                console.log(this.$Select.getValue());
-
+                this.loadTaxByTaxType(value).then(resolve, reject);
 
             }.bind(this));
-            //
-            //
-            //return Handler.getList().then(function (result) {
-            //    if (!result.length) {
-            //        return;
-            //    }
-            //
-            //    this.$Grid.setData({
-            //        data: result
-            //    });
-            //}.bind(this));
         },
 
         /**
@@ -278,6 +283,10 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             return new Promise(function (resolve, reject) {
                 Handler.getTaxByType(taxTypeId).then(function (result) {
                     if (!result.length) {
+                        this.$Grid.setData({
+                            data: result
+                        });
+
                         resolve();
                         return;
                     }
@@ -289,22 +298,28 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         entry = result[i];
 
                         if (entry.active) {
-                            result[i].active = {
-                                icon : 'icon-ok'
+                            result[i].activeButton = {
+                                icon  : 'icon-ok',
+                                styles: {
+                                    lineHeight: 16
+                                }
                             };
                         } else {
-                            result[i].active = {
-                                icon : 'icon-remove'
+                            result[i].activeButton = {
+                                icon  : 'icon-remove',
+                                styles: {
+                                    lineHeight: 16
+                                }
                             };
                         }
 
-                        if (entry.euvat) {
-                            result[i].euvat = new Element('span', {
-                                'class' : 'icon-ok'
+                        if (parseInt(entry.euvat)) {
+                            result[i].euvatIcon = new Element('span', {
+                                'class': 'icon-ok'
                             });
                         } else {
-                            result[i].euvat = new Element('span', {
-                                'class' : 'icon-remove'
+                            result[i].euvatIcon = new Element('span', {
+                                'class': 'icon-remove'
                             });
                         }
                     }
@@ -341,14 +356,14 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         childWindow: function (taxEntryId) {
             var self  = this,
-                title = QUILocale.get('', '');
+                title = QUILocale.get(lg, 'tax.window.create.title');
 
             if (typeof taxEntryId !== 'undefined') {
-                title = QUILocale.get('', '');
+                title = QUILocale.get(lg, 'tax.window.update.title');
             }
 
             new QUIConfirm({
-                title    : 'Neuen Steuersatz anlegen',
+                title    : title,
                 icon     : 'icon-plus fa fa-plus',
                 maxHeight: 600,
                 maxWidth : 800,
@@ -363,7 +378,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         Content.set('html', createTemplate);
 
                         var Select = Content.getElement('[name="area"]'),
-                            Data   = Promise.resolve({});
+                            Data   = Promise.resolve(false);
 
                         if (typeof taxEntryId !== 'undefined') {
                             Data = Handler.get(taxEntryId);
@@ -378,14 +393,50 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                                 areas      = data[1],
                                 taxData    = data[2];
 
-                            for (var i = 0, len = areas.length; i < len; i++) {
-                                new Element('option', {
-                                    value: areas[i].id,
-                                    html : QUILocale.get(
-                                        areas[i].title[0],
-                                        areas[i].title[1]
+                            if (!taxData) {
+                                var usedAreas = allEntries.map(function (o) {
+                                    return o.areaId;
+                                }).unique();
+
+                                for (var i = 0, len = areas.length; i < len; i++) {
+                                    if (usedAreas.contains(areas[i].id)) {
+                                        continue;
+                                    }
+
+                                    new Element('option', {
+                                        value: areas[i].id,
+                                        html : QUILocale.get(
+                                            areas[i].title[0],
+                                            areas[i].title[1]
+                                        )
+                                    }).inject(Select);
+                                }
+                            } else {
+                                Win.setAttribute('areaId', taxData.areaId);
+
+                                // areaid is defined
+                                new Element('div', {
+                                    text: QUILocale.get(
+                                        'quiqqer/areas',
+                                        'area.' + taxData.areaId + '.title'
                                     )
-                                }).inject(Select);
+                                }).replaces(Select);
+                            }
+
+                            if (taxData) {
+                                var Vat   = Content.getElement('[name="vat"]');
+                                var Area  = Content.getElement('[name="area"]');
+                                var EuVat = Content.getElement('[name="eu_vat"]');
+
+                                if (parseInt(taxData.euvat)) {
+                                    EuVat.checked = true;
+                                }
+
+                                if (Area) {
+                                    Area.value = taxData.areaId || '';
+                                }
+
+                                Vat.value = taxData.vat || '';
                             }
 
                             Win.Loader.hide();
@@ -400,16 +451,22 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             EUvat   = Content.getElement('[name="eu_vat"]');
 
                         var data = {
-                            Vat      : Vat.value,
-                            areaId   : Area.value,
+                            vat      : Vat.value,
                             euvat    : EUvat.checked ? 1 : 0,
                             taxTypeId: self.$Select.getValue()
                         };
 
+                        if (Area) {
+                            data.areaId = Area.value;
+                        } else {
+                            data.areaId = Win.getAttribute('areaId');
+                        }
+
                         if (typeof taxEntryId === 'undefined') {
 
                             Handler.createChild(
-                                self.$Select.getValue()
+                                self.$Select.getValue(),
+                                Area.value
                             ).then(function (newId) {
                                 return Handler.updateChild(newId, data);
 
@@ -444,9 +501,13 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             var self = this;
 
             new QUIConfirm({
-                title      : 'Steuergruppe löschen',
-                text       : 'Möchten Sie die wirklich Steuergruppe löschen?',
-                information: 'Die Steuergruppe ist nicht wieder herstellbar und alle Beziehungen gehen verloren.',
+                title      : QUILocale.get(lg, 'tax.window.delete.title'),
+                text       : QUILocale.get(lg, 'tax.window.delete.text', {
+                    id: taxEntryId
+                }),
+                information: QUILocale.get(lg, 'tax.window.delete.information', {
+                    id: taxEntryId
+                }),
                 icon       : 'icon-trash fa fa-trash',
                 textimage  : 'icon-trash fa fa-trash',
                 maxHeight  : 300,
@@ -458,11 +519,11 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         Handler.deleteChild(taxEntryId).then(function () {
                             return self.refresh();
                         }).then(function () {
-                            Win.hide();
+                            Win.close();
                         });
                     }
                 }
-            });
+            }).open();
         }
     });
 });

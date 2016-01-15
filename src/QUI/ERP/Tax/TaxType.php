@@ -11,6 +11,9 @@ use QUI;
  * Class TaxType
  * - Steuerart
  *
+ * Is not realy editable, it makes no sence to edit a type
+ * A type has only a title, the title is stored in the translator
+ *
  * @package QUI\ERP\Tax
  */
 class TaxType
@@ -108,5 +111,13 @@ class TaxType
             'groupId' => $groupId,
             'groupTitle' => $groupTitle
         );
+    }
+
+    /**
+     * Delete the tax type
+     */
+    public function delete()
+    {
+        $this->Handler->deleteTaxType($this->getId());
     }
 }

@@ -25,6 +25,19 @@
             <en><![CDATA[Tax group not found]]></en>
         </locale>
 
+        <locale name="exception.area.not.found">
+            <de><![CDATA[Zone wurde nicht gefunden]]></de>
+            <en><![CDATA[Area not found]]></en>
+        </locale>
+        <locale name="exception.area.is.still.in.use">
+            <de><![CDATA[
+                Zone ist bereits in Verwendung. Bitte wählen Sie eine andere Zone aus.
+            ]]></de>
+            <en><![CDATA[
+                Area is already in use. Please select a different area.
+            ]]></en>
+        </locale>
+
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">
@@ -47,13 +60,38 @@
             <en><![CDATA[Area]]></en>
         </locale>
         <locale name="tax.grid.taxentries.vat.title">
-            <de><![CDATA[Zone]]></de>
-            <en><![CDATA[Area]]></en>
+            <de><![CDATA[Steuersatz]]></de>
+            <en><![CDATA[Tax]]></en>
         </locale>
         <locale name="tax.grid.taxentries.euvat.title">
             <de><![CDATA[EU-Vat]]></de>
             <en><![CDATA[EU-Vat]]></en>
         </locale>
+
+
+        <locale name="tax.window.create.title">
+            <de><![CDATA[Neuen Steuersatz anlegen]]></de>
+            <en><![CDATA[Create new tax]]></en>
+        </locale>
+
+        <locale name="tax.window.update.title">
+            <de><![CDATA[Steuersatz bearbeiten]]></de>
+            <en><![CDATA[Edit the tax]]></en>
+        </locale>
+
+        <locale name="tax.window.delete.title">
+            <de><![CDATA[Steuersatz löschen]]></de>
+            <en><![CDATA[Delete Tax]]></en>
+        </locale>
+        <locale name="tax.window.delete.text">
+            <de><![CDATA[Möchten Sie den Steuersatz #[id] wirklich löschen?]]></de>
+            <en><![CDATA[Do you realy want to delete the tax #[id]?]]></en>
+        </locale>
+        <locale name="tax.window.delete.information">
+            <de><![CDATA[Der Steuersatz #[id] ist nicht wieder herstellbar und alle Beziehungen gehen verloren.]]></de>
+            <en><![CDATA[The tax #[id] can not be restored and all relationships will be lost.]]></en>
+        </locale>
+
 
 
         <!-- tax groups -->

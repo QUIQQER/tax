@@ -80,9 +80,10 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
          * Create a new tax group
          *
          * @param {Number} taxTypeId
+         * @param {Number} areaId
          * @returns {Promise}
          */
-        createChild: function (taxTypeId) {
+        createChild: function (taxTypeId, areaId) {
             return new Promise(function (resolve, reject) {
                 if (typeof taxTypeId === 'undefined') {
                     reject('taxTypeId missing');
@@ -94,7 +95,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     resolve, {
                         'package': 'quiqqer/tax',
                         onError  : reject,
-                        taxTypeId: taxTypeId
+                        taxTypeId: taxTypeId,
+                        areaId   : areaId
                     });
             });
         },

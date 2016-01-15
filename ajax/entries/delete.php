@@ -1,18 +1,21 @@
 <?php
 
 /**
- * This file contains package_quiqqer_tax_ajax_groups_delete
+ * This file contains package_quiqqer_tax_ajax_entries_delete
  */
 
 /**
  * Delete a tax group
+ *
+ * @param integer $taxId - Tax-ID
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_delete',
-    function ($taxGroupId) {
+    function ($taxId) {
         $Handler = new QUI\ERP\Tax\Handler();
-//        $Handler->delete($taxGroupId);
+        $Tax     = $Handler->getChild($taxId);
+        $Tax->delete();
     },
-    array('taxGroupId'),
+    array('taxId'),
     'Permission::checkAdminUser'
 );

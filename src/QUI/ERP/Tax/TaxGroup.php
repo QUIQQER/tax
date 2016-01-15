@@ -114,7 +114,7 @@ class TaxGroup
      * Set the tax types list to the tax group
      * the current list would be overwritten
      *
-     * @param array $types
+     * @param array $types - [typeId, typeId, typeId]
      */
     public function setTaxTypes($types = array())
     {

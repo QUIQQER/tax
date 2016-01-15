@@ -200,13 +200,16 @@ class Handler extends QUI\CRUD\Factory
     }
 
     /**
-     * @todo
+     * Update a group
+     *
+     * @param integer $taxGroupId - Group-ID
+     * @param array $types - array of types eq: - [typeId, typeId, typeId]
      */
-    public function updateTaxGroup()
+    public function updateTaxGroup($taxGroupId, $types)
     {
-        $Config = $this->getConfig();
-        $groups = $Config->getSection('taxgroups');
-
+        $TaxGroup = $this->getTaxGroup($taxGroupId);
+        $TaxGroup->setTaxTypes($types);
+        $TaxGroup->update();
     }
 
 
