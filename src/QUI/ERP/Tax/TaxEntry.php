@@ -48,7 +48,6 @@ class TaxEntry extends QUI\CRUD\Child
         $this->Events->addEvent('onUpdateBegin', function () {
             Permission::checkPermission('quiqqer.tax.edit');
 
-            // we must check if the areas in this tax is not used
             $Area      = $this->getArea();
             $children  = $this->Factory->getChildrenData();
             $usedAreas = array();
@@ -60,6 +59,7 @@ class TaxEntry extends QUI\CRUD\Child
                 ));
             }
 
+            // we can use only unused areas
             foreach ($children as $child) {
                 // ignore me
                 if ($child['id'] == $this->getId()) {
@@ -102,5 +102,15 @@ class TaxEntry extends QUI\CRUD\Child
         }
 
         return null;
+    }
+
+    /**
+     * Is the tax active?
+     *
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->getAttribute('active') ? true : false;
     }
 }

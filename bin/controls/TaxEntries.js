@@ -108,7 +108,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             }).inject(Elm);
 
             this.$Grid = new Grid(Container, {
-                multipleSelection: true,
+                multipleSelection: false,
                 columnModel      : [{
                     header   : QUILocale.get(lg, 'tax.grid.taxentries.active.title'),
                     dataIndex: 'activeButton',
@@ -241,6 +241,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             }).then(function () {
                 self.$Select.setValue(self.$current);
                 self.resize();
+
                 self.fireEvent('loaded');
 
             }).catch(function () {
@@ -327,6 +328,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                     this.$Grid.setData({
                         data: result
                     });
+
+                    this.$Grid.sort(2, 'DESC');
 
                     resolve();
 
