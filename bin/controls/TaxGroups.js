@@ -179,6 +179,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                 this.resize();
                 this.fireEvent('loaded');
             }.bind(this), function () {
+                this.resize();
                 this.fireEvent('loaded');
             }.bind(this));
         },

@@ -248,6 +248,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 self.fireEvent('loaded');
 
             }).catch(function () {
+                self.resize();
                 self.fireEvent('loaded');
             });
         },
@@ -267,6 +268,31 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         refresh: function () {
             return new Promise(function (resolve, reject) {
+                var buttons = this.$Grid.getButtons();
+
+                var Edit = buttons.find(function (Button) {
+                    if (Button.getAttribute('name') == 'edit') {
+                        return Button;
+                    }
+                    return false;
+                });
+
+                var Delete = buttons.find(function (Button) {
+                    if (Button.getAttribute('name') == 'delete') {
+                        return Button;
+                    }
+                    return false;
+                });
+
+                if (Edit) {
+                    Edit.disable();
+                }
+
+                if (Delete) {
+                    Delete.disable();
+                }
+
+
                 var value = this.$Select.getValue();
 
                 if (!value || value === '') {

@@ -42,7 +42,7 @@ class TaxGroup
         $Handler = new QUI\ERP\Tax\Handler();
         $Config  = $Handler->getConfig();
 
-        if (!$Config->get('taxgroups', $taxGroupId)) {
+        if ($Config->get('taxgroups', $taxGroupId) === false) {
             throw new QUI\Exception(array(
                 'quiqqer/tax',
                 'exception.taxgroup.not.found'

@@ -5,6 +5,8 @@
  *
  * @require qui/QUI
  * @require qui/classes/DOM
+ * @require Ajax
+ * @require Locale
  */
 define('package/quiqqer/tax/bin/controls/Panel', [
 
@@ -50,7 +52,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.addCategory({
                 name  : 'taxentries',
-                text  : 'Steuersatz',
+                text  : QUILocale.get(lg, 'panel.category.taxentries.text'),
                 events: {
                     click: this.openTaxEntries
                 }
@@ -58,7 +60,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.addCategory({
                 name  : 'taxtypes',
-                text  : 'Steuerarten',
+                text  : QUILocale.get(lg, 'panel.category.taxtypes.text'),
                 events: {
                     click: this.openTaxTypes
                 }
@@ -66,7 +68,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.addCategory({
                 name  : 'taxgroups',
-                text  : 'Steuergruppen',
+                text  : QUILocale.get(lg, 'panel.category.taxgroups.text'),
                 events: {
                     click: this.openTaxGroups
                 }

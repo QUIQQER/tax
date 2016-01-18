@@ -17,7 +17,7 @@
         </locale>
 
         <locale name="exception.taxtype.not.found">
-            <de><![CDATA[Steuerart nicht gefunden]]></de>
+            <de><![CDATA[Steuertyp nicht gefunden]]></de>
             <en><![CDATA[Tax type not found]]></en>
         </locale>
         <locale name="exception.taxgroup.not.found">
@@ -45,8 +45,20 @@
             <de><![CDATA[Steuergruppen]]></de>
             <en><![CDATA[Tax groups]]></en>
         </locale>
+        <locale name="panel.category.taxentries.text">
+            <de><![CDATA[Steuersatz]]></de>
+            <en><![CDATA[Tax]]></en>
+        </locale>
+        <locale name="panel.category.taxtypes.text">
+            <de><![CDATA[Steuertyp]]></de>
+            <en><![CDATA[Tax types]]></en>
+        </locale>
+        <locale name="panel.category.taxgroups.text">
+            <de><![CDATA[Steuergruppen]]></de>
+            <en><![CDATA[Tax groups]]></en>
+        </locale>
 
-        <!-- tax entry - steuerart -->
+        <!-- tax entry - Steuertyp -->
         <locale name="tax.grid.taxentries.title">
             <de><![CDATA[Steuersatz]]></de>
             <en><![CDATA[Tax]]></en>
@@ -138,7 +150,7 @@
 
         <!-- tax types -->
         <locale name="tax.grid.taxtype.title">
-            <de><![CDATA[Steuerart]]></de>
+            <de><![CDATA[Steuertyp]]></de>
             <en><![CDATA[Tax type]]></en>
         </locale>
         <locale name="tax.grid.taxtype.taxgroup.title">
