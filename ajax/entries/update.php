@@ -6,6 +6,9 @@
 
 /**
  * Update a tax group
+ *
+ * @param integer $taxId - Tax Entry ID
+ * @param string $data - JSON data
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_update',

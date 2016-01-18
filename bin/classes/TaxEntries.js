@@ -137,7 +137,60 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                         onError  : reject
                     });
             });
-        }
+        },
 
+        /**
+         * Toggle the status from the Tax Entry
+         *
+         * @param {Number} taxId
+         * @returns {Promise}
+         */
+        toggleStatus: function (taxId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_entries_toggle',
+                    resolve, {
+                        'package': 'quiqqer/tax',
+                        taxId    : taxId,
+                        onError  : reject
+                    });
+            });
+        },
+
+        /**
+         * Activate the Tax Entry
+         *
+         * @param {Number} taxId
+         * @returns {Promise}
+         */
+        activate: function (taxId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_entries_activate',
+                    resolve, {
+                        'package': 'quiqqer/tax',
+                        taxId    : taxId,
+                        onError  : reject
+                    });
+            });
+        },
+
+        /**
+         * Deactivate the Tax Entry
+         *
+         * @param {Number} taxId
+         * @returns {Promise}
+         */
+        deactivate: function (taxId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.post(
+                    'package_quiqqer_tax_ajax_entries_deactivate',
+                    resolve, {
+                        'package': 'quiqqer/tax',
+                        taxId    : taxId,
+                        onError  : reject
+                    });
+            });
+        }
     });
 });

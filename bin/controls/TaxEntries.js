@@ -53,6 +53,9 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             'updateChild',
             'deleteChild',
             'childWindow',
+            'toggleTaxEntryStatus',
+            'activatetaxEntry',
+            'deactivatetaxEntry',
             '$onInject',
             '$onCreate',
             '$onResize'
@@ -295,21 +298,28 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                     var i, len, entry;
 
                     for (i = 0, len = result.length; i < len; i++) {
-
                         entry = result[i];
 
-                        if (entry.active) {
+                        if (parseInt(entry.active) === 1) {
                             result[i].activeButton = {
                                 icon  : 'icon-ok',
+                                taxId : entry.id,
                                 styles: {
                                     lineHeight: 16
+                                },
+                                events: {
+                                    onClick: this.toggleTaxEntryStatus
                                 }
                             };
                         } else {
                             result[i].activeButton = {
                                 icon  : 'icon-remove',
+                                taxId : entry.id,
                                 styles: {
                                     lineHeight: 16
+                                },
+                                events: {
+                                    onClick: this.toggleTaxEntryStatus
                                 }
                             };
                         }
@@ -335,6 +345,75 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                 }.bind(this), reject);
             }.bind(this));
+        },
+
+        /**
+         * Toggle the tax status
+         *
+         * @param {Object} Btn
+         */
+        toggleTaxEntryStatus: function (Btn) {
+
+            Btn.setAttribute(
+                'icon',
+                'icon-spinner icon-spin fa fa-spinner fa-spin'
+            );
+
+            Handler.toggleStatus(
+                Btn.getAttribute('taxId')
+            ).then(function (status) {
+                this.$setTaxEntryButtonStatus(Btn, status);
+            }.bind(this));
+        },
+
+        /**
+         * Activate the tax
+         *
+         * @param {Object} Btn
+         */
+        activatetaxEntry: function (Btn) {
+            Btn.setAttribute(
+                'icon',
+                'icon-spinner icon-spin fa fa-spinner fa-spin'
+            );
+
+            Handler.activate(
+                Btn.getAttribute('taxId')
+            ).then(function (status) {
+                this.$setTaxEntryButtonStatus(Btn, status);
+            }.bind(this));
+        },
+
+        /**
+         * Deactivate the tax
+         *
+         * @param {Object} Btn
+         */
+        deactivatetaxEntry: function (Btn) {
+            Btn.setAttribute(
+                'icon',
+                'icon-spinner icon-spin fa fa-spinner fa-spin'
+            );
+
+            Handler.activate(
+                Btn.getAttribute('taxId')
+            ).then(function (status) {
+                this.$setTaxEntryButtonStatus(Btn, status);
+            }.bind(this));
+        },
+
+        /**
+         *
+         * @param {Object} Btn
+         * @param {Boolean|Number} status
+         */
+        $setTaxEntryButtonStatus: function (Btn, status) {
+            if (status) {
+                Btn.setAttribute('icon', 'icon-ok');
+                return;
+            }
+
+            Btn.setAttribute('icon', 'icon-remove');
         },
 
         /**
