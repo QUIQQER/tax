@@ -98,15 +98,14 @@ class Handler extends QUI\CRUD\Factory
     {
         Permission::checkPermission('quiqqer.tax.create');
 
-        $Tax    = QUI::getPackage('quiqqer/tax');
-        $Config = $Tax->getConfig();
-
+        $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
 
         if (is_array($groups) && count($groups)) {
             $newId = max(array_keys($groups)) + 1;
         } else {
-            $newId = 0;
+            $groups = array();
+            $newId  = 0;
         }
 
         $groups[$newId] = '';
@@ -202,11 +201,17 @@ class Handler extends QUI\CRUD\Factory
         $Config->setSection('taxgroups', $groups);
         $Config->save();
 
-
+        // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
             'taxGroup.' . $taxGroupId . '.title'
         );
+
+
+        // delete all tax entries
+        QUI::getDataBase()->delete($this->getDataBaseTableName(), array(
+            'taxGroupId' => $taxGroupId
+        ));
     }
 
     /**
@@ -242,6 +247,7 @@ class Handler extends QUI\CRUD\Factory
         if (is_array($types) && count($types)) {
             $newId = max(array_keys($types)) + 1;
         } else {
+            $types = array();
             $newId = 0;
         }
 
@@ -253,10 +259,16 @@ class Handler extends QUI\CRUD\Factory
         $current = QUI::getLocale()->getCurrent();
 
         // create locale
-        QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], array(
-            $current => '',
-            'datatype' => 'php,js'
-        ));
+        try {
+            QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], array(
+                $current => '',
+                'datatype' => 'php,js'
+            ));
+        } catch (QUI\Exception $Exception) {
+            QUI::getMessagesHandler()->addAttention(
+                $Exception->getMessage()
+            );
+        }
 
 
         return $this->getTaxType($newId);
@@ -329,10 +341,16 @@ class Handler extends QUI\CRUD\Factory
         $Config->setSection('taxtypes', $types);
         $Config->save();
 
+        // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
             'taxType.' . $taxTypeId . '.title'
         );
+
+        // delete all tax entries
+        QUI::getDataBase()->delete($this->getDataBaseTableName(), array(
+            'taxTypeId' => $taxTypeId
+        ));
     }
 
 

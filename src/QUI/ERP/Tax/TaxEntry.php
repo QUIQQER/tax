@@ -66,13 +66,25 @@ class TaxEntry extends QUI\CRUD\Child
                     continue;
                 }
 
+                if ((int)$child['taxGroupId'] != (int)$this->getAttribute('taxGroupId')) {
+                    continue;
+                }
+
+                if ((int)$child['taxTypeId'] != (int)$this->getAttribute('taxTypeId')) {
+                    continue;
+                }
+
                 $usedAreas[] = $child['areaId'];
             }
 
             if (in_array($this->getArea()->getId(), $usedAreas)) {
                 throw new QUI\Exception(array(
                     'quiqqer/tax',
-                    'exception.area.is.still.in.use'
+                    'exception.area.is.still.in.use',
+                    array(
+                        'area' => $this->getArea()->getId(),
+                        'title' => $this->getArea()->getTitle(),
+                    )
                 ));
             }
         });

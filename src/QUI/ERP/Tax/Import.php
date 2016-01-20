@@ -88,8 +88,6 @@ class Import
         $Path       = new \DOMXPath($Document);
         $groups     = $Path->query("//quiqqer/group");
 
-        $availableLanguages = QUI\Translator::getAvailableLanguages();
-
         foreach ($groups as $Group) {
             /* @var $Group \DOMElement */
             $types    = $Group->getElementsByTagName('type');
@@ -135,17 +133,20 @@ class Import
                     if (!$Area) {
                         continue;
                     }
-continue;
+
                     try {
                         $TaxEntry = $TaxHandler->createChild();
 
                         $TaxEntry->setAttribute('areaId', $Area->getId());
                         $TaxEntry->setAttribute('taxTypeId', $TaxType->getId());
                         $TaxEntry->setAttribute('taxGroupId', $TaxGroup->getId());
+                        $TaxEntry->setAttribute('vat', $Tax->getAttribute('vat'));
+                        $TaxEntry->setAttribute('euvat', (int)$Tax->getAttribute('euvat'));
                         $TaxEntry->update();
 
                     } catch (QUI\Exception $Exception) {
                         QUI\System\Log::addError($Exception->getMessage());
+
                         QUI::getMessagesHandler()->addError(
                             $Exception->getMessage()
                         );

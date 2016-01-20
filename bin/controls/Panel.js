@@ -28,6 +28,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             'openTaxEntries',
             'openTaxTypes',
             'openTaxGroups',
+            'openImport',
             '$onCreate',
             '$onInject'
         ],
@@ -38,10 +39,14 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             });
 
             this.parent(options);
+            this.$View = false;
 
             this.addEvents({
                 onCreate: this.$onCreate,
-                onInject: this.$onInject
+                onInject: this.$onInject,
+                onShow  : function () {
+                    this.$onInject();
+                }.bind(this)
             });
         },
 
@@ -81,10 +86,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
         $onInject: function () {
             this.Loader.show();
 
-            this.checkImport().then(function () {
+            return this.checkImport().then(function () {
                 this.getCategory('taxentries').click();
-                this.Loader.show();
-
             }.bind(this));
         },
 
@@ -164,10 +167,34 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * Opens the import
          */
         openImport: function () {
+            var self = this;
+
+            var windows = QUI.Controls.getByType(
+                'package/quiqqer/tax/bin/controls/Import'
+            );
+
+            if (windows.length) {
+                windows[0].open();
+                return;
+            }
+
             require([
                 'package/quiqqer/tax/bin/controls/Import'
             ], function (Import) {
-                new Import().open();
+                new Import({
+                    events: {
+                        onImport     : function () {
+                            if (self.$View) {
+                                self.$View.refresh().then(function () {
+                                    self.Loader.hide();
+                                });
+                            }
+                        },
+                        onImportBegin: function () {
+                            self.Loader.show();
+                        }
+                    }
+                }).open();
             });
         },
 
@@ -175,7 +202,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxEntries: function () {
-
             var self    = this,
                 Content = this.getContent();
 
@@ -186,7 +212,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             require([
                 'package/quiqqer/tax/bin/controls/TaxEntries'
             ], function (TaxEntries) {
-                new TaxEntries({
+                this.$View = new TaxEntries({
                     Panel : self,
                     events: {
                         onLoaded: function () {
@@ -194,14 +220,13 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                         }
                     }
                 }).inject(Content);
-            });
+            }.bind(this));
         },
 
         /**
          * open the tax groups
          */
         openTaxTypes: function () {
-
             var self    = this,
                 Content = this.getContent();
 
@@ -212,7 +237,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             require([
                 'package/quiqqer/tax/bin/controls/TaxTypes'
             ], function (TaxTypes) {
-                new TaxTypes({
+                self.$View = new TaxTypes({
                     Panel : self,
                     events: {
                         onLoaded: function () {
@@ -227,7 +252,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxGroups: function () {
-
             var self    = this,
                 Content = this.getContent();
 
@@ -238,7 +262,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             require([
                 'package/quiqqer/tax/bin/controls/TaxGroups'
             ], function (TaxGroups) {
-                new TaxGroups({
+                self.$View = new TaxGroups({
                     Panel : self,
                     events: {
                         onLoaded: function () {

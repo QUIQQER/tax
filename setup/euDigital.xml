@@ -16,37 +16,37 @@
                 <locale group="quiqqer/tax" var="tax.import.euDigital.type.mwst.title"/>
             </title>
 
-            <tax countries="DE" tax="19.00" euvat="0"/>
-            <tax countries="GR" tax="23.00" euvat="1"/>
-            <tax countries="AT" tax="20.00" euvat="1"/>
-            <tax countries="CH" tax="0" euvat="0"/>
-            <tax countries="LU" tax="15.00" euvat="1"/>
-            <tax countries="MT" tax="18.00" euvat="1"/>
-            <tax countries="CY" tax="19.00" euvat="1"/>
-            <tax countries="BG" tax="20.00" euvat="1"/>
-            <tax countries="EE" tax="20.00" euvat="1"/>
-            <tax countries="FR" tax="20.00" euvat="1"/>
-            <tax countries="SK" tax="20.00" euvat="1"/>
-            <tax countries="GB" tax="20.00" euvat="1"/>
-            <tax countries="NL" tax="21.00" euvat="1"/>
-            <tax countries="LT" tax="21.00" euvat="1"/>
-            <tax countries="LV" tax="21.00" euvat="1"/>
-            <tax countries="ES" tax="21.00" euvat="1"/>
-            <tax countries="BE" tax="21.00" euvat="1"/>
-            <tax countries="CZ" tax="21.00" euvat="1"/>
-            <tax countries="IT" tax="22.00" euvat="1"/>
-            <tax countries="SK" tax="22.00" euvat="1"/>
-            <tax countries="PT" tax="23.00" euvat="1"/>
-            <tax countries="PL" tax="23.00" euvat="1"/>
-            <tax countries="IE" tax="23.00" euvat="1"/>
-            <tax countries="RO" tax="24.00" euvat="1"/>
-            <tax countries="FI" tax="24.00" euvat="1"/>
-            <tax countries="SE" tax="25.00" euvat="1"/>
-            <tax countries="HR" tax="25.00" euvat="1"/>
-            <tax countries="DK" tax="25.00" euvat="1"/>
-            <tax countries="HU" tax="27.00" euvat="1"/>
+            <tax countries="DE" vat="19.00" euvat="0"/>
+            <tax countries="GR" vat="23.00" euvat="1"/>
+            <tax countries="AT" vat="20.00" euvat="1"/>
+            <tax countries="CH" vat="0" euvat="0"/>
+            <tax countries="LU" vat="15.00" euvat="1"/>
+            <tax countries="MT" vat="18.00" euvat="1"/>
+            <tax countries="CY" vat="19.00" euvat="1"/>
+            <tax countries="BG" vat="20.00" euvat="1"/>
+            <tax countries="EE" vat="20.00" euvat="1"/>
+            <tax countries="FR" vat="20.00" euvat="1"/>
+            <tax countries="SK" vat="20.00" euvat="1"/>
+            <tax countries="GB" vat="20.00" euvat="1"/>
+            <tax countries="NL" vat="21.00" euvat="1"/>
+            <tax countries="LT" vat="21.00" euvat="1"/>
+            <tax countries="LV" vat="21.00" euvat="1"/>
+            <tax countries="ES" vat="21.00" euvat="1"/>
+            <tax countries="BE" vat="21.00" euvat="1"/>
+            <tax countries="CZ" vat="21.00" euvat="1"/>
+            <tax countries="IT" vat="22.00" euvat="1"/>
+            <tax countries="SI" vat="22.00" euvat="1"/>
+            <tax countries="PT" vat="23.00" euvat="1"/>
+            <tax countries="PL" vat="23.00" euvat="1"/>
+            <tax countries="IE" vat="23.00" euvat="1"/>
+            <tax countries="RO" vat="24.00" euvat="1"/>
+            <tax countries="FI" vat="24.00" euvat="1"/>
+            <tax countries="SE" vat="25.00" euvat="1"/>
+            <tax countries="HR" vat="25.00" euvat="1"/>
+            <tax countries="DK" vat="25.00" euvat="1"/>
+            <tax countries="HU" vat="27.00" euvat="1"/>
 
-            <tax countries="*" tax="0" euvat="0"/>
+            <tax countries="*" vat="0" euvat="0"/>
         </type>
 
         <type>
@@ -54,7 +54,7 @@
                 <locale group="quiqqer/tax" var="tax.import.euDigital.type.mwstreduce.title"/>
             </title>
 
-            <tax countries="DE" tax="7.00" euvat="0"/>
+            <tax countries="DE" vat="7.00" euvat="0"/>
         </type>
 
     </group>

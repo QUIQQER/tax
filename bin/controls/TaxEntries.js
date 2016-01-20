@@ -226,22 +226,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
         $onInject: function () {
             var self = this;
 
-            TypeHandler.getList().then(function (list) {
-                for (var i = 0, len = list.length; i < len; i++) {
-                    self.$Select.appendChild(
-                        list[i].title,
-                        list[i].id
-                    );
-                }
-
-                self.$current = list[0].id;
-
-                return list[0].id;
-
-            }).then(function (id) {
-                return self.loadTaxByTaxType(id);
-
-            }).then(function () {
+            this.refresh().then(function () {
                 self.$Select.setValue(self.$current);
                 self.resize();
 
@@ -293,14 +278,33 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 }
 
 
-                var value = this.$Select.getValue();
+                var self  = this,
+                    value = this.$Select.getValue();
 
-                if (!value || value === '') {
-                    resolve();
-                    return;
-                }
+                return new Promise(function (res2) {
+                    if (value && value !== '') {
+                        return this.loadTaxByTaxType(value);
+                    }
 
-                this.loadTaxByTaxType(value).then(resolve, reject);
+                    TypeHandler.getList().then(function (list) {
+                        if (!list.length) {
+                            return Promise.resolve();
+                        }
+
+                        for (var i = 0, len = list.length; i < len; i++) {
+                            self.$Select.appendChild(
+                                list[i].title,
+                                list[i].id
+                            );
+                        }
+
+                        self.$current = list[0].id;
+
+                        return self.loadTaxByTaxType(list[0].id);
+
+                    }).then(res2, reject);
+                }).then(resolve, reject);
+
 
             }.bind(this));
         },

@@ -15,6 +15,10 @@
             <de><![CDATA[Steuergruppen]]></de>
             <en><![CDATA[Tax groups]]></en>
         </locale>
+        <locale name="tax.import.euDigital">
+            <de><![CDATA[Steuersätze für digitale Güter in der EU]]></de>
+            <en><![CDATA[Tax for digital goods in the EU]]></en>
+        </locale>
 
         <locale name="exception.taxtype.not.found">
             <de><![CDATA[Steuertyp nicht gefunden]]></de>
@@ -29,12 +33,12 @@
             <de><![CDATA[Zone wurde nicht gefunden]]></de>
             <en><![CDATA[Area not found]]></en>
         </locale>
-        <locale name="exception.area.is.still.in.use">
+        <locale name="exception.area.is.still.in.use" html="true">
             <de><![CDATA[
-                Zone ist bereits in Verwendung. Bitte wählen Sie eine andere Zone aus.
+                Die Zone <b>#[area] [title]</b> ist bereits in Verwendung. Bitte wählen Sie eine andere Zone aus.
             ]]></de>
             <en><![CDATA[
-                Area is already in use. Please select a different area.
+                The Area <b>#[area] [title]</b> is already in use. Please select a different area.
             ]]></en>
         </locale>
     </groups>
@@ -97,9 +101,13 @@
             <de><![CDATA[Möchten Sie den Steuersatz #[id] wirklich löschen?]]></de>
             <en><![CDATA[Do you realy want to delete the tax #[id]?]]></en>
         </locale>
-        <locale name="tax.window.delete.information">
-            <de><![CDATA[Der Steuersatz #[id] ist nicht wieder herstellbar und alle Beziehungen gehen verloren.]]></de>
-            <en><![CDATA[The tax #[id] can not be restored and all relationships will be lost.]]></en>
+        <locale name="tax.window.delete.information" html="true">
+            <de><![CDATA[
+                Der Steuersatz #[id] ist nicht wieder herstellbar und alle Beziehungen gehen verloren.
+                ]]></de>
+            <en><![CDATA[
+                The tax #[id] can not be restored and all relationships will be lost.
+            ]]></en>
         </locale>
 
 
@@ -135,8 +143,16 @@
             <en><![CDATA[Do you really want to delete the tax group #[taxGroupId]?]]></en>
         </locale>
         <locale name="taxgroup.window.delete.information" html="true">
-            <de><![CDATA[Die Steuergruppe ist nicht wiederherstellbar und alle Beziehungen gehen verloren.]]></de>
-            <en><![CDATA[The tax group is not recoverable and all relationships will be lost.]]></en>
+            <de><![CDATA[
+                Die Steuergruppe ist nicht wiederherstellbar und alle Beziehungen gehen verloren.
+                <br />
+                Alle Steuersätze welche der Steuergruppe zugewiesen sind werden gelöscht.
+                ]]></de>
+            <en><![CDATA[
+                The tax group is not recoverable and all relationships will be lost.
+                <br />
+                All tax entries which are assigned to the tax group will be deleted.
+            ]]></en>
         </locale>
 
         <locale name="taxgroup.edit.title">
@@ -177,8 +193,16 @@
             <en><![CDATA[Do you really want to delete the tax type #[taxTypeId]?]]></en>
         </locale>
         <locale name="taxtype.window.delete.information" html="true">
-            <de><![CDATA[Der Steuertyp ist nicht wiederherstellbar und alle Beziehungen gehen verloren.]]></de>
-            <en><![CDATA[The tax group is not recoverable and all relationships will be lost.]]></en>
+            <de><![CDATA[
+                Der Steuertyp ist nicht wiederherstellbar und alle Beziehungen gehen verloren.
+                <br />
+                Alle Steuersätze welche dem Steuertyp zugewiesen sind werden gelöscht.
+                ]]></de>
+            <en><![CDATA[
+                The tax type is not recoverable and all relationships will be lost.
+                <br />
+                All tax entries which are assigned to the tax type will be deleted.
+            ]]></en>
         </locale>
 
         <locale name="taxtype.message.create">
@@ -202,10 +226,6 @@
     </groups>
 
     <groups name="quiqqer/tax" datatype="php">
-        <locale name="tax.import.euDigital">
-            <de><![CDATA[Steuersätze für digitale Güter in der EU]]></de>
-            <en><![CDATA[Tax for digital goods in the EU]]></en>
-        </locale>
         <locale name="tax.import.euDigital.group.mwst.title">
             <de><![CDATA[Mehrwertsteuer]]></de>
             <en><![CDATA[VAT]]></en>

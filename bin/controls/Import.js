@@ -11,7 +11,8 @@
  * @require controls/upload/Form
  * @require text!package/quiqqer/tax/bin/controls/Import.html
  *
- * @event onSuccess
+ * @event onImportBegin
+ * @event onImport
  */
 define('package/quiqqer/tax/bin/controls/Import', [
 
@@ -130,12 +131,14 @@ define('package/quiqqer/tax/bin/controls/Import', [
             var self        = this,
                 selectValue = this.$Select.getValue();
 
+            this.fireEvent('importBegin');
+
             if (!selectValue || selectValue === '') {
 
                 this.$Upload.addEvent('onComplete', function () {
                     self.Loader.hide();
                     self.close();
-                    self.fireEvent('success');
+                    self.fireEvent('import');
                 });
 
                 this.$Upload.submit();
@@ -147,11 +150,16 @@ define('package/quiqqer/tax/bin/controls/Import', [
                 require([
                     'package/quiqqer/translator/bin/classes/Translator'
                 ], function (Translator) {
-                    new Translator().refreshLocale().then(function () {
+                    var Trans = new Translator();
+
+                    Trans.publish().then(function () {
+                        return Trans.refreshLocale();
+                    }).then(function () {
                         self.close();
-                        self.fireEvent('success');
+                        self.fireEvent('import');
                     });
                 });
+
             }, {
                 'package' : 'quiqqer/tax',
                 importName: selectValue
