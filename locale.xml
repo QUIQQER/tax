@@ -2,16 +2,16 @@
 <locales>
     <groups name="quiqqer/tax" datatype="php,js">
 
-        <locale name="menu.erm.title">
-            <de><![CDATA[ERM]]></de>
-            <en><![CDATA[ERM]]></en>
+        <locale name="menu.erp.title">
+            <de><![CDATA[ERP]]></de>
+            <en><![CDATA[ERP]]></en>
         </locale>
-        <locale name="menu.erm.tax.title">
+        <locale name="menu.erp.tax.title">
             <de><![CDATA[Steuergruppen]]></de>
             <en><![CDATA[Tax groups]]></en>
         </locale>
 
-        <locale name="menu.erm.tax.panel.title">
+        <locale name="menu.erp.tax.panel.title">
             <de><![CDATA[Steuergruppen]]></de>
             <en><![CDATA[Tax groups]]></en>
         </locale>

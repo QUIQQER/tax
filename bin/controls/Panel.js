@@ -207,20 +207,51 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.Loader.show();
 
-            Content.set('html', '');
+            if (this.$View &&
+                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxEntries') {
 
-            require([
-                'package/quiqqer/tax/bin/controls/TaxEntries'
-            ], function (TaxEntries) {
-                this.$View = new TaxEntries({
-                    Panel : self,
-                    events: {
-                        onLoaded: function () {
-                            self.Loader.hide();
+                this.$View.resize().then(function () {
+                    return self.$View.refresh();
+                }).then(function () {
+                    self.Loader.hide();
+                });
+
+                return;
+            }
+
+            var Prom = Promise.resolve();
+
+            if (this.$View) {
+                Prom = new Promise(function (resolve) {
+                    moofx(self.$View.getElm()).animate({
+                        opacity: 0
+                    }, {
+                        duration: 200,
+                        callback: function () {
+                            self.$View.destroy();
+                            self.$View = null;
+                            resolve();
                         }
-                    }
-                }).inject(Content);
-            }.bind(this));
+                    });
+                });
+            }
+
+            Prom.then(function () {
+                Content.set('html', '');
+
+                require([
+                    'package/quiqqer/tax/bin/controls/TaxEntries'
+                ], function (TaxEntries) {
+                    self.$View = new TaxEntries({
+                        Panel : self,
+                        events: {
+                            onLoaded: function () {
+                                self.Loader.hide();
+                            }
+                        }
+                    }).inject(Content);
+                });
+            });
         },
 
         /**
@@ -232,19 +263,51 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.Loader.show();
 
-            Content.set('html', '');
+            if (this.$View &&
+                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxTypes') {
 
-            require([
-                'package/quiqqer/tax/bin/controls/TaxTypes'
-            ], function (TaxTypes) {
-                self.$View = new TaxTypes({
-                    Panel : self,
-                    events: {
-                        onLoaded: function () {
-                            self.Loader.hide();
+                this.$View.resize().then(function () {
+                    return self.$View.refresh();
+                }).then(function () {
+                    self.Loader.hide();
+                });
+
+                return;
+            }
+
+            var Prom = Promise.resolve();
+
+            if (this.$View) {
+                Prom = new Promise(function (resolve) {
+                    moofx(self.$View.getElm()).animate({
+                        opacity: 0
+                    }, {
+                        duration: 200,
+                        callback: function () {
+                            self.$View.destroy();
+                            self.$View = null;
+                            resolve();
                         }
-                    }
-                }).inject(Content);
+                    });
+                });
+            }
+
+            Prom.then(function () {
+                Content.set('html', '');
+
+                require([
+                    'package/quiqqer/tax/bin/controls/TaxTypes'
+                ], function (TaxTypes) {
+
+                    self.$View = new TaxTypes({
+                        Panel : self,
+                        events: {
+                            onLoaded: function () {
+                                self.Loader.hide();
+                            }
+                        }
+                    }).inject(Content);
+                });
             });
         },
 
@@ -257,19 +320,50 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
             this.Loader.show();
 
-            Content.set('html', '');
+            if (this.$View &&
+                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxGroups') {
 
-            require([
-                'package/quiqqer/tax/bin/controls/TaxGroups'
-            ], function (TaxGroups) {
-                self.$View = new TaxGroups({
-                    Panel : self,
-                    events: {
-                        onLoaded: function () {
-                            self.Loader.hide();
+                this.$View.resize().then(function () {
+                    return self.$View.refresh();
+                }).then(function () {
+                    self.Loader.hide();
+                });
+
+                return;
+            }
+
+            var Prom = Promise.resolve();
+
+            if (this.$View) {
+                Prom = new Promise(function (resolve) {
+                    moofx(self.$View.getElm()).animate({
+                        opacity: 0
+                    }, {
+                        duration: 200,
+                        callback: function () {
+                            self.$View.destroy();
+                            self.$View = null;
+                            resolve();
                         }
-                    }
-                }).inject(Content);
+                    });
+                });
+            }
+
+            Prom.then(function () {
+                Content.set('html', '');
+
+                require([
+                    'package/quiqqer/tax/bin/controls/TaxGroups'
+                ], function (TaxGroups) {
+                    self.$View = new TaxGroups({
+                        Panel : self,
+                        events: {
+                            onLoaded: function () {
+                                self.Loader.hide();
+                            }
+                        }
+                    }).inject(Content);
+                });
             });
         }
     });

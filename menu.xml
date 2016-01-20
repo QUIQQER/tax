@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu>
     <item parent="/extras/"
-          name="erm"
+          name="erp"
           icon="icon-sun"
     >
-        <locale group="quiqqer/tax" var="menu.erm.title" />
+        <locale group="quiqqer/tax" var="menu.erp.title" />
     </item>
-    <item parent="/extras/erm/"
+    <item parent="/extras/erp/"
           name="tax"
           require="package/quiqqer/tax/bin/controls/Panel"
           icon="fa fa-percent"
     >
-        <locale group="quiqqer/tax" var="menu.erm.tax.title" />
+        <locale group="quiqqer/tax" var="menu.erp.tax.title" />
     </item>
 
 </menu>

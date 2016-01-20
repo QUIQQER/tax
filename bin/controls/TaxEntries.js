@@ -53,6 +53,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             'updateChild',
             'deleteChild',
             'childWindow',
+            'resize',
             'toggleTaxEntryStatus',
             'activatetaxEntry',
             'deactivatetaxEntry',
@@ -68,8 +69,13 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             this.$current = false;
 
             this.addEvents({
-                onInject: this.$onInject,
-                onResize: this.$onResize
+                onInject : this.$onInject,
+                onResize : this.$onResize,
+                onDestroy: function () {
+                    if (this.$Grid) {
+                        this.$Grid.destroy();
+                    }
+                }.bind(this)
             });
         },
 
@@ -81,8 +87,9 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 Elm  = this.parent();
 
             Elm.setStyles({
-                height: '100%',
-                width : '100%'
+                height : '100%',
+                opacity: 0,
+                width  : '100%'
             });
 
 
@@ -230,20 +237,38 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 self.$Select.setValue(self.$current);
                 self.resize();
 
-                self.fireEvent('loaded');
+            }).then(function () {
 
-            }).catch(function () {
-                self.resize();
-                self.fireEvent('loaded');
+                return new Promise(function (resolve) {
+                    moofx(self.getElm()).animate({
+                        opacity: 1
+                    }, {
+                        duration: 200,
+                        callback: function () {
+                            self.fireEvent('loaded');
+                            resolve();
+                        }
+                    });
+                });
             });
         },
 
         /**
-         * event : on resize
+         * resize
+         *
+         * @return {Promise}
          */
-        $onResize: function () {
-            this.$Grid.setHeight(this.getElm().getSize().y - 60);
-            this.$Grid.resize();
+        resize: function () {
+            var self = this;
+
+            return new Promise(function (resolve) {
+                self.$Grid.setHeight(
+                    self.getElm().getSize().y - 60
+                ).then(function () {
+                    self.$Grid.resize();
+                    resolve();
+                });
+            });
         },
 
         /**
