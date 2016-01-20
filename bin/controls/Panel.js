@@ -79,9 +79,96 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * event : on create
          */
         $onInject: function () {
-            (function () {
+            this.Loader.show();
+
+            this.checkImport().then(function () {
                 this.getCategory('taxentries').click();
-            }).delay(750, this);
+                this.Loader.show();
+
+            }.bind(this));
+        },
+
+        /**
+         * Checks, if we can run an import
+         *
+         * @returns {Promise}
+         */
+        checkImport: function () {
+
+            var self = this;
+
+            return new Promise(function (resolve, reject) {
+                require([
+                    'package/quiqqer/tax/bin/classes/TaxEntries',
+                    'package/quiqqer/tax/bin/classes/TaxGroups',
+                    'package/quiqqer/tax/bin/classes/TaxTypes'
+                ], function (TaxEntries, TaxGroups, TaxTypes) {
+
+                    Promise.all([
+                        new TaxEntries().getList(),
+                        new TaxGroups().getList(),
+                        new TaxTypes().getList()
+                    ]).then(function (result) {
+
+                        var taxEntries = result[0],
+                            taxGroups  = result[1],
+                            taxTypes   = result[2];
+
+                        if (!taxEntries.length && !taxGroups.length && !taxTypes.length) {
+                            self.openImport();
+                            resolve();
+                            return;
+                        }
+
+                        if (!taxEntries.length) {
+                            QUI.getMessageHandler().then(function (MH) {
+                                MH.addInformation(
+                                    QUILocale.get(
+                                        'quiqqer/tax',
+                                        'message.tax.create.taxentries'
+                                    )
+                                );
+                            });
+                        }
+
+                        if (!taxGroups.length) {
+                            QUI.getMessageHandler().then(function (MH) {
+                                MH.addInformation(
+                                    QUILocale.get(
+                                        'quiqqer/tax',
+                                        'message.tax.create.taxgroups'
+                                    )
+                                );
+                            });
+                        }
+
+                        if (!taxTypes.length) {
+                            QUI.getMessageHandler().then(function (MH) {
+                                MH.addInformation(
+                                    QUILocale.get(
+                                        'quiqqer/tax',
+                                        'message.tax.create.taxtypes'
+                                    )
+                                );
+                            });
+                        }
+
+                        resolve();
+
+                    }, reject);
+                }, reject);
+            });
+        },
+
+        /**
+         * Opens the import
+         */
+        openImport: function () {
+            require([
+                'package/quiqqer/tax/bin/controls/Import'
+            ], function (Import) {
+                new Import().open();
+            });
         },
 
         /**

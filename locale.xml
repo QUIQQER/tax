@@ -37,7 +37,6 @@
                 Area is already in use. Please select a different area.
             ]]></en>
         </locale>
-
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">
@@ -80,7 +79,6 @@
             <en><![CDATA[EU-Vat]]></en>
         </locale>
 
-
         <locale name="tax.window.create.title">
             <de><![CDATA[Neuen Steuersatz anlegen]]></de>
             <en><![CDATA[Create new tax]]></en>
@@ -103,7 +101,6 @@
             <de><![CDATA[Der Steuersatz #[id] ist nicht wieder herstellbar und alle Beziehungen gehen verloren.]]></de>
             <en><![CDATA[The tax #[id] can not be restored and all relationships will be lost.]]></en>
         </locale>
-
 
 
         <!-- tax groups -->
@@ -184,11 +181,43 @@
             <en><![CDATA[The tax group is not recoverable and all relationships will be lost.]]></en>
         </locale>
 
+        <locale name="taxtype.message.create">
+            <de><![CDATA[Steuerart wird angelegt...]]></de>
+            <en><![CDATA[Taxtype being created...]]></en>
+        </locale>
+        <locale name="taxtype.message.translationvars.create">
+            <de><![CDATA[Sprachvariablen werden angelegt...]]></de>
+            <en><![CDATA[Translation variables being created...]]></en>
+        </locale>
+        <locale name="taxtype.message.translation.publish">
+            <de><![CDATA[Sprachvariablen werden veröffentlicht...]]></de>
+            <en><![CDATA[Translation variables being published...]]></en>
+        </locale>
+
 
         <locale name="taxgroup.edit.title">
             <de><![CDATA[Steuertyp #[taxGroupdId]]]></de>
             <en><![CDATA[Tax type #[taxGroupdId]]]></en>
         </locale>
-
     </groups>
+
+    <groups name="quiqqer/tax" datatype="php">
+        <locale name="tax.import.euDigital">
+            <de><![CDATA[Steuersätze für digitale Güter in der EU]]></de>
+            <en><![CDATA[Tax for digital goods in the EU]]></en>
+        </locale>
+        <locale name="tax.import.euDigital.group.mwst.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="tax.import.euDigital.type.mwst.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="tax.import.euDigital.type.mwstreduce.title">
+            <de><![CDATA[Mehrwertsteuer verminderte]]></de>
+            <en><![CDATA[VAT reduced]]></en>
+        </locale>
+    </groups>
+
 </locales>

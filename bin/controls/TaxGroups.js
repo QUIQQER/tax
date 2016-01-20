@@ -328,7 +328,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                             padding: 20
                         });
 
-                        var Edit = new TaxGroupsEdit({
+                        Sheet.Edit = new TaxGroupsEdit({
                             taxGroupId: taxGroupId,
                             events    : {
                                 onLoaded: function () {
@@ -337,7 +337,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                             }
                         });
 
-                        Edit.inject(Sheet.getContent());
+                        Sheet.Edit.inject(Sheet.getContent());
 
                         Sheet.addButton({
                             text     : QUILocale.get('quiqqer/system', 'save'),
@@ -345,13 +345,25 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                             events   : {
                                 onClick: function () {
                                     self.$Panel.Loader.show();
+
+
                                     Edit.update().then(function () {
-                                        Sheet.hide();
+                                        return Sheet.hide();
+                                    }).then(function () {
                                         self.$Panel.Loader.hide();
                                     });
                                 }
                             }
                         });
+                    },
+
+                    onClose: function (Sheet) {
+                        Sheet.Edit.destroy();
+                        Sheet.destroy();
+                    },
+
+                    onResize: function (Sheet) {
+                        Sheet.Edit.resize();
                     }
                 }
             }).show();

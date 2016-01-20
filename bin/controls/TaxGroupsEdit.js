@@ -51,6 +51,14 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
         },
 
         /**
+         * resize control
+         */
+        resize: function () {
+            this.$Grid.setWidth(this.getElm().getSize().x - 20);
+            this.$Grid.resize();
+        },
+
+        /**
          * Create the DOMNode Element
          *
          * @return {HTMLDivElement}
@@ -81,8 +89,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
                 styles: {
                     'float' : 'left',
                     overflow: 'hidden',
-                    width   : '100%',
-                    outline : '1px solid red'
+                    width   : '100%'
                 }
             }).inject(
                 this.getElm().getElement(
@@ -94,6 +101,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             var GridContainer = new Element('div').inject(Container);
 
             this.$Grid = new Grid(GridContainer, {
+                width      : 100,
                 columnModel: [{
                     header   : QUILocale.get('quiqqer/tax', ''),
                     dataIndex: 'type',
@@ -120,7 +128,8 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             });
 
             this.$Grid.setHeight(200);
-            this.$Grid.setWidth(Container.getSize().x);
+            this.$Grid.setWidth(this.getElm().getSize().x - 20);
+            this.$Grid.resize();
 
             this.$Handler.get(
                 this.getAttribute('taxGroupId')
@@ -147,7 +156,6 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             }).then(function () {
                 self.fireEvent('loaded');
             });
-
         },
 
         /**

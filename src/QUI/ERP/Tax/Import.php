@@ -1,0 +1,252 @@
+<?php
+
+/**
+ * This file contains QUI\ERP\Tax\Import
+ */
+namespace QUI\ERP\Tax;
+
+use QUI;
+use QUI\Utils\XML;
+
+/**
+ * Class Import
+ * @package QUI\ERP\Tax
+ */
+class Import
+{
+    /**
+     * @return array
+     */
+    public static function getAvailableImports()
+    {
+        $dir      = OPT_DIR . 'quiqqer/tax/setup/';
+        $xmlFiles = QUI\Utils\System\File::readDir($dir);
+        $result   = array();
+
+        foreach ($xmlFiles as $xmlFile) {
+            $Document = QUI\Utils\XML::getDomFromXml($dir . $xmlFile);
+            $Path     = new \DOMXPath($Document);
+            $title    = $Path->query("//quiqqer/title");
+
+            if ($title->item(0)) {
+                $result[] = array(
+                    'file' => $xmlFile,
+                    'locale' => QUI\Utils\DOM::getTextFromNode($title->item(0), false)
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Import tax from a preconfigure file
+     *
+     * @param string $fileName - file.xml
+     * @throws QUI\Exception
+     */
+    public static function importPreconfigureAreas($fileName)
+    {
+        if (self::existPreconfigure($fileName) === false) {
+            throw new QUI\Exception(
+                array('quiqqer/tax', 'exception.preconfigure.file.not.found'),
+                404
+            );
+        }
+
+        self::import(OPT_DIR . 'quiqqer/tax/setup/' . $fileName);
+    }
+
+    /**
+     * Exists the preconfigure file?
+     *
+     * @param string $file
+     * @return boolean
+     */
+    public static function existPreconfigure($file)
+    {
+        $availableImports = QUI\ERP\Tax\Import::getAvailableImports();
+
+        foreach ($availableImports as $data) {
+            if ($file == $data['file']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Import the standard areas
+     *
+     * @param string $xmlFile - XML File, path to the xml file
+     */
+    public static function import($xmlFile)
+    {
+        $Document   = XML::getDomFromXml($xmlFile);
+        $TaxHandler = new QUI\ERP\Tax\Handler();
+        $Path       = new \DOMXPath($Document);
+        $groups     = $Path->query("//quiqqer/group");
+
+        $availableLanguages = QUI\Translator::getAvailableLanguages();
+
+        foreach ($groups as $Group) {
+            /* @var $Group \DOMElement */
+            $types    = $Group->getElementsByTagName('type');
+            $TaxGroup = $TaxHandler->createTaxGroup();
+
+            $taxGroupLocaleData = self::getLocaleDataFromNode($Group);
+
+            QUI\Translator::edit(
+                'quiqqer/tax',
+                'taxGroup.' . $TaxGroup->getId() . '.title',
+                $taxGroupLocaleData
+            );
+
+            foreach ($types as $Type) {
+                /* @var $Type \DOMElement */
+                $taxTypeLocaleData = self::getLocaleDataFromNode($Type);
+                $taxList           = $Type->getElementsByTagName('tax');
+
+                $TaxType = $TaxHandler->createTaxType();
+
+                QUI\Translator::edit(
+                    'quiqqer/tax',
+                    'taxType.' . $TaxType->getId() . '.title',
+                    $taxTypeLocaleData
+                );
+
+                $TaxGroup->addTaxType($TaxType);
+
+                // import taxes
+                foreach ($taxList as $Tax) {
+                    /* @var $Tax \DOMElement */
+
+                    // search area
+                    $countries = $Tax->getAttribute('countries');
+
+                    if (!$countries) {
+                        continue;
+                    }
+
+                    $countries = explode(',', $countries);
+                    $Area      = self::getAreaByCountries($countries);
+
+                    if (!$Area) {
+                        continue;
+                    }
+continue;
+                    try {
+                        $TaxEntry = $TaxHandler->createChild();
+
+                        $TaxEntry->setAttribute('areaId', $Area->getId());
+                        $TaxEntry->setAttribute('taxTypeId', $TaxType->getId());
+                        $TaxEntry->setAttribute('taxGroupId', $TaxGroup->getId());
+                        $TaxEntry->update();
+
+                    } catch (QUI\Exception $Exception) {
+                        QUI\System\Log::addError($Exception->getMessage());
+                        QUI::getMessagesHandler()->addError(
+                            $Exception->getMessage()
+                        );
+                    }
+                }
+            }
+
+            $TaxGroup->update();
+        }
+    }
+
+
+    /**
+     * Return text params from <title>
+     *
+     * @param \DOMElement $Parent
+     * @return string|array
+     */
+    protected static function getTextNodeParamsFromNode($Parent)
+    {
+        /* @var $Child \DOMElement */
+        foreach ($Parent->childNodes as $Child) {
+            if ($Child->nodeName == 'title') {
+                $Locale = $Child->getElementsByTagName('locale');
+
+                if ($Locale->item(0)) {
+                    /* @var $LocaleItem \DOMElement */
+                    $LocaleItem = $Locale->item(0);
+
+                    return array(
+                        'group' => $LocaleItem->getAttribute('group'),
+                        'var' => $LocaleItem->getAttribute('var')
+                    );
+                }
+
+                return $Child->nodeValue;
+                break;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Return locale data from \DOMElement
+     * Search <title> and return the locale translation data
+     *
+     * @param \DOMElement $Parent
+     * @return array
+     */
+    protected static function getLocaleDataFromNode($Parent)
+    {
+        $result     = array();
+        $localeData = self::getTextNodeParamsFromNode($Parent);
+
+        $availableLanguages = QUI\Translator::getAvailableLanguages();
+
+        if (is_string($localeData)) {
+            foreach ($availableLanguages as $lang) {
+                $result[$lang] = $localeData;
+            }
+
+            return $result;
+        }
+
+        $data = QUI\Translator::getVarData(
+            $localeData['group'],
+            $localeData['var']
+        );
+
+        foreach ($availableLanguages as $lang) {
+            if (!isset($data[$lang])) {
+                $result[$lang] = '';
+                continue;
+            }
+
+            $result[$lang] = $data[$lang];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return the area by countries
+     *
+     * @param array $countries
+     * @return boolean|QUI\ERP\Areas\Area
+     */
+    protected static function getAreaByCountries($countries)
+    {
+        $AreaHandler = new QUI\ERP\Areas\Handler();
+        $areas       = $AreaHandler->getChildrenData();
+
+        foreach ($areas as $area) {
+            foreach ($countries as $country) {
+                if (strpos($area['countries'], $country) !== false) {
+                    return $AreaHandler->getChild((int)$area['id']);
+                }
+            }
+        }
+
+        return false;
+    }
+}

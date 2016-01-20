@@ -256,9 +256,18 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                             return;
                         }
 
-                        Win.Loader.show();
+                        Win.Loader.show(
+                            QUILocale.get(lg, 'taxtype.message.create')
+                        );
 
                         Handler.createChild().then(function (childId) {
+
+                            Win.Loader.show(
+                                QUILocale.get(
+                                    lg,
+                                    'taxtype.message.translationvars.create'
+                                )
+                            );
 
                             var currentLang = QUILocale.getCurrent(),
                                 data        = {};
@@ -274,6 +283,13 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                                     'taxType.' + childId + '.title',
                                     data
                                 ).then(function () {
+                                    Win.Loader.show(
+                                        QUILocale.get(
+                                            lg,
+                                            'taxtype.message.translation.publish'
+                                        )
+                                    );
+
                                     return new Translator().publish();
 
                                 }).then(function () {

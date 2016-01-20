@@ -117,10 +117,20 @@ class Handler extends QUI\CRUD\Factory
         $current = QUI::getLocale()->getCurrent();
 
         // create locale
-        QUI\Translator::addUserVar('quiqqer/tax', $groups[$newId], array(
-            $current => '',
-            'datatype' => 'php,js'
-        ));
+        try {
+            QUI\Translator::addUserVar(
+                'quiqqer/tax',
+                'taxGroup.' . $newId . '.title',
+                array(
+                    $current => '',
+                    'datatype' => 'php,js'
+                )
+            );
+        } catch (QUI\Exception $Exception) {
+            QUI::getMessagesHandler()->addAttention(
+                $Exception->getMessage()
+            );
+        }
 
         return $this->getTaxGroup($newId);
     }
@@ -141,7 +151,7 @@ class Handler extends QUI\CRUD\Factory
             $ids = false;
         }
 
-        if (!$groups) {
+        if (!$groups || !is_array($groups)) {
             $groups = array();
         }
 

@@ -178,4 +178,12 @@ class TaxGroup
         $Config->set('taxgroups', $this->getId(), $data['taxtypes']);
         $Config->save();
     }
+
+    /**
+     * Delete the tax group
+     */
+    public function delete()
+    {
+        $this->Handler->deleteTaxGroup($this->getId());
+    }
 }
