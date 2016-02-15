@@ -50,7 +50,7 @@ define('package/quiqqer/tax/bin/controls/Import', [
                 maxHeight: 460,
                 maxWidth : 690,
                 title    : 'Noch keine Steuersätze vorhanden',
-                icon     : 'icon-upload',
+                icon     : 'fa fa-upload',
                 autoclose: false
             });
 

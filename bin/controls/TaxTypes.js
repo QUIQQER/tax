@@ -95,14 +95,14 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 buttons    : [{
                     name     : 'add',
                     text     : QUILocale.get('quiqqer/system', 'add'),
-                    textimage: 'icon-plus fa fa-plus',
+                    textimage: 'fa fa-plus',
                     events   : {
                         click: this.createChild
                     }
                 }, {
                     name     : 'edit',
                     text     : QUILocale.get('quiqqer/system', 'edit'),
-                    textimage: 'icon-edit fa fa-edit',
+                    textimage: 'fa fa-edit',
                     disabled : true,
                     events   : {
                         click: this.updateChild
@@ -112,7 +112,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 }, {
                     name     : 'delete',
                     text     : QUILocale.get('quiqqer/system', 'delete'),
-                    textimage: 'icon-trash fa fa-trash',
+                    textimage: 'fa fa-trash',
                     disabled : true,
                     events   : {
                         click: function () {
@@ -248,8 +248,8 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 title      : QUILocale.get(lg, 'taxtype.window.create.title'),
                 text       : QUILocale.get(lg, 'taxtype.window.create.text'),
                 information: QUILocale.get(lg, 'taxtype.window.create.information'),
-                icon       : 'icon-plus fa fa-plus',
-                textimage  : 'icon-plus fa fa-plus',
+                icon       : 'fa fa-plus',
+                textimage  : 'fa fa-plus',
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,
@@ -370,7 +370,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
 
                         Sheet.addButton({
                             text     : QUILocale.get('quiqqer/system', 'save'),
-                            textimage: 'icon-save',
+                            textimage: 'fa fa-save',
                             events   : {
                                 onClick: function () {
                                     self.$Panel.Loader.show();
@@ -405,8 +405,8 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 information: QUILocale.get(lg, 'taxtype.window.delete.information', {
                     taxTypeId: taxTypeId
                 }),
-                icon       : 'icon-trash fa fa-trash',
-                textimage  : 'icon-trash fa fa-trash',
+                icon       : 'fa fa-trash',
+                textimage  : 'fa fa-trash',
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,

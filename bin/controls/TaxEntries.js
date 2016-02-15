@@ -148,14 +148,14 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 buttons          : [{
                     name     : 'add',
                     text     : QUILocale.get('quiqqer/system', 'add'),
-                    textimage: 'icon-plus fa fa-plus',
+                    textimage: 'fa fa-plus',
                     events   : {
                         click: this.createChild
                     }
                 }, {
                     name     : 'edit',
                     text     : QUILocale.get('quiqqer/system', 'edit'),
-                    textimage: 'icon-edit fa fa-edit',
+                    textimage: 'fa fa-edit',
                     disabled : true,
                     events   : {
                         click: function () {
@@ -169,7 +169,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 }, {
                     name     : 'delete',
                     text     : QUILocale.get('quiqqer/system', 'delete'),
-                    textimage: 'icon-trash fa fa-trash',
+                    textimage: 'fa fa-trash',
                     disabled : true,
                     events   : {
                         click: function () {
@@ -357,7 +357,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                         if (parseInt(entry.active) === 1) {
                             result[i].activeButton = {
-                                icon  : 'icon-ok',
+                                icon  : 'fa fa-check',
                                 taxId : entry.id,
                                 styles: {
                                     lineHeight: 16
@@ -368,7 +368,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             };
                         } else {
                             result[i].activeButton = {
-                                icon  : 'icon-remove',
+                                icon  : 'fa fa-remove',
                                 taxId : entry.id,
                                 styles: {
                                     lineHeight: 16
@@ -381,11 +381,11 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                         if (parseInt(entry.euvat)) {
                             result[i].euvatIcon = new Element('span', {
-                                'class': 'icon-ok'
+                                'class': 'fa fa-check'
                             });
                         } else {
                             result[i].euvatIcon = new Element('span', {
-                                'class': 'icon-remove'
+                                'class': 'fa fa-remove'
                             });
                         }
                     }
@@ -409,10 +409,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         toggleTaxEntryStatus: function (Btn) {
 
-            Btn.setAttribute(
-                'icon',
-                'icon-spinner icon-spin fa fa-spinner fa-spin'
-            );
+            Btn.setAttribute('icon', 'fa fa-spinner fa-spin');
 
             Handler.toggleStatus(
                 Btn.getAttribute('taxId')
@@ -427,10 +424,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @param {Object} Btn
          */
         activatetaxEntry: function (Btn) {
-            Btn.setAttribute(
-                'icon',
-                'icon-spinner icon-spin fa fa-spinner fa-spin'
-            );
+            Btn.setAttribute('icon', 'fa fa-spinner fa-spin');
 
             Handler.activate(
                 Btn.getAttribute('taxId')
@@ -445,10 +439,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @param {Object} Btn
          */
         deactivatetaxEntry: function (Btn) {
-            Btn.setAttribute(
-                'icon',
-                'icon-spinner icon-spin fa fa-spinner fa-spin'
-            );
+            Btn.setAttribute('icon', 'fa fa-spinner fa-spin');
 
             Handler.activate(
                 Btn.getAttribute('taxId')
@@ -464,11 +455,11 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         $setTaxEntryButtonStatus: function (Btn, status) {
             if (status) {
-                Btn.setAttribute('icon', 'icon-ok');
+                Btn.setAttribute('icon', 'fa fa-check');
                 return;
             }
 
-            Btn.setAttribute('icon', 'icon-remove');
+            Btn.setAttribute('icon', 'fa fa-remove');
         },
 
         /**
@@ -501,7 +492,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
             new QUIConfirm({
                 title    : title,
-                icon     : 'icon-plus fa fa-plus',
+                icon     : 'fa fa-plus',
                 maxHeight: 600,
                 maxWidth : 800,
                 autoclose: false,
@@ -645,8 +636,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 information: QUILocale.get(lg, 'tax.window.delete.information', {
                     id: taxEntryId
                 }),
-                icon       : 'icon-trash fa fa-trash',
-                textimage  : 'icon-trash fa fa-trash',
+                icon       : 'fa fa-trash',
+                textimage  : 'fa fa-trash',
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,
