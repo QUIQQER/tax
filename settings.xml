@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiqqer>
+    <settings>
+
+        <config>
+            <section name="shop">
+                <conf name="vat">
+                    <type><![CDATA[string]]></type>
+                </conf>
+                <conf name="isNetto">
+                    <type><![CDATA[bool]]></type>
+                </conf>
+                <conf name="area">
+                    <type><![CDATA[integer]]></type>
+                </conf>
+            </section>
+        </config>
+
+        <window name="ERP">
+            <title>
+                <locale group="quiqqer/tax" var="window.erp.title"/>
+            </title>
+            <params>
+                <icon>fa fa-sun-o</icon>
+            </params>
+
+            <categories>
+                <category name="vat" index="6">
+                    <text>
+                        <locale group="quiqqer/tax" var="menu.erp.tax.title"/>
+                    </text>
+                    <icon>fa fa-percent</icon>
+
+                    <settings title="vat_settings" name="vat_settings">
+                        <input conf="shop.vat" type="string"
+                               data-qui="package/quiqqer/products/bin/controls/fields/types/Vat"
+                        >
+                            <text>
+                                <locale group="quiqqer/tax" var="settings.window.vat.shopVat"/>
+                            </text>
+                        </input>
+
+                        <select conf="shop.isNetto">
+                            <text>
+                                <locale group="quiqqer/tax" var="settings.window.vat.isNetto"/>
+                            </text>
+                            <option value="1">B2B</option>
+                            <option value="0">B2C</option>
+                        </select>
+
+                        <input conf="shop.area" type="string"
+                               data-qui="package/quiqqer/areas/bin/controls/Select"
+                               data-qui-options-max="1"
+                        >
+                            <text>
+                                <locale group="quiqqer/tax" var="settings.window.vat.area"/>
+                            </text>
+                        </input>
+                    </settings>
+
+                </category>
+            </categories>
+
+        </window>
+
+    </settings>
+</quiqqer>

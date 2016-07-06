@@ -7,8 +7,8 @@
             <en><![CDATA[Shop]]></en>
         </locale>
         <locale name="menu.erp.tax.title">
-            <de><![CDATA[Steuergruppen]]></de>
-            <en><![CDATA[Tax groups]]></en>
+            <de><![CDATA[Steuern]]></de>
+            <en><![CDATA[Tax]]></en>
         </locale>
 
         <locale name="menu.erp.tax.panel.title">
@@ -40,6 +40,32 @@
             <en><![CDATA[
                 The Area <b>#[area] [title]</b> is already in use. Please select a different area.
             ]]></en>
+        </locale>
+
+        <locale name="menu.erp.products.vat.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="menu.erp.vat.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="window.erp.title">
+            <de><![CDATA[Shop]]></de>
+            <en><![CDATA[Shop]]></en>
+        </locale>
+
+        <locale name="settings.window.vat.shopVat">
+            <de><![CDATA[Standard Steuersatz]]></de>
+            <en><![CDATA[Standard VAT]]></en>
+        </locale>
+        <locale name="settings.window.vat.isNetto">
+            <de><![CDATA[Anzeige der Mehrwertsteuer]]></de>
+            <en><![CDATA[Display type of the VAT]]></en>
+        </locale>
+        <locale name="settings.window.vat.area">
+            <de><![CDATA[Standard Zone]]></de>
+            <en><![CDATA[Standard area]]></en>
         </locale>
     </groups>
 

@@ -6,7 +6,7 @@
 namespace QUI\ERP\Tax;
 
 use QUI;
-use QUI\Rights\Permission;
+use QUI\Permissions\Permission;
 
 /**
  * Class Handler
@@ -121,7 +121,7 @@ class Handler extends QUI\CRUD\Factory
                 'quiqqer/tax',
                 'taxGroup.' . $newId . '.title',
                 array(
-                    $current => '',
+                    $current   => '',
                     'datatype' => 'php,js'
                 )
             );
@@ -261,7 +261,7 @@ class Handler extends QUI\CRUD\Factory
         // create locale
         try {
             QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], array(
-                $current => '',
+                $current   => '',
                 'datatype' => 'php,js'
             ));
         } catch (QUI\Exception $Exception) {
