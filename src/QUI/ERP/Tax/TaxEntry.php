@@ -6,7 +6,7 @@
 namespace QUI\ERP\Tax;
 
 use QUI;
-use QUI\Rights\Permission;
+use QUI\Permissions\Permission;
 
 /**
  * Class Tax
@@ -82,7 +82,7 @@ class TaxEntry extends QUI\CRUD\Child
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',
                     array(
-                        'area' => $this->getArea()->getId(),
+                        'area'  => $this->getArea()->getId(),
                         'title' => $this->getArea()->getTitle(),
                     )
                 ));
