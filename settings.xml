@@ -10,6 +10,10 @@
                 <conf name="isNetto">
                     <type><![CDATA[bool]]></type>
                 </conf>
+                <conf name="companyForceBruttoPrice">
+                    <type><![CDATA[bool]]></type>
+                    <defaultvalue>0</defaultvalue>
+                </conf>
                 <conf name="area">
                     <type><![CDATA[integer]]></type>
                 </conf>
@@ -37,6 +41,12 @@
                         >
                             <text>
                                 <locale group="quiqqer/tax" var="settings.window.vat.shopVat"/>
+                            </text>
+                        </input>
+
+                        <input conf="shop.companyForceBruttoPrice" type="checkbox">
+                            <text>
+                                <locale group="quiqqer/tax" var="settings.window.vat.companyForceBruttoPrice"/>
                             </text>
                         </input>
 

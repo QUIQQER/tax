@@ -67,6 +67,10 @@
             <de><![CDATA[Standard Zone]]></de>
             <en><![CDATA[Standard area]]></en>
         </locale>
+        <locale name="settings.window.vat.companyForceBruttoPrice">
+            <de><![CDATA[Brutto Preis auch für Firmenkunden]]></de>
+            <en><![CDATA[Show brutto price for companies]]></en>
+        </locale>
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">
