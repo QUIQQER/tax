@@ -117,6 +117,16 @@ class TaxEntry extends QUI\CRUD\Child
     }
 
     /**
+     * Return the vat value
+     *
+     * @return integer
+     */
+    public function getValue()
+    {
+        return (int)$this->getAttribute('vat');
+    }
+
+    /**
      * Is the tax active?
      *
      * @return boolean
