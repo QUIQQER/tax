@@ -71,6 +71,27 @@
             <de><![CDATA[Brutto Preis auch für Firmenkunden]]></de>
             <en><![CDATA[Show brutto price for companies]]></en>
         </locale>
+        <locale name="settings.window.vat.validateVatId">
+            <de><![CDATA[Überprüfung der USt-IdNr bei ec.europa.eu]]></de>
+            <en><![CDATA[Validate the Vat-Id by ec.europa.eu]]></en>
+        </locale>
+
+        <locale name="message.vat.text.netto.EUVAT">
+            <de><![CDATA[zzgl. [vat]% MwSt. *]]></de>
+            <en><![CDATA[plus [vat]% VAT *]]></en>
+        </locale>
+        <locale name="message.vat.text.netto">
+            <de><![CDATA[zzgl. [vat]% MwSt.]]></de>
+            <en><![CDATA[plus [vat]% VAT]]></en>
+        </locale>
+        <locale name="message.vat.text.brutto.EUVAT">
+            <de><![CDATA[inkl. [vat]% MwSt. *]]></de>
+            <en><![CDATA[incl. [vat]% VAT *]]></en>
+        </locale>
+        <locale name="message.vat.text.brutto">
+            <de><![CDATA[inkl. [vat]% MwSt.]]></de>
+            <en><![CDATA[incl. [vat]% VAT]]></en>
+        </locale>
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">

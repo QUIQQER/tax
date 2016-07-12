@@ -8,7 +8,6 @@ namespace QUI\ERP\Tax;
 use QUI;
 use QUI\ERP\Areas\Area;
 use QUI\Interfaces\Users\User;
-use QUI\ERP\Products\Utils\User as ProductUserUtils;
 
 /**
  * Class Utils
@@ -103,48 +102,6 @@ class Utils
         }
 
         return self::$userTaxes[$uid];
-    }
-
-    /**
-     * Return the tax message for an user
-     *
-     * @param User $User
-     * @return string
-     */
-    public static function getTaxTextByUser(User $User)
-    {
-        $Tax = self::getTaxByUser($User);
-        $vat = $Tax->getValue() . '%';
-
-        if (ProductUserUtils::isNettoUser($User)) {
-            if (self::isUserEuVatUser($User)) {
-                return $User->getLocale()->get(
-                    'quiqqer/tax',
-                    'message.vat.text.netto.EUVAT',
-                    array('vat' => $vat)
-                );
-            }
-
-            return $User->getLocale()->get(
-                'quiqqer/tax',
-                'message.vat.text.netto',
-                array('vat' => $vat)
-            );
-        }
-
-        if (self::isUserEuVatUser($User)) {
-            return $User->getLocale()->get(
-                'quiqqer/tax',
-                'message.vat.text.brutto.EUVAT',
-                array('vat' => $vat)
-            );
-        }
-
-        return $User->getLocale()->get(
-            'quiqqer/tax',
-            'message.vat.text.brutto',
-            array('vat' => $vat)
-        );
     }
 
     /**
@@ -265,5 +222,85 @@ class Utils
         }
 
         return $result[0];
+    }
+
+    /**
+     * Cleanup a VAT-ID, no validation
+     *
+     * @param $vatId
+     * @return string
+     */
+    public static function cleanupVatId($vatId)
+    {
+        return str_replace(array(' ', '.', '-', ',', ', '), '', trim($vatId));
+    }
+
+    /**
+     * Validate a VAT-ID via http://ec.europa.eu/
+     *
+     * @param string $vatId
+     * @return string
+     * @throws QUI\ERP\Tax\Exception
+     */
+    public static function validateVatId($vatId)
+    {
+        // UST-ID oder Vat-Id
+        $first  = mb_substr($vatId, 0, 1);
+        $second = mb_substr($vatId, 1, 1);
+
+        if (!ctype_alpha($first) || !ctype_alpha($second)) {
+            throw new QUI\ERP\Tax\Exception();
+        }
+
+        $vatId = self::cleanupVatId($vatId);
+
+        $cc = substr($vatId, 0, 2);
+        $vn = substr($vatId, 2);
+
+        $Client = new \SoapClient(
+            "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
+        );
+
+        if (!$Client) {
+            throw new QUI\ERP\Tax\Exception(
+                array(
+                    'quiqqer/tax',
+                    'exception.vatid.validate.no.client',
+                    array('vatid' => $vatId)
+                ),
+                503
+            );
+        }
+
+        try {
+            $Response = $Client->checkVat(array(
+                'countryCode' => $cc,
+                'vatNumber'   => $vn
+            ));
+
+            if ($Response->valid == true) {
+                return $vatId;
+            }
+
+            // USt-ID ist ungültig
+            throw new QUI\ERP\Tax\Exception(
+                array(
+                    'quiqqer/tax',
+                    'exception.invalid.vatid',
+                    array('vatid' => $vatId)
+                ),
+                403
+            );
+
+        } catch (\SoapFault $Exception) {
+            throw new QUI\ERP\Tax\Exception(
+                array(
+                    'quiqqer/tax',
+                    'exception.vatid.validate.no.connection',
+                    array('vatid' => $vatId)
+                ),
+                503
+            );
+        }
     }
 }
