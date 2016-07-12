@@ -244,15 +244,19 @@ class Utils
      */
     public static function validateVatId($vatId)
     {
+        $vatId = self::cleanupVatId($vatId);
+
         // UST-ID oder Vat-Id
         $first  = mb_substr($vatId, 0, 1);
         $second = mb_substr($vatId, 1, 1);
 
         if (!ctype_alpha($first) || !ctype_alpha($second)) {
-            throw new QUI\ERP\Tax\Exception();
+            throw new QUI\ERP\Tax\Exception(array(
+                'quiqqer/tax',
+                'exception.invalid.vatid',
+                array('vatid' => $vatId)
+            ));
         }
-
-        $vatId = self::cleanupVatId($vatId);
 
         $cc = substr($vatId, 0, 2);
         $vn = substr($vatId, 2);
@@ -293,14 +297,30 @@ class Utils
             );
 
         } catch (\SoapFault $Exception) {
-            throw new QUI\ERP\Tax\Exception(
-                array(
-                    'quiqqer/tax',
-                    'exception.vatid.validate.no.connection',
-                    array('vatid' => $vatId)
-                ),
-                503
-            );
+            switch ($Exception->getMessage()) {
+                case 'INVALID_INPUT':
+                    throw new QUI\ERP\Tax\Exception(
+                        array(
+                            'quiqqer/tax',
+                            'exception.invalid.vatid',
+                            array('vatid' => $vatId)
+                        ),
+                        403
+                    );
+
+                default:
+                case 'TIMEOUT':
+                case 'SERVICE_UNAVAILABLE':
+                case 'MS_UNAVAILABLE':
+                    throw new QUI\ERP\Tax\Exception(
+                        array(
+                            'quiqqer/tax',
+                            'exception.vatid.validate.no.connection',
+                            array('vatid' => $vatId)
+                        ),
+                        503
+                    );
+            }
         }
     }
 }

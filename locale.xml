@@ -269,7 +269,6 @@
             <en><![CDATA[Translation variables being published...]]></en>
         </locale>
 
-
         <locale name="taxgroup.edit.title">
             <de><![CDATA[Steuertyp #[taxGroupdId]]]></de>
             <en><![CDATA[Tax type #[taxGroupdId]]]></en>
@@ -288,6 +287,27 @@
         <locale name="tax.import.euDigital.type.mwstreduce.title">
             <de><![CDATA[Mehrwertsteuer verminderte]]></de>
             <en><![CDATA[VAT reduced]]></en>
+        </locale>
+        <locale name="exception.invalid.vatid">
+            <de><![CDATA[Die Umsatzsteuer-ID [vatid] ist ungültig.]]></de>
+            <en><![CDATA[The VAT-ID [vatid] is invalid]]></en>
+        </locale>
+        <locale name="exception.vatid.validate.no.client">
+            <de><![CDATA[
+                Die Umsatzsteuer-ID konnte nicht geprüft werden. Es ist ein Fehler aufgetreten.
+                ]]></de>
+            <en><![CDATA[
+                The VAT ID could not be checked. An error has occurred.
+            ]]></en>
+        </locale>
+        <locale name="exception.vatid.validate.no.connection">
+            <de><![CDATA[
+                Die Umsatzsteuer-ID konnte nicht geprüft werden.
+                Der Service ist zur Zeit nicht verfügbar.
+            ]]></de>
+            <en><![CDATA[
+                The VAT ID could not be checked. The service is currently unavailable.
+            ]]></en>
         </locale>
     </groups>
 
