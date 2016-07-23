@@ -40,7 +40,7 @@ class TaxType
         $Handler = new QUI\ERP\Tax\Handler();
         $Config  = $Handler->getConfig();
 
-        if (!$Config->get('taxtypes', $taxTypeId)) {
+        if (!$Config->getValue('taxtypes', $taxTypeId)) {
             throw new QUI\Exception(array(
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
@@ -106,9 +106,9 @@ class TaxType
         }
 
         return array(
-            'id' => $this->getId(),
-            'title' => $this->getTitle(),
-            'groupId' => $groupId,
+            'id'         => $this->getId(),
+            'title'      => $this->getTitle(),
+            'groupId'    => $groupId,
             'groupTitle' => $groupTitle
         );
     }

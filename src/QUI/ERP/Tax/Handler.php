@@ -361,7 +361,7 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return tax config
      *
-     * @return bool|QUI\Config
+     * @return QUI\Config
      */
     public function getConfig()
     {

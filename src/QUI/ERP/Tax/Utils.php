@@ -64,7 +64,7 @@ class Utils
             $Country = $User->getCountry();
 
             if (!$Country) {
-                throw new QUI\Exception('County not found');
+                throw new QUI\Exception('Country not found');
             }
 
             $Area = QUI\ERP\Areas\Utils::getAreaByCountry($Country);
@@ -77,7 +77,8 @@ class Utils
                 $Area   = $Areas->getChild($areaId);
             }
 
-            $TaxEntry = self::getTaxTypeByArea($Area);
+            $TaxType  = self::getTaxTypeByArea($Area);
+            $TaxEntry = self::getTaxEntry($TaxType, $Area);
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
@@ -119,7 +120,7 @@ class Utils
      * Return the tax by an area
      *
      * @param Area $Area
-     * @return QUI\ERP\Tax\TaxEntry
+     * @return QUI\ERP\Tax\TaxType
      * @throws QUI\Exception
      */
     public static function getTaxTypeByArea(Area $Area)
@@ -153,7 +154,7 @@ class Utils
         foreach ($taxtypes as $TaxType) {
             foreach ($result as $TaxEntry) {
                 if ($TaxEntry->getAttribute('taxTypeId') == $TaxType->getId()) {
-                    return $TaxEntry;
+                    return $TaxType;
                 }
             }
         }
