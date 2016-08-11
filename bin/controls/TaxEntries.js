@@ -326,6 +326,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         }
 
                         self.$current = list[0].id;
+                        self.$Select.setValue(self.$current);
 
                         return self.loadTaxByTaxType(list[0].id);
 
