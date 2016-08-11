@@ -316,6 +316,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             return Promise.resolve();
                         }
 
+                        self.$Select.clear();
+
                         for (var i = 0, len = list.length; i < len; i++) {
                             self.$Select.appendChild(
                                 list[i].title,

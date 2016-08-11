@@ -1,4 +1,5 @@
 /**
+ * Panel für die Steuerverwaltung
  *
  * @package package/quiqqer/
  * @author www.pcsg.de (Henning Leutz)
