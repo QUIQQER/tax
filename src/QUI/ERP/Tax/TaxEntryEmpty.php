@@ -6,7 +6,6 @@
 namespace QUI\ERP\Tax;
 
 use QUI;
-use QUI\Permissions\Permission;
 
 /**
  * Class Tax
@@ -21,7 +20,6 @@ class TaxEntryEmpty extends QUI\QDOM
      */
     public function __construct()
     {
-
     }
 
     /**

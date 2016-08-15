@@ -89,7 +89,6 @@ class Utils
             } else {
                 self::$userTaxes[$uid] = $TaxEntry;
             }
-
         } catch (QUI\Exception $Exception) {
             $Country = $User->getCountry();
             $Area    = QUI\ERP\Areas\Utils::getAreaByCountry($Country);
@@ -296,7 +295,6 @@ class Utils
                 ),
                 403
             );
-
         } catch (\SoapFault $Exception) {
             switch ($Exception->getMessage()) {
                 case 'INVALID_INPUT':
@@ -323,5 +321,39 @@ class Utils
                     );
             }
         }
+    }
+
+    /**
+     * Return the highest tax
+     *
+     * @return integer
+     */
+    public static function getMaxTax()
+    {
+        $result = QUI::getDataBase()->fetch(array(
+            'select' => 'vat',
+            'from'   => QUI::getDBTableName('tax'),
+            'limit'  => 1,
+            'order'  => 'vat DESC'
+        ));
+
+        return isset($result[0]) ? (int)$result[0]['vat'] : 0;
+    }
+
+    /**
+     * Return the least tax
+     *
+     * @return integer
+     */
+    public static function getMinTax()
+    {
+        $result = QUI::getDataBase()->fetch(array(
+            'select' => 'vat',
+            'from'   => QUI::getDBTableName('tax'),
+            'limit'  => 1,
+            'order'  => 'vat ASC'
+        ));
+
+        return isset($result[0]) ? (int)$result[0]['vat'] : 0;
     }
 }

@@ -30,7 +30,7 @@ class Import
 
             if ($title->item(0)) {
                 $result[] = array(
-                    'file' => $xmlFile,
+                    'file'   => $xmlFile,
                     'locale' => QUI\Utils\DOM::getTextFromNode($title->item(0), false)
                 );
             }
@@ -143,7 +143,6 @@ class Import
                         $TaxEntry->setAttribute('vat', $Tax->getAttribute('vat'));
                         $TaxEntry->setAttribute('euvat', (int)$Tax->getAttribute('euvat'));
                         $TaxEntry->update();
-
                     } catch (QUI\Exception $Exception) {
                         QUI\System\Log::addError($Exception->getMessage());
 
@@ -178,7 +177,7 @@ class Import
 
                     return array(
                         'group' => $LocaleItem->getAttribute('group'),
-                        'var' => $LocaleItem->getAttribute('var')
+                        'var'   => $LocaleItem->getAttribute('var')
                     );
                 }
 

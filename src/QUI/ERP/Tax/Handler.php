@@ -43,7 +43,6 @@ class Handler extends QUI\CRUD\Factory
 
         // create new translation var for the tax
         $this->Events->addEvent('onCreateEnd', function ($NewArea) {
-
         });
     }
 
