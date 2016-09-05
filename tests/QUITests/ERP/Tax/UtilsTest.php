@@ -11,7 +11,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMaxTax()
     {
-        $max = QUI\ERP\Tax\Utils();
+        $max = QUI\ERP\Tax\Utils::getMaxTax();
         $this->assertGreaterThan(0, $max);
     }
 

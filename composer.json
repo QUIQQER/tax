@@ -19,7 +19,8 @@
     "quiqqer/quiqqer": "*",
     "quiqqer/countries": "*",
     "quiqqer/translator": "*",
-    "quiqqer/areas": "*"
+    "quiqqer/areas": "*",
+    "quiqqer/utils": ">=1.4|dev-master|dev-dev"
   },
   "autoload": {
     "psr-4": {

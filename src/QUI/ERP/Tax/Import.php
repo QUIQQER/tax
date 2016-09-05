@@ -6,7 +6,7 @@
 namespace QUI\ERP\Tax;
 
 use QUI;
-use QUI\Utils\XML;
+use QUI\Utils\Text\XML;
 
 /**
  * Class Import
@@ -24,7 +24,7 @@ class Import
         $result   = array();
 
         foreach ($xmlFiles as $xmlFile) {
-            $Document = QUI\Utils\XML::getDomFromXml($dir . $xmlFile);
+            $Document = XML::getDomFromXml($dir . $xmlFile);
             $Path     = new \DOMXPath($Document);
             $title    = $Path->query("//quiqqer/title");
 
@@ -242,7 +242,9 @@ class Import
         foreach ($areas as $area) {
             foreach ($countries as $country) {
                 if (strpos($area['countries'], $country) !== false) {
-                    return $AreaHandler->getChild((int)$area['id']);
+                    /* @var $Area QUI\ERP\Areas\Area */
+                    $Area = $AreaHandler->getChild((int)$area['id']);
+                    return $Area;
                 }
             }
         }
