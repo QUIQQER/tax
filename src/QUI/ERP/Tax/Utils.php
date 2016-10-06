@@ -31,7 +31,6 @@ class Utils
         $Package     = QUI::getPackage('quiqqer/tax');
         $Config      = $Package->getConfig();
         $standardTax = $Config->getValue('shop', 'vat');
-        $Handler     = new Handler();
 
         if (!$standardTax) {
             return new TaxEntryEmpty();
@@ -43,7 +42,7 @@ class Utils
             return new TaxEntryEmpty();
         }
 
-        return $Handler->getTaxType($standardTax[1]);
+        return Handler::getInstance()->getTaxType($standardTax[1]);
     }
 
     /**
