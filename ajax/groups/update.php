@@ -9,10 +9,13 @@
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_update',
-    function () {
-        $Handler = new QUI\ERP\Tax\Handler();
+    function ($taxGroupId, $data) {
+        $Handler  = new QUI\ERP\Tax\Handler();
+        $TaxGroup = $Handler->getTaxGroup($taxGroupId);
 
+        $TaxGroup->setTaxTypes(json_decode($data, true));
+        $TaxGroup->update();
     },
-    array(),
+    array('taxGroupId', 'data'),
     'Permission::checkAdminUser'
 );

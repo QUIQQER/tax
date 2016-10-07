@@ -17,7 +17,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
     'package/quiqqer/tax/bin/classes/TaxGroups',
     'package/quiqqer/tax/bin/classes/TaxTypes',
     'Locale',
-    'package/quiqqer/translator/bin/controls/VariableTranslation',
+    'package/quiqqer/translator/bin/controls/Update',
 
     'text!package/quiqqer/tax/bin/controls/TaxTypesEdit.html'
 
@@ -30,7 +30,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
 
     return new Class({
         Extends: QUIControl,
-        Type   : 'package/quiqqer/tax/bin/controls/TaxTypesEdit',
+        Type: 'package/quiqqer/tax/bin/controls/TaxTypesEdit',
 
         Binds: [
             '$onInject'
@@ -63,15 +63,15 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
          * event : on inject
          */
         $onInject: function () {
-            var Elm    = this.getElm(),
-                id     = this.getAttribute('taxTypeId'),
+            var Elm = this.getElm(),
+                id = this.getAttribute('taxTypeId'),
                 Groups = Elm.getElement(
                     '.quiqqer-taxtype-setting-table-group'
                 );
 
             new Translation({
                 'group': 'quiqqer/tax',
-                'var'  : 'taxType.' + id + '.title'
+                'var': 'taxType.' + id + '.title'
             }).inject(
                 Elm.getElement('.quiqqer-taxtype-setting-table-title')
             );
@@ -84,7 +84,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
                 TypesHandler.get(id),
                 GroupHandler.getList()
             ]).then(function (data) {
-                var type   = data[0],
+                var type = data[0],
                     groups = data[1];
 
                 for (var i = 0, len = groups.length; i < len; i++) {
@@ -94,8 +94,8 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
                     );
                 }
 
-                if (type.group !== '') {
-                    this.$Select.setValue(type.group);
+                if (type.groupId !== '') {
+                    this.$Select.setValue(type.groupId);
                 }
 
                 this.fireEvent('loaded');
@@ -109,12 +109,9 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
          * @returns {Promise}
          */
         update: function () {
-            return TypesHandler.updateChild(
-                this.getAttribute('taxTypeId'),
-                {
-                    group: this.$Select.getValue()
-                }
-            );
+            return TypesHandler.updateChild(this.getAttribute('taxTypeId'), {
+                group: this.$Select.getValue()
+            });
         }
     });
 });

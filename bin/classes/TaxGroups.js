@@ -1,6 +1,5 @@
 /**
- *
- * @package package/quiqqer/
+ * @module package/quiqqer/tax/bin/classes/TaxGroups
  * @author www.pcsg.de (Henning Leutz)
  *
  * @require qui/QUI
@@ -18,7 +17,7 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
 
     return new Class({
         Extends: QDOM,
-        Type   : 'package/quiqqer/tax/bin/classes/TaxGroup',
+        Type: 'package/quiqqer/tax/bin/classes/TaxGroup',
 
         initialize: function (options) {
             this.parent(options);
@@ -31,13 +30,11 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          */
         getList: function (ids) {
             return new Promise(function (resolve, reject) {
-                QUIAjax.get(
-                    'package_quiqqer_tax_ajax_groups_getList',
-                    resolve, {
-                        'package': 'quiqqer/tax',
-                        onError  : reject,
-                        ids      : JSON.decode(ids || [])
-                    });
+                QUIAjax.get('package_quiqqer_tax_ajax_groups_getList', resolve, {
+                    'package': 'quiqqer/tax',
+                    onError: reject,
+                    ids: JSON.decode(ids || [])
+                });
             });
         },
 
@@ -49,13 +46,11 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          */
         get: function (taxGroupId) {
             return new Promise(function (resolve, reject) {
-                QUIAjax.get(
-                    'package_quiqqer_tax_ajax_groups_get',
-                    resolve, {
-                        'package' : 'quiqqer/tax',
-                        onError   : reject,
-                        taxGroupId: taxGroupId
-                    });
+                QUIAjax.get('package_quiqqer_tax_ajax_groups_get', resolve, {
+                    'package': 'quiqqer/tax',
+                    onError: reject,
+                    taxGroupId: taxGroupId
+                });
             });
         },
 
@@ -66,12 +61,10 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          */
         createChild: function () {
             return new Promise(function (resolve, reject) {
-                QUIAjax.post(
-                    'package_quiqqer_tax_ajax_groups_create',
-                    resolve, {
-                        'package': 'quiqqer/tax',
-                        onError  : reject
-                    });
+                QUIAjax.post('package_quiqqer_tax_ajax_groups_create', resolve, {
+                    'package': 'quiqqer/tax',
+                    onError: reject
+                });
             });
         },
 
@@ -85,14 +78,12 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          */
         updateChild: function (taxGroupId, data) {
             return new Promise(function (resolve, reject) {
-                QUIAjax.post(
-                    'package_quiqqer_tax_ajax_groups_create',
-                    resolve, {
-                        'package' : 'quiqqer/tax',
-                        taxGroupId: taxGroupId,
-                        data      : JSON.encode(data),
-                        onError   : reject
-                    });
+                QUIAjax.post('package_quiqqer_tax_ajax_groups_update', resolve, {
+                    'package': 'quiqqer/tax',
+                    taxGroupId: taxGroupId,
+                    data: JSON.encode(data),
+                    onError: reject
+                });
             });
         },
 
@@ -103,13 +94,27 @@ define('package/quiqqer/tax/bin/classes/TaxGroups', [
          */
         deleteChild: function (taxGroupId) {
             return new Promise(function (resolve, reject) {
-                QUIAjax.post(
-                    'package_quiqqer_tax_ajax_groups_delete',
-                    resolve, {
-                        'package' : 'quiqqer/tax',
-                        taxGroupId: taxGroupId,
-                        onError   : reject
-                    });
+                QUIAjax.post('package_quiqqer_tax_ajax_groups_delete', resolve, {
+                    'package': 'quiqqer/tax',
+                    taxGroupId: taxGroupId,
+                    onError: reject
+                });
+            });
+        },
+
+        /**
+         * Return all tax groups
+         *
+         * @param {Number} taxGroupId
+         * @returns {Promise}
+         */
+        getTaxTypesFromGroup: function (taxGroupId) {
+            return new Promise(function (resolve, reject) {
+                QUIAjax.get('package_quiqqer_tax_ajax_groups_getTaxTypes', resolve, {
+                    'package': 'quiqqer/tax',
+                    onError: reject,
+                    taxGroupdId: taxGroupId
+                });
             });
         }
     });

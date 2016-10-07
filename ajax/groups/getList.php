@@ -18,16 +18,16 @@ QUI::$Ajax->registerFunction(
 
         /* @var $TaxGroup \QUI\ERP\Tax\TaxGroup */
         foreach ($groups as $TaxGroup) {
-            $attributes    = $TaxGroup->toArray();
-            $taxTypes      = $TaxGroup->getTaxTypes();
-            $taxTypyeNames = array();
+            $attributes   = $TaxGroup->toArray();
+            $taxTypes     = $TaxGroup->getTaxTypes();
+            $taxTypeNames = array();
 
             /* @var $TaxType \QUI\ERP\Tax\TaxType */
             foreach ($taxTypes as $TaxType) {
-                $taxTypyeNames[] = $TaxType->getTitle();
+                $taxTypeNames[] = $TaxType->getTitle();
             }
 
-            $attributes['taxTypeNames'] = implode(', ', $taxTypyeNames);
+            $attributes['taxTypeNames'] = implode(', ', $taxTypeNames);
 
             $result[] = $attributes;
         }

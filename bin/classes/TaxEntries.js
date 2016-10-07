@@ -1,7 +1,7 @@
 /**
  * Tax management
  *
- * @package package/quiqqer/tax/bin/classes/Tax
+ * @package package/quiqqer/tax/bin/classes/TaxEntries
  * @author www.pcsg.de (Henning Leutz)
  *
  * @require qui/QUI
@@ -19,7 +19,7 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
 
     return new Class({
         Extends: QDOM,
-        Type   : 'package/quiqqer/tax/bin/classes/TaxEntries',
+        Type: 'package/quiqqer/tax/bin/classes/TaxEntries',
 
         initialize: function (options) {
             this.parent(options);
@@ -36,7 +36,7 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_getList',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        onError  : reject
+                        onError: reject
                     });
             });
         },
@@ -53,8 +53,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_get',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        onError  : reject,
-                        taxId    : taxId
+                        onError: reject,
+                        taxId: taxId
                     });
             });
         },
@@ -70,7 +70,7 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_getTaxByType',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        onError  : reject,
+                        onError: reject,
                         taxTypeId: taxTypeId
                     });
             });
@@ -94,9 +94,9 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_create',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        onError  : reject,
+                        onError: reject,
                         taxTypeId: taxTypeId,
-                        areaId   : areaId
+                        areaId: areaId
                     });
             });
         },
@@ -115,9 +115,9 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_update',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        taxId    : taxId,
-                        data     : JSON.encode(data),
-                        onError  : reject
+                        taxId: taxId,
+                        data: JSON.encode(data),
+                        onError: reject
                     });
             });
         },
@@ -133,8 +133,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_delete',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        taxId    : taxId,
-                        onError  : reject
+                        taxId: taxId,
+                        onError: reject
                     });
             });
         },
@@ -151,8 +151,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_toggle',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        taxId    : taxId,
-                        onError  : reject
+                        taxId: taxId,
+                        onError: reject
                     });
             });
         },
@@ -169,8 +169,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_activate',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        taxId    : taxId,
-                        onError  : reject
+                        taxId: taxId,
+                        onError: reject
                     });
             });
         },
@@ -187,8 +187,8 @@ define('package/quiqqer/tax/bin/classes/TaxEntries', [
                     'package_quiqqer_tax_ajax_entries_deactivate',
                     resolve, {
                         'package': 'quiqqer/tax',
-                        taxId    : taxId,
-                        onError  : reject
+                        taxId: taxId,
+                        onError: reject
                     });
             });
         }

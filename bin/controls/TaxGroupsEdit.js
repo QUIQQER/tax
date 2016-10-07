@@ -17,7 +17,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
     'Ajax',
     'controls/grid/Grid',
     'package/quiqqer/tax/bin/classes/TaxGroups',
-    'package/quiqqer/translator/bin/controls/VariableTranslation',
+    'package/quiqqer/translator/bin/controls/Update',
 
     'text!package/quiqqer/tax/bin/controls/TaxGroupsEdit.html',
     'css!package/quiqqer/tax/bin/controls/TaxGroupsEdit.css'
@@ -28,7 +28,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
 
     return new Class({
         Extends: QUIControl,
-        Type   : 'package/quiqqer/tax/bin/controls/TaxGroupsEdit',
+        Type: 'package/quiqqer/tax/bin/controls/TaxGroupsEdit',
 
         Binds: [
             '$onInject'
@@ -41,7 +41,8 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
         initialize: function (options) {
             this.parent(options);
 
-            this.$Grid    = null;
+            this.$Grid = null;
+            this.$Translator = null;
             this.$Handler = new Handler();
 
 
@@ -77,9 +78,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
         $onInject: function () {
             var self = this;
 
-            new Translation({
+            this.$Translator = new Translation({
                 'group': 'quiqqer/tax',
-                'var'  : 'taxGroup.' + this.getAttribute('taxGroupId') + '.title'
+                'var': 'taxGroup.' + this.getAttribute('taxGroupId') + '.title'
             }).inject(
                 this.getElm().getElement('.quiqqer-taxgroup-setting-table-title')
             );
@@ -87,9 +88,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
 
             var Container = new Element('div', {
                 styles: {
-                    'float' : 'left',
+                    'float': 'left',
                     overflow: 'hidden',
-                    width   : '100%'
+                    width: '100%'
                 }
             }).inject(
                 this.getElm().getElement(
@@ -101,27 +102,34 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             var GridContainer = new Element('div').inject(Container);
 
             this.$Grid = new Grid(GridContainer, {
-                width      : 100,
+                width: 100,
+                serverSort: true,
+                sortHeader: false,
                 columnModel: [{
-                    header   : QUILocale.get('quiqqer/tax', ''),
-                    dataIndex: 'type',
-                    dataType : 'string',
-                    width    : 600
+                    header: QUILocale.get('quiqqer/system', 'id'),
+                    dataIndex: 'id',
+                    dataType: 'numeric',
+                    width: 60
+                }, {
+                    header: QUILocale.get('quiqqer/tax', 'panel.category.taxtypes.text'),
+                    dataIndex: 'title',
+                    dataType: 'string',
+                    width: 600
                 }],
-                buttons    : [{
-                    name  : 'up',
-                    text  : QUILocale.get('quiqqer/system', 'up'),
+                buttons: [{
+                    name: 'up',
+                    text: QUILocale.get('quiqqer/system', 'up'),
                     events: {
                         onClick: function () {
-                            self.$Grid.up();
+                            self.$Grid.moveup();
                         }
                     }
                 }, {
-                    name  : 'down',
-                    text  : QUILocale.get('quiqqer/system', 'down'),
+                    name: 'down',
+                    text: QUILocale.get('quiqqer/system', 'down'),
                     events: {
                         onClick: function () {
-                            self.$Grid.down();
+                            self.$Grid.movedown();
                         }
                     }
                 }]
@@ -131,29 +139,17 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             this.$Grid.setWidth(this.getElm().getSize().x - 20);
             this.$Grid.resize();
 
-            this.$Handler.get(
-                this.getAttribute('taxGroupId')
-            ).then(function (data) {
-                if (data.taxtypes === '') {
-                    return;
-                }
+            this.$Handler.getTaxTypesFromGroup(this.getAttribute('taxGroupId')).then(function (result) {
 
-                var types = data.taxtypes.split(',');
-
-                return new Promise(function (resolve, reject) {
-                    require([
-                        'package/quiqqer/tax/bin/classes/TaxTypes'
-                    ], function (TaxTypes) {
-                        new TaxTypes().getList(types).then(function () {
-
-                            // @todo insert list to grids
-
-                            resolve();
-                        }, reject);
-                    });
+                self.$Grid.setData({
+                    data: result
                 });
 
             }).then(function () {
+                self.fireEvent('loaded');
+
+            }).catch(function (error) {
+                console.error(error);
                 self.fireEvent('loaded');
             });
         },
@@ -164,9 +160,16 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
          * @returns {Promise}
          */
         update: function () {
-            return new Promise(function (resolve, reject) {
-                resolve();
+            var taxtTypeIds = this.$Grid.getData().map(function (entry) {
+                return entry.id;
             });
+
+            return this.$Translator.save().then(function () {
+                return this.$Handler.updateChild(
+                    this.getAttribute('taxGroupId'),
+                    taxtTypeIds
+                );
+            }.bind(this));
         }
     });
 });

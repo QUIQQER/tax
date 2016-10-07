@@ -15,7 +15,7 @@ QUI::$Ajax->registerFunction(
         $Handler = new QUI\ERP\Tax\Handler();
         $groups  = $Handler->getTaxTypes(json_decode($ids, true));
         $result  = array();
-        
+
         /* @var $TaxType \QUI\ERP\Tax\TaxType */
         foreach ($groups as $TaxType) {
             $result[] = $TaxType->toArray();
