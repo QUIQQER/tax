@@ -24,7 +24,7 @@ class Utils
     /**
      * Return the shop tax tapx
      *
-     * @return TaxEntryEmpty|TaxType
+     * @return TaxType|false
      */
     public static function getShopTaxType()
     {
@@ -33,13 +33,13 @@ class Utils
         $standardTax = $Config->getValue('shop', 'vat');
 
         if (!$standardTax) {
-            return new TaxEntryEmpty();
+            return false;
         }
 
         $standardTax = explode(':', $standardTax);
 
         if (!isset($standardTax[1])) {
-            return new TaxEntryEmpty();
+            return false;
         }
 
         return Handler::getInstance()->getTaxType($standardTax[1]);
@@ -97,7 +97,15 @@ class Utils
             }
 
             // tax entry via the taxtype from the shop
-            self::$userTaxes[$uid] = self::getTaxEntry(self::getShopTaxType(), $Area);
+            $shopTaxType           = self::getShopTaxType();
+            self::$userTaxes[$uid] = new TaxEntryEmpty();
+
+            if ($shopTaxType) {
+                try {
+                    self::$userTaxes[$uid] = self::getTaxEntry($shopTaxType, $Area);
+                } catch (QUI\Exception $Exception) {
+                }
+            }
         }
 
         return self::$userTaxes[$uid];
@@ -111,7 +119,12 @@ class Utils
      */
     public static function isUserEuVatUser(User $User)
     {
-        return self::getTaxByUser($User)->getAttribute('euvat');
+        try {
+            return self::getTaxByUser($User)->getAttribute('euvat');
+        } catch (QUI\Exception $Exception) {
+        }
+
+        return false;
     }
 
     /**
