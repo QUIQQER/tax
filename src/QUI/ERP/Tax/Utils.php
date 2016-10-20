@@ -218,6 +218,13 @@ class Utils
         $Taxes = new Handler();
         $Group = $TaxType->getGroup();
 
+        if (!$Group) {
+            throw new QUI\Exception(array(
+                'quiqqer/tax',
+                'exception.taxentry.not.found'
+            ));
+        }
+
         $result = $Taxes->getChildren(array(
             'where' => array(
                 'areaId'     => $Area->getId(),
