@@ -261,9 +261,21 @@ class Utils
         $cc = substr($vatId, 0, 2);
         $vn = substr($vatId, 2);
 
+        if (!class_exists('SoapClient')) {
+            throw new QUI\ERP\Tax\Exception(
+                array(
+                    'quiqqer/tax',
+                    'exception.vatid.validate.no.client',
+                    array('vatid' => $vatId)
+                ),
+                503
+            );
+        }
+
         $Client = new \SoapClient(
             "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
         );
+
 
         if (!$Client) {
             throw new QUI\ERP\Tax\Exception(
