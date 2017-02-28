@@ -17,7 +17,7 @@ use QUI\Permissions\Permission;
 class Handler extends QUI\CRUD\Factory
 {
     /**
-     * handler instance
+     * Handler instance
      *
      * @var null
      */
@@ -60,7 +60,7 @@ class Handler extends QUI\CRUD\Factory
      */
     public static function getInstance()
     {
-        if (is_null(self::$Instance)) {
+        if (self::$Instance === null) {
             self::$Instance = new self();
         }
 
@@ -289,7 +289,6 @@ class Handler extends QUI\CRUD\Factory
                 $Exception->getMessage()
             );
         }
-
 
         return $this->getTaxType($newId);
     }
