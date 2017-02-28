@@ -17,6 +17,11 @@ use QUI\Permissions\Permission;
 class Handler extends QUI\CRUD\Factory
 {
     /**
+     * @var null
+     */
+    protected static $Instance = null;
+
+    /**
      * List of tax groups
      *
      * @var array
@@ -44,6 +49,20 @@ class Handler extends QUI\CRUD\Factory
         // create new translation var for the tax
         $this->Events->addEvent('onCreateEnd', function ($NewArea) {
         });
+    }
+
+    /**
+     * Return singleton instance
+     *
+     * @return Handler
+     */
+    public static function getInstance()
+    {
+        if (self::$Instance === null) {
+            self::$Instance = new self();
+        }
+
+        return self::$Instance;
     }
 
     /**
