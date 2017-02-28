@@ -98,6 +98,7 @@ class Import
             QUI\Translator::edit(
                 'quiqqer/tax',
                 'taxGroup.' . $TaxGroup->getId() . '.title',
+                'quiqqer/tax',
                 $taxGroupLocaleData
             );
 
@@ -111,6 +112,7 @@ class Import
                 QUI\Translator::edit(
                     'quiqqer/tax',
                     'taxType.' . $TaxType->getId() . '.title',
+                    'quiqqer/tax',
                     $taxTypeLocaleData
                 );
 
@@ -156,7 +158,6 @@ class Import
             $TaxGroup->update();
         }
     }
-
 
     /**
      * Return text params from <title>
