@@ -158,7 +158,7 @@ class Import
             $TaxGroup->update();
         }
     }
-    
+
     /**
      * Return text params from <title>
      *
