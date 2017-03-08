@@ -22,12 +22,12 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
 ], function (QUI, QUIControl, QUIConfirm, Grid, TaxTypes, TaxTypesEdit, QUILocale) {
     "use strict";
 
-    var lg = 'quiqqer/tax',
+    var lg      = 'quiqqer/tax',
         Handler = new TaxTypes();
 
     return new Class({
         Extends: QUIControl,
-        Type: 'package/quiqqer/tax/bin/controls/TaxTypes',
+        Type   : 'package/quiqqer/tax/bin/controls/TaxTypes',
 
         Binds: [
             'Panel',
@@ -45,8 +45,8 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             this.$Panel = this.getAttribute('Panel');
 
             this.addEvents({
-                onInject: this.$onInject,
-                onResize: this.$onResize,
+                onInject : this.$onInject,
+                onResize : this.$onResize,
                 onDestroy: function () {
                     if (this.$Grid) {
                         this.$Grid.destroy();
@@ -60,51 +60,51 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
          */
         create: function () {
             var self = this,
-                Elm = this.parent();
+                Elm  = this.parent();
 
             var Container = new Element('div', {
                 styles: {
                     height: '100%',
-                    width: '100%'
+                    width : '100%'
                 }
             }).inject(Elm);
 
             Elm.setStyles({
-                height: '100%',
+                height : '100%',
                 opacity: 0,
-                width: '100%'
+                width  : '100%'
             });
 
             this.$Grid = new Grid(Container, {
                 columnModel: [{
-                    header: QUILocale.get('quiqqer/system', 'id'),
+                    header   : QUILocale.get('quiqqer/system', 'id'),
                     dataIndex: 'id',
-                    dataType: 'number',
-                    width: 60
+                    dataType : 'number',
+                    width    : 60
                 }, {
-                    header: QUILocale.get(lg, 'tax.grid.taxtype.title'),
+                    header   : QUILocale.get(lg, 'tax.grid.taxtype.title'),
                     dataIndex: 'title',
-                    dataType: 'string',
-                    width: 300
+                    dataType : 'string',
+                    width    : 300
                 }, {
-                    header: QUILocale.get(lg, 'tax.grid.taxtype.taxgroup.title'),
+                    header   : QUILocale.get(lg, 'tax.grid.taxtype.taxgroup.title'),
                     dataIndex: 'groupTitle',
-                    dataType: 'string',
-                    width: 300
+                    dataType : 'string',
+                    width    : 300
                 }],
-                buttons: [{
-                    name: 'add',
-                    text: QUILocale.get('quiqqer/system', 'add'),
+                buttons    : [{
+                    name     : 'add',
+                    text     : QUILocale.get('quiqqer/system', 'add'),
                     textimage: 'fa fa-plus',
-                    events: {
+                    events   : {
                         click: this.createChild
                     }
                 }, {
-                    name: 'edit',
-                    text: QUILocale.get('quiqqer/system', 'edit'),
+                    name     : 'edit',
+                    text     : QUILocale.get('quiqqer/system', 'edit'),
                     textimage: 'fa fa-edit',
-                    disabled: true,
-                    events: {
+                    disabled : true,
+                    events   : {
                         click: function () {
                             self.updateChild(
                                 self.$Grid.getSelectedData()[0].id
@@ -114,11 +114,11 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 }, {
                     type: 'seperator'
                 }, {
-                    name: 'delete',
-                    text: QUILocale.get('quiqqer/system', 'delete'),
+                    name     : 'delete',
+                    text     : QUILocale.get('quiqqer/system', 'delete'),
                     textimage: 'fa fa-trash',
-                    disabled: true,
-                    events: {
+                    disabled : true,
+                    events   : {
                         click: function () {
                             self.deleteChild(
                                 self.$Grid.getSelectedData()[0].id
@@ -131,7 +131,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             this.$Grid.addEvents({
                 onClick: function () {
                     var selecteData = self.$Grid.getSelectedData(),
-                        buttons = self.$Grid.getButtons();
+                        buttons     = self.$Grid.getButtons();
 
                     var Edit = buttons.find(function (Button) {
                         if (Button.getAttribute('name') == 'edit') {
@@ -249,17 +249,17 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             var self = this;
 
             new QUIConfirm({
-                title: QUILocale.get(lg, 'taxtype.window.create.title'),
-                text: QUILocale.get(lg, 'taxtype.window.create.text'),
+                title      : QUILocale.get(lg, 'taxtype.window.create.title'),
+                text       : QUILocale.get(lg, 'taxtype.window.create.text'),
                 information: QUILocale.get(lg, 'taxtype.window.create.information'),
-                icon: 'fa fa-plus',
-                textimage: 'fa fa-plus',
-                maxHeight: 300,
-                maxWidth: 450,
-                autoclose: false,
-                events: {
+                icon       : 'fa fa-plus',
+                textimage  : 'fa fa-plus',
+                maxHeight  : 300,
+                maxWidth   : 450,
+                autoclose  : false,
+                events     : {
                     onOpen: function (Win) {
-                        var Content = Win.getContent(),
+                        var Content     = Win.getContent(),
                             Information = Content.getElement('.information');
 
                         var Input = new Element('input', {
@@ -280,7 +280,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
 
                     onSubmit: function (Win) {
                         var Content = Win.getContent(),
-                            Input = Content.getElement('input');
+                            Input   = Content.getElement('input');
 
                         if (Input.value === '') {
                             return;
@@ -300,7 +300,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                             );
 
                             var currentLang = QUILocale.getCurrent(),
-                                data = {};
+                                data        = {};
 
                             data[currentLang] = Input.value;
 
@@ -308,7 +308,9 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                                 'package/quiqqer/translator/bin/classes/Translator'
                             ], function (Translator) {
 
-                                new Translator().setTranslation(
+                                new Translator({
+                                    'package': 'quiqqer/tax'
+                                }).setTranslation(
                                     'quiqqer/tax',
                                     'taxType.' + childId + '.title',
                                     data
@@ -352,7 +354,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             this.$Panel.Loader.show();
 
             this.$Panel.createSheet({
-                title: QUILocale.get(lg, 'taxtype.edit.title', {
+                title : QUILocale.get(lg, 'taxtype.edit.title', {
                     taxTypeId: taxTypeId
                 }),
                 events: {
@@ -363,7 +365,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
 
                         var Edit = new TaxTypesEdit({
                             taxTypeId: taxTypeId,
-                            events: {
+                            events   : {
                                 onLoaded: function () {
                                     self.$Panel.Loader.hide();
                                 }
@@ -373,9 +375,9 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                         Edit.inject(Sheet.getContent());
 
                         Sheet.addButton({
-                            text: QUILocale.get('quiqqer/system', 'save'),
+                            text     : QUILocale.get('quiqqer/system', 'save'),
                             textimage: 'fa fa-save',
-                            events: {
+                            events   : {
                                 onClick: function () {
                                     self.$Panel.Loader.show();
                                     Edit.update().then(function () {
@@ -402,19 +404,19 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             var self = this;
 
             new QUIConfirm({
-                title: QUILocale.get(lg, 'taxtype.window.delete.title'),
-                text: QUILocale.get(lg, 'taxtype.window.delete.text', {
+                title      : QUILocale.get(lg, 'taxtype.window.delete.title'),
+                text       : QUILocale.get(lg, 'taxtype.window.delete.text', {
                     taxTypeId: taxTypeId
                 }),
                 information: QUILocale.get(lg, 'taxtype.window.delete.information', {
                     taxTypeId: taxTypeId
                 }),
-                icon: 'fa fa-trash',
-                textimage: 'fa fa-trash',
-                maxHeight: 300,
-                maxWidth: 450,
-                autoclose: false,
-                events: {
+                icon       : 'fa fa-trash',
+                textimage  : 'fa fa-trash',
+                maxHeight  : 300,
+                maxWidth   : 450,
+                autoclose  : false,
+                events     : {
                     onSubmit: function (Win) {
                         Win.Loader.show();
                         Handler.deleteChild(taxTypeId).then(function () {

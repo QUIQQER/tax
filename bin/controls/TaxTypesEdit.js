@@ -30,7 +30,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
 
     return new Class({
         Extends: QUIControl,
-        Type: 'package/quiqqer/tax/bin/controls/TaxTypesEdit',
+        Type   : 'package/quiqqer/tax/bin/controls/TaxTypesEdit',
 
         Binds: [
             '$onInject'
@@ -63,15 +63,16 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
          * event : on inject
          */
         $onInject: function () {
-            var Elm = this.getElm(),
-                id = this.getAttribute('taxTypeId'),
+            var Elm    = this.getElm(),
+                id     = this.getAttribute('taxTypeId'),
                 Groups = Elm.getElement(
                     '.quiqqer-taxtype-setting-table-group'
                 );
 
             new Translation({
-                'group': 'quiqqer/tax',
-                'var': 'taxType.' + id + '.title'
+                'group'  : 'quiqqer/tax',
+                'var'    : 'taxType.' + id + '.title',
+                'package': 'quiqqer/tax'
             }).inject(
                 Elm.getElement('.quiqqer-taxtype-setting-table-title')
             );
@@ -84,7 +85,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
                 TypesHandler.get(id),
                 GroupHandler.getList()
             ]).then(function (data) {
-                var type = data[0],
+                var type   = data[0],
                     groups = data[1];
 
                 for (var i = 0, len = groups.length; i < len; i++) {
