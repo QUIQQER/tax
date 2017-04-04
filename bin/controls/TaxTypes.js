@@ -112,7 +112,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                         }
                     }
                 }, {
-                    type: 'seperator'
+                    type: 'separator'
                 }, {
                     name     : 'delete',
                     text     : QUILocale.get('quiqqer/system', 'delete'),
@@ -134,21 +134,21 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                         buttons     = self.$Grid.getButtons();
 
                     var Edit = buttons.find(function (Button) {
-                        if (Button.getAttribute('name') == 'edit') {
+                        if (Button.getAttribute('name') === 'edit') {
                             return Button;
                         }
                         return false;
                     });
 
                     var Delete = buttons.find(function (Button) {
-                        if (Button.getAttribute('name') == 'delete') {
+                        if (Button.getAttribute('name') === 'delete') {
                             return Button;
                         }
                         return false;
                     });
 
 
-                    if (selecteData.length == 1) {
+                    if (selecteData.length === 1) {
                         Edit.enable();
                         Delete.enable();
                         return;
@@ -224,14 +224,14 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 var buttons = this.$Grid.getButtons();
 
                 var Edit = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'edit') {
+                    if (Button.getAttribute('name') === 'edit') {
                         return Button;
                     }
                     return false;
                 });
 
                 var Delete = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'delete') {
+                    if (Button.getAttribute('name') === 'delete') {
                         return Button;
                     }
                     return false;
