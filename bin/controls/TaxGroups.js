@@ -34,12 +34,12 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
 
     "use strict";
 
-    var lg = 'quiqqer/tax',
+    var lg      = 'quiqqer/tax',
         Handler = new TaxGroups();
 
     return new Class({
         Extends: QUIControl,
-        Type: 'package/quiqqer/tax/bin/controls/TaxGroup',
+        Type   : 'package/quiqqer/tax/bin/controls/TaxGroup',
 
         Binds: [
             'Panel',
@@ -57,8 +57,8 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             this.$Panel = this.getAttribute('Panel');
 
             this.addEvents({
-                onInject: this.$onInject,
-                onResize: this.$onResize,
+                onInject : this.$onInject,
+                onResize : this.$onResize,
                 onDestroy: function () {
                     if (this.$Grid) {
                         this.$Grid.destroy();
@@ -72,52 +72,52 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
          */
         create: function () {
             var self = this,
-                Elm = this.parent();
+                Elm  = this.parent();
 
             var Container = new Element('div', {
                 styles: {
                     height: '100%',
-                    width: '100%'
+                    width : '100%'
                 }
             }).inject(Elm);
 
             Elm.setStyles({
-                height: '100%',
+                height : '100%',
                 opacity: 0,
-                width: '100%'
+                width  : '100%'
             });
 
             this.$Grid = new Grid(Container, {
                 multipleSelection: true,
-                columnModel: [{
-                    header: QUILocale.get('quiqqer/system', 'id'),
+                columnModel      : [{
+                    header   : QUILocale.get('quiqqer/system', 'id'),
                     dataIndex: 'id',
-                    dataType: 'number',
-                    width: 60
+                    dataType : 'number',
+                    width    : 60
                 }, {
-                    header: QUILocale.get(lg, 'tax.grid.taxgroup.title'),
+                    header   : QUILocale.get(lg, 'tax.grid.taxgroup.title'),
                     dataIndex: 'title',
-                    dataType: 'string',
-                    width: 300
+                    dataType : 'string',
+                    width    : 300
                 }, {
-                    header: QUILocale.get(lg, 'tax.grid.taxgroup.taxtypes.title'),
+                    header   : QUILocale.get(lg, 'tax.grid.taxgroup.taxtypes.title'),
                     dataIndex: 'taxTypeNames',
-                    dataType: 'string',
-                    width: 300
+                    dataType : 'string',
+                    width    : 300
                 }],
-                buttons: [{
-                    name: 'add',
-                    text: QUILocale.get('quiqqer/system', 'add'),
+                buttons          : [{
+                    name     : 'add',
+                    text     : QUILocale.get('quiqqer/system', 'add'),
                     textimage: 'fa fa-plus',
-                    events: {
+                    events   : {
                         click: this.createChild
                     }
                 }, {
-                    name: 'edit',
-                    text: QUILocale.get('quiqqer/system', 'edit'),
+                    name     : 'edit',
+                    text     : QUILocale.get('quiqqer/system', 'edit'),
                     textimage: 'fa fa-edit',
-                    disabled: true,
-                    events: {
+                    disabled : true,
+                    events   : {
                         click: function () {
                             self.updateChild(
                                 self.$Grid.getSelectedData()[0].id
@@ -125,13 +125,13 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                         }
                     }
                 }, {
-                    type: 'seperator'
+                    type: 'separator'
                 }, {
-                    name: 'delete',
-                    text: QUILocale.get('quiqqer/system', 'delete'),
+                    name     : 'delete',
+                    text     : QUILocale.get('quiqqer/system', 'delete'),
                     textimage: 'fa fa-trash',
-                    disabled: true,
-                    events: {
+                    disabled : true,
+                    events   : {
                         click: function () {
                             self.deleteChild(
                                 self.$Grid.getSelectedData()[0].id
@@ -144,24 +144,24 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             this.$Grid.addEvents({
                 onClick: function () {
                     var selecteData = self.$Grid.getSelectedData(),
-                        buttons = self.$Grid.getButtons();
+                        buttons     = self.$Grid.getButtons();
 
                     var Edit = buttons.find(function (Button) {
-                        if (Button.getAttribute('name') == 'edit') {
+                        if (Button.getAttribute('name') === 'edit') {
                             return Button;
                         }
                         return false;
                     });
 
                     var Delete = buttons.find(function (Button) {
-                        if (Button.getAttribute('name') == 'delete') {
+                        if (Button.getAttribute('name') === 'delete') {
                             return Button;
                         }
                         return false;
                     });
 
 
-                    if (selecteData.length == 1) {
+                    if (selecteData.length === 1) {
                         Edit.enable();
                         Delete.enable();
                         return;
@@ -236,14 +236,14 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                 var buttons = this.$Grid.getButtons();
 
                 var Edit = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'edit') {
+                    if (Button.getAttribute('name') === 'edit') {
                         return Button;
                     }
                     return false;
                 });
 
                 var Delete = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'delete') {
+                    if (Button.getAttribute('name') === 'delete') {
                         return Button;
                     }
                     return false;
@@ -262,17 +262,17 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             var self = this;
 
             new QUIConfirm({
-                title: QUILocale.get(lg, 'taxgroup.window.create.title'),
-                text: QUILocale.get(lg, 'taxgroup.window.create.text'),
+                title      : QUILocale.get(lg, 'taxgroup.window.create.title'),
+                text       : QUILocale.get(lg, 'taxgroup.window.create.text'),
                 information: QUILocale.get(lg, 'taxgroup.window.create.information'),
-                icon: 'fa fa-plus',
-                textimage: 'fa fa-plus',
-                maxHeight: 300,
-                maxWidth: 450,
-                autoclose: false,
-                events: {
+                icon       : 'fa fa-plus',
+                textimage  : 'fa fa-plus',
+                maxHeight  : 300,
+                maxWidth   : 450,
+                autoclose  : false,
+                events     : {
                     onOpen: function (Win) {
-                        var Content = Win.getContent(),
+                        var Content     = Win.getContent(),
                             Information = Content.getElement('.information');
 
                         var Input = new Element('input', {
@@ -293,7 +293,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
 
                     onSubmit: function (Win) {
                         var Content = Win.getContent(),
-                            Input = Content.getElement('input');
+                            Input   = Content.getElement('input');
 
                         if (Input.value === '') {
                             return;
@@ -304,7 +304,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                         Handler.createChild().then(function (childId) {
 
                             var currentLang = QUILocale.getCurrent(),
-                                data = {};
+                                data        = {};
 
                             data[currentLang] = Input.value;
 
@@ -348,7 +348,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             this.$Panel.Loader.show();
 
             this.$Panel.createSheet({
-                title: QUILocale.get(lg, 'taxgroup.edit.title', {
+                title : QUILocale.get(lg, 'taxgroup.edit.title', {
                     taxGroupId: taxGroupId
                 }),
                 events: {
@@ -359,7 +359,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
 
                         Sheet.Edit = new TaxGroupsEdit({
                             taxGroupId: taxGroupId,
-                            events: {
+                            events    : {
                                 onLoaded: function () {
                                     self.$Panel.Loader.hide();
                                 }
@@ -369,9 +369,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                         Sheet.Edit.inject(Sheet.getContent());
 
                         Sheet.addButton({
-                            text: QUILocale.get('quiqqer/system', 'save'),
+                            text     : QUILocale.get('quiqqer/system', 'save'),
                             textimage: 'fa fa-save',
-                            events: {
+                            events   : {
                                 onClick: function () {
                                     self.$Panel.Loader.show();
 
@@ -406,19 +406,19 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             var self = this;
 
             new QUIConfirm({
-                title: QUILocale.get(lg, 'taxgroup.window.delete.title'),
-                text: QUILocale.get(lg, 'taxgroup.window.delete.text', {
+                title      : QUILocale.get(lg, 'taxgroup.window.delete.title'),
+                text       : QUILocale.get(lg, 'taxgroup.window.delete.text', {
                     taxGroupId: taxGroupId
                 }),
                 information: QUILocale.get(lg, 'taxgroup.window.delete.information', {
                     taxGroupId: taxGroupId
                 }),
-                icon: 'fa fa-trash',
-                textimage: 'fa fa-trash',
-                maxHeight: 300,
-                maxWidth: 450,
-                autoclose: false,
-                events: {
+                icon       : 'fa fa-trash',
+                textimage  : 'fa fa-trash',
+                maxHeight  : 300,
+                maxWidth   : 450,
+                autoclose  : false,
+                events     : {
                     onSubmit: function (Win) {
                         Win.Loader.show();
                         Handler.deleteChild(taxGroupId).then(function () {
