@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
     <groups name="quiqqer/tax" datatype="php,js">
+        <locale name="package.title">
+            <de><![CDATA[QUIQQER - Shop - TAX]]></de>
+            <en><![CDATA[QUIQQER - Shop - TAX]]></en>
+        </locale>
+        <locale name="package.description" html="true">
+            <de><![CDATA[]]></de>
+            <en><![CDATA[]]></en>
+        </locale>
+
+        <locale name="permission.quiqqer.tax._header">
+            <de><![CDATA[Shop - TAX]]></de>
+            <en><![CDATA[Shop - TAX]]></en>
+        </locale>
+        <locale name="permission.quiqqer.tax.create">
+            <de><![CDATA[Darf Steuersätze und Steuergruppen erstellen.]]></de>
+            <en><![CDATA[Is allowed to create tax entries and tax groups.]]></en>
+        </locale>
+        <locale name="permission.quiqqer.tax.edit">
+            <de><![CDATA[Darf Steuersätze und Steuergruppen bearbeiten.]]></de>
+            <en><![CDATA[Is allowed to edit tax entries and tax groups.]]></en>
+        </locale>
+        <locale name="permission.quiqqer.tax.delete">
+            <de><![CDATA[Darf Steuersätze und Steuergruppen löschen.]]></de>
+            <en><![CDATA[Is allowed to delete tax entries and tax groups.]]></en>
+        </locale>
+
 
         <locale name="menu.erp.title">
             <de><![CDATA[Shop]]></de>
