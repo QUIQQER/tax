@@ -3,6 +3,7 @@
 /**
  * This fiel contains QUI\ERP\Tax\Utils
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -22,7 +23,7 @@ class Utils
     protected static $userTaxes = array();
 
     /**
-     * Return the shop tax tapx
+     * Return the shop tax tax
      *
      * @return TaxType|false
      */
@@ -59,6 +60,8 @@ class Utils
             return self::$userTaxes[$uid];
         }
 
+        self::$userTaxes[$uid] = new TaxEntryEmpty();
+
         try {
             $Country = $User->getCountry();
 
@@ -88,24 +91,35 @@ class Utils
             } else {
                 self::$userTaxes[$uid] = $TaxEntry;
             }
+
+            return self::$userTaxes[$uid];
         } catch (QUI\Exception $Exception) {
+        }
+
+        // if for user cant be found a VAT, use the shop settings
+        $Country = null;
+
+        try {
             $Country = $User->getCountry();
-            $Area    = QUI\ERP\Areas\Utils::getAreaByCountry($Country);
+        } catch (QUI\Exception $Exception) {
+        }
+
+        try {
+            $Area = QUI\ERP\Areas\Utils::getAreaByCountry($Country);
 
             if (!$Area) {
-                $Area = QUI\ERP\Products\Utils\User::getShopArea();
+                $Area = QUI\ERP\Defaults::getArea();
             }
 
-            // tax entry via the taxtype from the shop
-            $shopTaxType           = self::getShopTaxType();
-            self::$userTaxes[$uid] = new TaxEntryEmpty();
+            $ShopTaxType = self::getShopTaxType();
 
-            if ($shopTaxType) {
-                try {
-                    self::$userTaxes[$uid] = self::getTaxEntry($shopTaxType, $Area);
-                } catch (QUI\Exception $Exception) {
-                }
+            if ($ShopTaxType) {
+                $TaxEntry = self::getTaxEntry($ShopTaxType, $Area);
+
+                self::$userTaxes[$uid] = $TaxEntry;
             }
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::addWarning($Exception->getMessage());
         }
 
         return self::$userTaxes[$uid];
