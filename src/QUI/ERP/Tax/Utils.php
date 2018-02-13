@@ -3,6 +3,7 @@
 /**
  * This fiel contains QUI\ERP\Tax\Utils
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -25,6 +26,8 @@ class Utils
      * Return the shop tax tapx
      *
      * @return TaxType|false
+     *
+     * @throws QUI\Exception
      */
     public static function getShopTaxType()
     {
@@ -50,6 +53,7 @@ class Utils
      *
      * @param User $User
      * @return QUI\ERP\Tax\TaxEntry|TaxEntryEmpty
+     * @throws QUI\Exception
      */
     public static function getTaxByUser(User $User)
     {
@@ -76,8 +80,16 @@ class Utils
                 $Area   = $Areas->getChild($areaId);
             }
 
-            $TaxType  = self::getTaxTypeByArea($Area);
-            $TaxEntry = self::getTaxEntry($TaxType, $Area);
+            $TaxType = self::getTaxTypeByArea($Area);
+
+            if ($TaxType instanceof TaxGroup) {
+                $TaxEntry = self::getTaxEntry($TaxType, $Area);
+            } elseif ($TaxType instanceof TaxEntry) {
+                $TaxEntry = $TaxType;
+            } else {
+                throw new QUI\Exception('Tax Entry not found');
+            }
+
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
@@ -93,7 +105,7 @@ class Utils
             $Area    = QUI\ERP\Areas\Utils::getAreaByCountry($Country);
 
             if (!$Area) {
-                $Area = QUI\ERP\Products\Utils\User::getShopArea();
+                $Area = QUI\ERP\Defaults::getArea();
             }
 
             // tax entry via the taxtype from the shop
@@ -159,10 +171,10 @@ class Utils
 
         $taxGroup = $TaxEntry->getAttribute('group');
         $Group    = $Taxes->getTaxGroup($taxGroup);
-        $taxtypes = $Group->getTaxTypes();
+        $taxTypes = $Group->getTaxTypes();
 
         /* @var $TaxType TaxType */
-        foreach ($taxtypes as $TaxType) {
+        foreach ($taxTypes as $TaxType) {
             foreach ($result as $TaxEntry) {
                 if ($TaxEntry->getAttribute('taxTypeId') == $TaxType->getId()) {
                     return $TaxType;
