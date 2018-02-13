@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\TaxGroup
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -23,7 +24,7 @@ class TaxGroup
     /**
      * @var array
      */
-    protected $taxtypes = array();
+    protected $taxTypes = array();
 
     /**
      * tax Handler
@@ -52,12 +53,12 @@ class TaxGroup
         $this->id      = (int)$taxGroupId;
         $this->Handler = $Handler;
 
-        $taxtypes = $Config->get('taxgroups', $taxGroupId);
-        $taxtypes = explode(',', $taxtypes);
+        $taxTypes = $Config->get('taxgroups', $taxGroupId);
+        $taxTypes = explode(',', $taxTypes);
 
-        foreach ($taxtypes as $taxTypeId) {
+        foreach ($taxTypes as $taxTypeId) {
             try {
-                $this->taxtypes[] = $this->Handler->getTaxType($taxTypeId);
+                $this->taxTypes[] = $this->Handler->getTaxType($taxTypeId);
             } catch (QUI\Exception $Exception) {
             }
         }
@@ -78,7 +79,7 @@ class TaxGroup
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
-            'taxGroup.' . $this->getId() . '.title'
+            'taxGroup.'.$this->getId().'.title'
         );
     }
 
@@ -89,7 +90,7 @@ class TaxGroup
      */
     public function getTaxTypes()
     {
-        return $this->taxtypes;
+        return $this->taxTypes;
     }
 
     /**
@@ -101,7 +102,7 @@ class TaxGroup
     public function isTaxTypeInGroup(TaxType $TaxType)
     {
         /* @var $Tax TaxType */
-        foreach ($this->taxtypes as $Tax) {
+        foreach ($this->taxTypes as $Tax) {
             if ($Tax->getId() == $TaxType->getId()) {
                 return true;
             }
@@ -131,7 +132,7 @@ class TaxGroup
             }
         }
 
-        $this->taxtypes = $list;
+        $this->taxTypes = $list;
     }
 
     /**
@@ -142,7 +143,7 @@ class TaxGroup
     public function addTaxType(TaxType $TaxType)
     {
         if (!$this->isTaxTypeInGroup($TaxType)) {
-            $this->taxtypes[] = $TaxType;
+            $this->taxTypes[] = $TaxType;
         }
     }
 
@@ -156,19 +157,21 @@ class TaxGroup
         $types = array();
 
         /* @var $TaxType TaxType */
-        foreach ($this->taxtypes as $TaxType) {
+        foreach ($this->taxTypes as $TaxType) {
             $types[] = $TaxType->getId();
         }
 
         return array(
-            'id' => $this->getId(),
-            'title' => $this->getTitle(),
+            'id'       => $this->getId(),
+            'title'    => $this->getTitle(),
             'taxtypes' => implode(',', $types)
         );
     }
 
     /**
      * Saves / Update the tax group
+     *
+     * @throws QUI\Exception
      */
     public function update()
     {
