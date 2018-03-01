@@ -293,14 +293,9 @@ class Utils
         $vn = substr($vatId, 2);
 
         if (!class_exists('SoapClient')) {
-            throw new QUI\ERP\Tax\Exception(
-                array(
-                    'quiqqer/tax',
-                    'exception.vatid.validate.no.client',
-                    array('vatid' => $vatId)
-                ),
-                503
-            );
+            QUI\System\Log::addWarning('SoapClient is not available');
+
+            return $vatId;
         }
 
         $Client = new \SoapClient(
