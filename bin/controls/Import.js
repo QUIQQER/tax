@@ -1,15 +1,8 @@
 /**
  * Import window
  *
+ * @module package/quiqqer/tax/bin/controls/Import
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/controls/windows/Confirm
- * @require qui/controls/buttons/Select
- * @require Locale
- * @require Ajax
- * @require controls/upload/Form
- * @require text!package/quiqqer/tax/bin/controls/Import.html
  *
  * @event onImportBegin
  * @event onImport

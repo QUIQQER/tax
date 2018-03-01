@@ -1,16 +1,8 @@
 /**
  * Tax groups management
  *
- * @package package/quiqqer/tax/bin/controls/TaxGroups
+ * @module package/quiqqer/tax/bin/controls/TaxGroups
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/controls/Control
- * @require qui/controls/windows/Confirm
- * @require controls/grid/Grid
- * @require package/quiqqer/tax/bin/classes/TaxGroups
- * @require package/quiqqer/tax/bin/controls/TaxGroupsEdit
- * @require Locale
  *
  * @event onLoaded
  */
