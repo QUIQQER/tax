@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\Handler
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -113,6 +114,8 @@ class Handler extends QUI\CRUD\Factory
      * Create a new tax group
      *
      * @return TaxGroup
+     *
+     * @throws QUI\Exception
      */
     public function createTaxGroup()
     {
@@ -139,7 +142,7 @@ class Handler extends QUI\CRUD\Factory
         try {
             QUI\Translator::addUserVar(
                 'quiqqer/tax',
-                'taxGroup.' . $newId . '.title',
+                'taxGroup.'.$newId.'.title',
                 array(
                     $current   => '',
                     'datatype' => 'php,js'
@@ -159,6 +162,8 @@ class Handler extends QUI\CRUD\Factory
      *
      * @param array|boolean $ids - optional, list of wanted ids, default = all
      * @return array
+     *
+     * @throws QUI\Exception
      */
     public function getTaxGroups($ids = false)
     {
@@ -190,6 +195,8 @@ class Handler extends QUI\CRUD\Factory
      *
      * @param integer $taxGroupId - Tax Group ID
      * @return TaxGroup
+     *
+     * @throws QUI\Exception
      */
     public function getTaxGroup($taxGroupId)
     {
@@ -204,6 +211,7 @@ class Handler extends QUI\CRUD\Factory
      * Delete a tax group
      *
      * @param integer $taxGroupId - Tax Group ID
+     * @throws QUI\Exception
      */
     public function deleteTaxGroup($taxGroupId)
     {
@@ -224,7 +232,7 @@ class Handler extends QUI\CRUD\Factory
         // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
-            'taxGroup.' . $taxGroupId . '.title'
+            'taxGroup.'.$taxGroupId.'.title'
         );
 
 
@@ -239,6 +247,8 @@ class Handler extends QUI\CRUD\Factory
      *
      * @param integer $taxGroupId - Group-ID
      * @param array $types - array of types eq: - [typeId, typeId, typeId]
+     *
+     * @throws QUI\Exception
      */
     public function updateTaxGroup($taxGroupId, $types)
     {
@@ -246,7 +256,6 @@ class Handler extends QUI\CRUD\Factory
         $TaxGroup->setTaxTypes($types);
         $TaxGroup->update();
     }
-
 
     /**
      * Tax types
@@ -256,6 +265,9 @@ class Handler extends QUI\CRUD\Factory
      * Create a new tax type
      *
      * @return TaxType
+     *
+     * @throws QUI\Exception
+     * @throws QUI\Permissions\Exception
      */
     public function createTaxType()
     {
@@ -271,7 +283,7 @@ class Handler extends QUI\CRUD\Factory
             $newId = 0;
         }
 
-        $types[$newId] = 'taxType.' . $newId . '.title';
+        $types[$newId] = 'taxType.'.$newId.'.title';
 
         $Config->setSection('taxtypes', $types);
         $Config->save();
@@ -298,6 +310,8 @@ class Handler extends QUI\CRUD\Factory
      *
      * @param array|boolean $ids - optional, list of wanted ids, default = all
      * @return array
+     *
+     * @throws QUI\Exception
      */
     public function getTaxTypes($ids = false)
     {
@@ -329,6 +343,8 @@ class Handler extends QUI\CRUD\Factory
      *
      * @param integer $taxTypeId - Tax Type ID
      * @return TaxType
+     *
+     * @throws QUI\Exception
      */
     public function getTaxType($taxTypeId)
     {
@@ -343,6 +359,8 @@ class Handler extends QUI\CRUD\Factory
      * Delete a tax type
      *
      * @param integer $taxTypeId - Tax Type ID
+     *
+     * @throws QUI\Exception
      */
     public function deleteTaxType($taxTypeId)
     {
@@ -363,7 +381,7 @@ class Handler extends QUI\CRUD\Factory
         // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
-            'taxType.' . $taxTypeId . '.title'
+            'taxType.'.$taxTypeId.'.title'
         );
 
         // delete all tax entries
@@ -381,6 +399,8 @@ class Handler extends QUI\CRUD\Factory
      * Return tax config
      *
      * @return QUI\Config
+     *
+     * @throws QUI\Exception
      */
     public function getConfig()
     {

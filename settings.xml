@@ -9,6 +9,7 @@
                 </conf>
                 <conf name="isNetto">
                     <type><![CDATA[bool]]></type>
+                    <defaultvalue>0</defaultvalue>
                 </conf>
                 <conf name="validateVatId">
                     <type><![CDATA[bool]]></type>
@@ -48,7 +49,10 @@
                             </text>
                         </input>
 
-                        <input conf="shop.validateVatId" type="checkbox">
+                        <input conf="shop.validateVatId"
+                               type="checkbox"
+                               data-qui="package/quiqqer/tax/bin/controls/SettingsValidate"
+                        >
                             <text>
                                 <locale group="quiqqer/tax" var="settings.window.vat.validateVatId"/>
                             </text>

@@ -118,6 +118,19 @@
             <de><![CDATA[inkl. [vat]% MwSt.]]></de>
             <en><![CDATA[incl. [vat]% VAT]]></en>
         </locale>
+
+        <locale name="exception.no.soap.client">
+            <de><![CDATA[
+            Die Überprüfung der USt-IdNr. kann nicht durchgeführt werden.<br />
+            Bitte installieren Sie auf Ihrem Server folgende PHP Erweiterung: php-soap<br />
+            <pre>sudo apt-get install php-soap</pre>
+            ]]></de>
+            <en><![CDATA[
+            The VAT ID number cannot be checked.<br />
+            Please install the following PHP extension on your server: php-soap
+            <pre>sudo apt-get install php-soap</pre>
+            ]]></en>
+        </locale>
     </groups>
 
     <groups name="quiqqer/tax" datatype="js">

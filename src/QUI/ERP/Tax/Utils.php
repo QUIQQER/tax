@@ -26,6 +26,8 @@ class Utils
      * Return the shop tax tax
      *
      * @return TaxType|false
+     *
+     * @throws QUI\Exception
      */
     public static function getShopTaxType()
     {
@@ -51,6 +53,7 @@ class Utils
      *
      * @param User $User
      * @return QUI\ERP\Tax\TaxEntry|TaxEntryEmpty
+     * @throws QUI\Exception
      */
     public static function getTaxByUser(User $User)
     {
@@ -79,8 +82,16 @@ class Utils
                 $Area   = $Areas->getChild($areaId);
             }
 
-            $TaxType  = self::getTaxTypeByArea($Area);
-            $TaxEntry = self::getTaxEntry($TaxType, $Area);
+            $TaxType = self::getTaxTypeByArea($Area);
+
+            if ($TaxType instanceof TaxGroup) {
+                $TaxEntry = self::getTaxEntry($TaxType, $Area);
+            } elseif ($TaxType instanceof TaxEntry) {
+                $TaxEntry = $TaxType;
+            } else {
+                throw new QUI\Exception('Tax Entry not found');
+            }
+
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
@@ -173,10 +184,10 @@ class Utils
 
         $taxGroup = $TaxEntry->getAttribute('group');
         $Group    = $Taxes->getTaxGroup($taxGroup);
-        $taxtypes = $Group->getTaxTypes();
+        $taxTypes = $Group->getTaxTypes();
 
         /* @var $TaxType TaxType */
-        foreach ($taxtypes as $TaxType) {
+        foreach ($taxTypes as $TaxType) {
             foreach ($result as $TaxEntry) {
                 if ($TaxEntry->getAttribute('taxTypeId') == $TaxType->getId()) {
                     return $TaxType;
@@ -295,14 +306,9 @@ class Utils
         $vn = substr($vatId, 2);
 
         if (!class_exists('SoapClient')) {
-            throw new QUI\ERP\Tax\Exception(
-                array(
-                    'quiqqer/tax',
-                    'exception.vatid.validate.no.client',
-                    array('vatid' => $vatId)
-                ),
-                503
-            );
+            QUI\System\Log::addWarning('SoapClient is not available');
+
+            return $vatId;
         }
 
         $Client = new \SoapClient(
