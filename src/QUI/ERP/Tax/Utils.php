@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This fiel contains QUI\ERP\Tax\Utils
+ * This file contains QUI\ERP\Tax\Utils
  */
 
 namespace QUI\ERP\Tax;
@@ -264,6 +264,25 @@ class Utils
     public static function cleanupVatId($vatId)
     {
         return str_replace(array(' ', '.', '-', ',', ', '), '', trim($vatId));
+    }
+
+    /**
+     * Is the VAT Validation active?
+     *
+     * @return bool
+     */
+    public static function shouldVatIdValidationBeExecuted()
+    {
+        try {
+            $Config = QUI::getPackage('quiqqer/tax')->getConfig();
+
+            if ($Config->get('shop', 'validateVatId')) {
+                return true;
+            }
+        } catch (QUI\Exception $Exception) {
+        }
+
+        return false;
     }
 
     /**

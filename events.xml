@@ -3,4 +3,6 @@
     <event on="onQuiqqer::frontend-users::profile::user-data-middle"
            fire="\QUI\ERP\Tax\EventHandler::onFrontendUserDataMiddle"
     />
+
+    <event on="onUserSaveBegin" fire="\QUI\ERP\Tax\EventHandler::onUserSaveBegin"/>
 </events>

@@ -3,18 +3,6 @@
         <h2>Firmen Angaben</h2>
     </header>
 
-    <label class="quiqqer-order-customerData-edit-company">
-        <span class="quiqqer-frontendUsers-userdata-label">
-            {locale group="quiqqer/order" var="company"}
-        </span>
-        <input type="text"
-               name="company"
-               class="quiqqer-frontendUsers-userdata-field"
-               autocomplete="organization"
-               value="{$Address->getAttribute('company')|escape:'html'}"
-        />
-    </label>
-
     <label class="quiqqer-order-customerData-edit-vatId">
         <span class="quiqqer-frontendUsers-userdata-label">
             {locale group="quiqqer/order" var="vatId"}

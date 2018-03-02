@@ -44,4 +44,35 @@ class EventHandler
             QUI\System\Log::writeException($Exception);
         }
     }
+
+    /**
+     * event: on user save
+     * saves the vat number
+     *
+     *
+     * @param QUI\Users\User $User
+     * @throws QUI\Exception
+     */
+    public static function onUserSaveBegin(QUI\Users\User $User)
+    {
+        $Request = QUI::getRequest()->request;
+        $data    = $Request->all();
+
+        if (empty($data)) {
+            return;
+        }
+
+        if (!isset($data['vatId'])) {
+            return;
+        }
+
+        $vatId = $data['vatId'];
+
+        if (Utils::shouldVatIdValidationBeExecuted()) {
+            $vatId = QUI\ERP\Tax\Utils::validateVatId($vatId);
+        }
+
+        // save VAT ID
+        $User->setAttribute('quiqqer.erp.taxId', $vatId);
+    }
 }
