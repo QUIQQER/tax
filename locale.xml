@@ -327,6 +327,11 @@
             <de><![CDATA[Mehrwertsteuer verminderte]]></de>
             <en><![CDATA[VAT reduced]]></en>
         </locale>
+        <locale name="user.profile.userdata.title">
+            <de><![CDATA[Firmendaten]]></de>
+            <en><![CDATA[Company data]]></en>
+        </locale>
+
         <locale name="exception.invalid.vatid">
             <de><![CDATA[Die Umsatzsteuer-ID [vatid] ist ungültig.]]></de>
             <en><![CDATA[The VAT-ID [vatid] is invalid]]></en>

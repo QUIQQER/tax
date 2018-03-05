@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<events>
-    <event on="onQuiqqer::frontend-users::profile::user-data-middle"
-           fire="\QUI\ERP\Tax\EventHandler::onFrontendUserDataMiddle"
-    />
-
-    <event on="onUserSaveBegin" fire="\QUI\ERP\Tax\EventHandler::onUserSaveBegin"/>
-</events>
