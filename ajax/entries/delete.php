@@ -16,6 +16,6 @@ QUI::$Ajax->registerFunction(
         $Tax     = $Handler->getChild($taxId);
         $Tax->delete();
     },
-    array('taxId'),
+    ['taxId'],
     'Permission::checkAdminUser'
 );

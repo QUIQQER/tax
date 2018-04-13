@@ -1,13 +1,8 @@
 /**
  * Panel für die Steuerverwaltung
  *
- * @package package/quiqqer/
+ * @module package/quiqqer/tax/bin/controls/Panel
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/classes/DOM
- * @require Ajax
- * @require Locale
  */
 define('package/quiqqer/tax/bin/controls/Panel', [
 
@@ -23,7 +18,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
     return new Class({
         Extends: QUIPanel,
-        Type: 'package/quiqqer/tax/bin/controls/Panel',
+        Type   : 'package/quiqqer/tax/bin/controls/Panel',
 
         Binds: [
             'openTaxEntries',
@@ -45,7 +40,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             this.addEvents({
                 onCreate: this.$onCreate,
                 onInject: this.$onInject,
-                onShow: function () {
+                onShow  : function () {
                     this.$onInject();
                 }.bind(this)
             });
@@ -56,24 +51,24 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          */
         $onCreate: function () {
             this.addCategory({
-                name: 'taxentries',
-                text: QUILocale.get(lg, 'panel.category.taxentries.text'),
+                name  : 'taxentries',
+                text  : QUILocale.get(lg, 'panel.category.taxentries.text'),
                 events: {
                     click: this.openTaxEntries
                 }
             });
 
             this.addCategory({
-                name: 'taxtypes',
-                text: QUILocale.get(lg, 'panel.category.taxtypes.text'),
+                name  : 'taxtypes',
+                text  : QUILocale.get(lg, 'panel.category.taxtypes.text'),
                 events: {
                     click: this.openTaxTypes
                 }
             });
 
             this.addCategory({
-                name: 'taxgroups',
-                text: QUILocale.get(lg, 'panel.category.taxgroups.text'),
+                name  : 'taxgroups',
+                text  : QUILocale.get(lg, 'panel.category.taxgroups.text'),
                 events: {
                     click: this.openTaxGroups
                 }
@@ -114,8 +109,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                     ]).then(function (result) {
 
                         var taxEntries = result[0],
-                            taxGroups = result[1],
-                            taxTypes = result[2];
+                            taxGroups  = result[1],
+                            taxTypes   = result[2];
 
                         if (!taxEntries.length && !taxGroups.length && !taxTypes.length) {
                             self.openImport();
@@ -183,7 +178,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             ], function (Import) {
                 new Import({
                     events: {
-                        onImport: function () {
+                        onImport     : function () {
                             if (self.$View) {
                                 self.$View.refresh().then(function () {
                                     self.Loader.hide();
@@ -202,13 +197,13 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxEntries: function () {
-            var self = this,
+            var self    = this,
                 Content = this.getContent();
 
             this.Loader.show();
 
             if (this.$View &&
-                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxEntries') {
+                this.$View.getType() === 'package/quiqqer/tax/bin/controls/TaxEntries') {
 
                 this.$View.resize().then(function () {
                     return self.$View.refresh();
@@ -243,7 +238,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                     'package/quiqqer/tax/bin/controls/TaxEntries'
                 ], function (TaxEntries) {
                     self.$View = new TaxEntries({
-                        Panel: self,
+                        Panel : self,
                         events: {
                             onLoaded: function () {
                                 self.Loader.hide();
@@ -258,13 +253,13 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxTypes: function () {
-            var self = this,
+            var self    = this,
                 Content = this.getContent();
 
             this.Loader.show();
 
             if (this.$View &&
-                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxTypes') {
+                this.$View.getType() === 'package/quiqqer/tax/bin/controls/TaxTypes') {
 
                 this.$View.resize().then(function () {
                     return self.$View.refresh();
@@ -300,7 +295,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 ], function (TaxTypes) {
 
                     self.$View = new TaxTypes({
-                        Panel: self,
+                        Panel : self,
                         events: {
                             onLoaded: function () {
                                 self.Loader.hide();
@@ -315,13 +310,13 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxGroups: function () {
-            var self = this,
+            var self    = this,
                 Content = this.getContent();
 
             this.Loader.show();
 
             if (this.$View &&
-                this.$View.getType() == 'package/quiqqer/tax/bin/controls/TaxGroups') {
+                this.$View.getType() === 'package/quiqqer/tax/bin/controls/TaxGroups') {
 
                 this.$View.resize().then(function () {
                     return self.$View.refresh();
@@ -356,7 +351,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                     'package/quiqqer/tax/bin/controls/TaxGroups'
                 ], function (TaxGroups) {
                     self.$View = new TaxGroups({
-                        Panel: self,
+                        Panel : self,
                         events: {
                             onLoaded: function () {
                                 self.Loader.hide();

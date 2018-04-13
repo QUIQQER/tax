@@ -20,6 +20,6 @@ QUI::$Ajax->registerFunction(
             $TaxGroup->update();
         }
     },
-    array('taxTypeId', 'data'),
+    ['taxTypeId', 'data'],
     'Permission::checkAdminUser'
 );

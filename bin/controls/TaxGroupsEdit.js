@@ -1,11 +1,6 @@
 /**
- *
- * @package package/quiqqer/
+ * @module package/quiqqer/tax/bin/controls/TaxGroupsEdit
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/classes/DOM
- * @require package/quiqqer/tax/bin/classes/TaxGroups
  *
  * @event onLoaded
  */
@@ -28,7 +23,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
 
     return new Class({
         Extends: QUIControl,
-        Type: 'package/quiqqer/tax/bin/controls/TaxGroupsEdit',
+        Type   : 'package/quiqqer/tax/bin/controls/TaxGroupsEdit',
 
         Binds: [
             '$onInject'
@@ -41,9 +36,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
         initialize: function (options) {
             this.parent(options);
 
-            this.$Grid = null;
+            this.$Grid       = null;
             this.$Translator = null;
-            this.$Handler = new Handler();
+            this.$Handler    = new Handler();
 
 
             this.addEvents({
@@ -80,7 +75,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
 
             this.$Translator = new Translation({
                 'group': 'quiqqer/tax',
-                'var': 'taxGroup.' + this.getAttribute('taxGroupId') + '.title'
+                'var'  : 'taxGroup.' + this.getAttribute('taxGroupId') + '.title'
             }).inject(
                 this.getElm().getElement('.quiqqer-taxgroup-setting-table-title')
             );
@@ -88,9 +83,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
 
             var Container = new Element('div', {
                 styles: {
-                    'float': 'left',
+                    'float' : 'left',
                     overflow: 'hidden',
-                    width: '100%'
+                    width   : '100%'
                 }
             }).inject(
                 this.getElm().getElement(
@@ -102,31 +97,31 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             var GridContainer = new Element('div').inject(Container);
 
             this.$Grid = new Grid(GridContainer, {
-                width: 100,
-                serverSort: true,
-                sortHeader: false,
+                width      : 100,
+                serverSort : true,
+                sortHeader : false,
                 columnModel: [{
-                    header: QUILocale.get('quiqqer/system', 'id'),
+                    header   : QUILocale.get('quiqqer/system', 'id'),
                     dataIndex: 'id',
-                    dataType: 'numeric',
-                    width: 60
+                    dataType : 'numeric',
+                    width    : 60
                 }, {
-                    header: QUILocale.get('quiqqer/tax', 'panel.category.taxtypes.text'),
+                    header   : QUILocale.get('quiqqer/tax', 'panel.category.taxtypes.text'),
                     dataIndex: 'title',
-                    dataType: 'string',
-                    width: 600
+                    dataType : 'string',
+                    width    : 600
                 }],
-                buttons: [{
-                    name: 'up',
-                    text: QUILocale.get('quiqqer/system', 'up'),
+                buttons    : [{
+                    name  : 'up',
+                    text  : QUILocale.get('quiqqer/system', 'up'),
                     events: {
                         onClick: function () {
                             self.$Grid.moveup();
                         }
                     }
                 }, {
-                    name: 'down',
-                    text: QUILocale.get('quiqqer/system', 'down'),
+                    name  : 'down',
+                    text  : QUILocale.get('quiqqer/system', 'down'),
                     events: {
                         onClick: function () {
                             self.$Grid.movedown();

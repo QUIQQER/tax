@@ -1,25 +1,31 @@
 QUIQQER TAX
 ========
 
+The QUIQQER Tax module adds TAX functionality to QUIQQER.
+Its possible to manage different tax rates for each country.
 
+*The TAX module is part of the ERP stack of QUIQQER*
 
-Paketname:
+Package name:
 
     quiqqer/tax
 
 
-Features (Funktionen)
+Features
 --------
 
-- Mehrwertsteuer Verwaltung für ERP
+- TAX management
+    - Manage different tax rates for each country
+- Provides ready-to-use TAX settings for all EU countries
+
 
 Installation
 ------------
 
-Der Paketname ist: quiqqer/tax
+The package name is: quiqqer/tax
 
 
-Mitwirken
+Contribution
 ----------
 
 - Issue Tracker: https://dev.quiqqer.com/quiqqer/tax/issues
@@ -29,13 +35,11 @@ Mitwirken
 Support
 -------
 
-Falls Sie ein Fehler gefunden haben, oder Verbesserungen wünschen,
-dann können Sie gerne an support@pcsg.de eine E-Mail schreiben.
+If you have found a bug, or want improvements,
+then you are welcome to send an e-mail to support@pcsg.de
 
 
-Lizenz
+Licence
 -------
 
-
-Entwickler
---------
+GPL-3.0+

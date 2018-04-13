@@ -1,15 +1,8 @@
 /**
  * Import window
  *
+ * @module package/quiqqer/tax/bin/controls/Import
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/controls/windows/Confirm
- * @require qui/controls/buttons/Select
- * @require Locale
- * @require Ajax
- * @require controls/upload/Form
- * @require text!package/quiqqer/tax/bin/controls/Import.html
  *
  * @event onImportBegin
  * @event onImport
@@ -25,13 +18,7 @@ define('package/quiqqer/tax/bin/controls/Import', [
 
     'text!package/quiqqer/tax/bin/controls/Import.html'
 
-], function (QUI,
-             QUIConfirm,
-             QUISelect,
-             QUILocale,
-             QUIAjax,
-             UploadForm,
-             templateImport) {
+], function (QUI, QUIConfirm, QUISelect, QUILocale, QUIAjax, UploadForm, templateImport) {
     "use strict";
 
     return new Class({
@@ -45,7 +32,6 @@ define('package/quiqqer/tax/bin/controls/Import', [
         ],
 
         initialize: function (options) {
-
             this.setAttributes({
                 maxHeight: 460,
                 maxWidth : 690,
@@ -101,25 +87,23 @@ define('package/quiqqer/tax/bin/controls/Import', [
             }).inject(Available);
 
 
-            QUIAjax.get(
-                'package_quiqqer_tax_ajax_import_available',
-                function (result) {
-                    self.$Select.appendChild('&nbsp;', '');
+            QUIAjax.get('package_quiqqer_tax_ajax_import_available', function (result) {
+                self.$Select.appendChild('&nbsp;', '');
 
-                    for (var i = 0, len = result.length; i < len; i++) {
-                        self.$Select.appendChild(
-                            QUILocale.get(
-                                result[i].locale[0],
-                                result[i].locale[1]
-                            ),
-                            result[i].file
-                        );
-                    }
+                for (var i = 0, len = result.length; i < len; i++) {
+                    self.$Select.appendChild(
+                        QUILocale.get(
+                            result[i].locale[0],
+                            result[i].locale[1]
+                        ),
+                        result[i].file
+                    );
+                }
 
-                    self.Loader.hide();
-                }, {
-                    'package': 'quiqqer/tax'
-                });
+                self.Loader.hide();
+            }, {
+                'package': 'quiqqer/tax'
+            });
         },
 
         /**

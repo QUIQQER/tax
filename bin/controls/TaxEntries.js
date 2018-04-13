@@ -2,19 +2,8 @@
  * Tax Entry
  * Manage all taxes
  *
- * @package package/quiqqer/tax/bin/controls/TaxEntries
+ * @module package/quiqqer/tax/bin/controls/TaxEntries
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/controls/Control
- * @require qui/controls/windows/Confirm
- * @require qui/controls/buttons/Select
- * @require controls/grid/Grid
- * @require package/quiqqer/tax/bin/classes/TaxEntries
- * @require package/quiqqer/tax/bin/classes/TaxGroups
- * @require package/quiqqer/tax/bin/classes/TaxTypes
- * @require package/quiqqer/areas/bin/classes/Handler
- * @require Locale
  *
  * @event onLoaded
  */
@@ -207,7 +196,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         return;
                     }
 
-                    if (selecteData.length == 1) {
+                    if (selecteData.length === 1) {
                         Delete.enable();
                         Edit.enable();
                         return;
@@ -281,14 +270,14 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 var buttons = this.$Grid.getButtons();
 
                 var Edit = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'edit') {
+                    if (Button.getAttribute('name') === 'edit') {
                         return Button;
                     }
                     return false;
                 });
 
                 var Delete = buttons.find(function (Button) {
-                    if (Button.getAttribute('name') == 'delete') {
+                    if (Button.getAttribute('name') === 'delete') {
                         return Button;
                     }
                     return false;

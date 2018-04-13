@@ -17,10 +17,10 @@ QUI::$Ajax->registerFunction(
         $data    = json_decode($data, true);
 
         if (!isset($data['taxTypeId'])) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
-            ));
+            ]);
         }
 
         $Tax     = $Handler->getChild($taxId);
@@ -42,6 +42,6 @@ QUI::$Ajax->registerFunction(
 
         $Tax->update();
     },
-    array('taxId', 'data'),
+    ['taxId', 'data'],
     'Permission::checkAdminUser'
 );

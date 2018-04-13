@@ -19,6 +19,6 @@ QUI::$Ajax->registerFunction(
             $File->getAttribute('filepath')
         );
     },
-    array('File'),
+    ['File'],
     'Permission::checkAdminUser'
 );

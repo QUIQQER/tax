@@ -13,8 +13,9 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_getList',
     function () {
         $Handler = new QUI\ERP\Tax\Handler();
+
         return $Handler->getChildrenData();
     },
-    array(),
+    [],
     'Permission::checkAdminUser'
 );

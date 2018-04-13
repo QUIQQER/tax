@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\Import
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -19,20 +20,20 @@ class Import
      */
     public static function getAvailableImports()
     {
-        $dir      = OPT_DIR . 'quiqqer/tax/setup/';
+        $dir      = OPT_DIR.'quiqqer/tax/setup/';
         $xmlFiles = QUI\Utils\System\File::readDir($dir);
-        $result   = array();
+        $result   = [];
 
         foreach ($xmlFiles as $xmlFile) {
-            $Document = XML::getDomFromXml($dir . $xmlFile);
+            $Document = XML::getDomFromXml($dir.$xmlFile);
             $Path     = new \DOMXPath($Document);
             $title    = $Path->query("//quiqqer/title");
 
             if ($title->item(0)) {
-                $result[] = array(
+                $result[] = [
                     'file'   => $xmlFile,
                     'locale' => QUI\Utils\DOM::getTextFromNode($title->item(0), false)
-                );
+                ];
             }
         }
 
@@ -49,12 +50,12 @@ class Import
     {
         if (self::existPreconfigure($fileName) === false) {
             throw new QUI\Exception(
-                array('quiqqer/tax', 'exception.preconfigure.file.not.found'),
+                ['quiqqer/tax', 'exception.preconfigure.file.not.found'],
                 404
             );
         }
 
-        self::import(OPT_DIR . 'quiqqer/tax/setup/' . $fileName);
+        self::import(OPT_DIR.'quiqqer/tax/setup/'.$fileName);
     }
 
     /**
@@ -80,6 +81,7 @@ class Import
      * Import the standard areas
      *
      * @param string $xmlFile - XML File, path to the xml file
+     * @throws QUI\Exception
      */
     public static function import($xmlFile)
     {
@@ -97,7 +99,7 @@ class Import
 
             QUI\Translator::edit(
                 'quiqqer/tax',
-                'taxGroup.' . $TaxGroup->getId() . '.title',
+                'taxGroup.'.$TaxGroup->getId().'.title',
                 'quiqqer/tax',
                 $taxGroupLocaleData
             );
@@ -111,7 +113,7 @@ class Import
 
                 QUI\Translator::edit(
                     'quiqqer/tax',
-                    'taxType.' . $TaxType->getId() . '.title',
+                    'taxType.'.$TaxType->getId().'.title',
                     'quiqqer/tax',
                     $taxTypeLocaleData
                 );
@@ -176,10 +178,10 @@ class Import
                     /* @var $LocaleItem \DOMElement */
                     $LocaleItem = $Locale->item(0);
 
-                    return array(
+                    return [
                         'group' => $LocaleItem->getAttribute('group'),
                         'var'   => $LocaleItem->getAttribute('var')
-                    );
+                    ];
                 }
 
                 return $Child->nodeValue;
@@ -199,10 +201,16 @@ class Import
      */
     protected static function getLocaleDataFromNode($Parent)
     {
-        $result     = array();
+        $result     = [];
         $localeData = self::getTextNodeParamsFromNode($Parent);
 
-        $availableLanguages = QUI\Translator::getAvailableLanguages();
+        try {
+            $availableLanguages = QUI\Translator::getAvailableLanguages();
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeException($Exception);
+
+            return [];
+        }
 
         if (is_string($localeData)) {
             foreach ($availableLanguages as $lang) {
@@ -234,6 +242,8 @@ class Import
      *
      * @param array $countries
      * @return boolean|QUI\ERP\Areas\Area
+     *
+     * @throws QUI\Exception
      */
     protected static function getAreaByCountries($countries)
     {
@@ -245,6 +255,7 @@ class Import
                 if (strpos($area['countries'], $country) !== false) {
                     /* @var $Area QUI\ERP\Areas\Area */
                     $Area = $AreaHandler->getChild((int)$area['id']);
+
                     return $Area;
                 }
             }

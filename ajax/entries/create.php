@@ -27,6 +27,6 @@ QUI::$Ajax->registerFunction(
 
         return $Tax->getId();
     },
-    array('taxTypeId', 'areaId'),
+    ['taxTypeId', 'areaId'],
     'Permission::checkAdminUser'
 );

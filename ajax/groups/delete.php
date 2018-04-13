@@ -13,6 +13,6 @@ QUI::$Ajax->registerFunction(
         $Handler = new QUI\ERP\Tax\Handler();
         $Handler->deleteTaxGroup($taxGroupId);
     },
-    array('taxGroupId'),
+    ['taxGroupId'],
     'Permission::checkAdminUser'
 );

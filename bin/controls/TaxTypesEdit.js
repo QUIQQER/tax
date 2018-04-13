@@ -1,11 +1,6 @@
 /**
- *
- * @package package/quiqqer/
+ * @module package/quiqqer/tax/bin/controls/TaxTypesEdit
  * @author www.pcsg.de (Henning Leutz)
- *
- * @require qui/QUI
- * @require qui/classes/DOM
- * @require package/quiqqer/tax/bin/classes/TaxTypesEdit
  *
  * @event onLoaded
  */
