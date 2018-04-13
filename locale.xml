@@ -151,6 +151,11 @@
             <en><![CDATA[Tax groups]]></en>
         </locale>
 
+        <locale name="control.import.no.tax.entry">
+            <de><![CDATA[Noch keine Steuersätze vorhanden.]]></de>
+            <en><![CDATA[Tax rates not yet available.]]></en>
+        </locale>
+
         <!-- tax entry - Steuertyp -->
         <locale name="tax.grid.taxentries.title">
             <de><![CDATA[Steuersatz]]></de>
@@ -199,7 +204,30 @@
                 The tax #[id] can not be restored and all relationships will be lost.
             ]]></en>
         </locale>
-
+        <locale name="message.tax.create.taxgroups">
+            <de><![CDATA[
+            Es existieren keine Steuergruppen. Bitte legen Sie Steuergruppen an.
+            ]]></de>
+            <en><![CDATA[
+            There are no tax groups. Please create tax groups.
+            ]]></en>
+        </locale>
+        <locale name="message.tax.create.taxentries">
+            <de><![CDATA[
+            Es existieren keine Steuersätze. Bitte legen Sie Steuersätze an.
+            ]]></de>
+            <en><![CDATA[
+            There are no tax rates. Please create tax rates.
+            ]]></en>
+        </locale>
+        <locale name="message.tax.create.taxtypes">
+            <de><![CDATA[
+            Es existieren keine Steuertypen. Bitte legen Sie Steuertypen an.
+            ]]></de>
+            <en><![CDATA[
+            There are no tax types. Please create tax types.
+            ]]></en>
+        </locale>
 
         <!-- tax groups -->
         <locale name="tax.grid.taxgroup.title">
