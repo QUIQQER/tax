@@ -29,14 +29,14 @@ class Handler extends QUI\CRUD\Factory
      *
      * @var array
      */
-    protected $taxGroups = array();
+    protected $taxGroups = [];
 
     /**
      * List of tax types
      *
      * @var array
      */
-    protected $taxTypes = array();
+    protected $taxTypes = [];
 
     /**
      * Handler constructor.
@@ -95,14 +95,14 @@ class Handler extends QUI\CRUD\Factory
      */
     public function getChildAttributes()
     {
-        return array(
+        return [
             'taxTypeId',
             'taxGroupId',
             'vat',
             'areaId',
             'active',
             'euvat'
-        );
+        ];
     }
 
 
@@ -127,7 +127,7 @@ class Handler extends QUI\CRUD\Factory
         if (is_array($groups) && count($groups)) {
             $newId = max(array_keys($groups)) + 1;
         } else {
-            $groups = array();
+            $groups = [];
             $newId  = 0;
         }
 
@@ -143,10 +143,10 @@ class Handler extends QUI\CRUD\Factory
             QUI\Translator::addUserVar(
                 'quiqqer/tax',
                 'taxGroup.'.$newId.'.title',
-                array(
+                [
                     $current   => '',
                     'datatype' => 'php,js'
-                )
+                ]
             );
         } catch (QUI\Exception $Exception) {
             QUI::getMessagesHandler()->addAttention(
@@ -169,14 +169,14 @@ class Handler extends QUI\CRUD\Factory
     {
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
-        $result = array();
+        $result = [];
 
         if (!is_array($ids)) {
             $ids = false;
         }
 
         if (!$groups || !is_array($groups)) {
-            $groups = array();
+            $groups = [];
         }
 
         foreach ($groups as $key => $var) {
@@ -237,9 +237,9 @@ class Handler extends QUI\CRUD\Factory
 
 
         // delete all tax entries
-        QUI::getDataBase()->delete($this->getDataBaseTableName(), array(
+        QUI::getDataBase()->delete($this->getDataBaseTableName(), [
             'taxGroupId' => $taxGroupId
-        ));
+        ]);
     }
 
     /**
@@ -279,7 +279,7 @@ class Handler extends QUI\CRUD\Factory
         if (is_array($types) && count($types)) {
             $newId = max(array_keys($types)) + 1;
         } else {
-            $types = array();
+            $types = [];
             $newId = 0;
         }
 
@@ -292,10 +292,10 @@ class Handler extends QUI\CRUD\Factory
 
         // create locale
         try {
-            QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], array(
+            QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], [
                 $current   => '',
                 'datatype' => 'php,js'
-            ));
+            ]);
         } catch (QUI\Exception $Exception) {
             QUI::getMessagesHandler()->addAttention(
                 $Exception->getMessage()
@@ -317,14 +317,14 @@ class Handler extends QUI\CRUD\Factory
     {
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
-        $result = array();
+        $result = [];
 
         if (!is_array($ids)) {
             $ids = false;
         }
 
         if (!$types) {
-            $types = array();
+            $types = [];
         }
 
         foreach ($types as $key => $var) {
@@ -385,9 +385,9 @@ class Handler extends QUI\CRUD\Factory
         );
 
         // delete all tax entries
-        QUI::getDataBase()->delete($this->getDataBaseTableName(), array(
+        QUI::getDataBase()->delete($this->getDataBaseTableName(), [
             'taxTypeId' => $taxTypeId
-        ));
+        ]);
     }
 
 

@@ -14,13 +14,13 @@ QUI::$Ajax->registerFunction(
     function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
         $groups  = $Handler->getTaxGroups(json_decode($ids, true));
-        $result  = array();
+        $result  = [];
 
         /* @var $TaxGroup \QUI\ERP\Tax\TaxGroup */
         foreach ($groups as $TaxGroup) {
             $attributes   = $TaxGroup->toArray();
             $taxTypes     = $TaxGroup->getTaxTypes();
-            $taxTypeNames = array();
+            $taxTypeNames = [];
 
             /* @var $TaxType \QUI\ERP\Tax\TaxType */
             foreach ($taxTypes as $TaxType) {
@@ -34,6 +34,6 @@ QUI::$Ajax->registerFunction(
 
         return $result;
     },
-    array('ids'),
+    ['ids'],
     'Permission::checkAdminUser'
 );

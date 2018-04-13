@@ -26,6 +26,6 @@ QUI::$Ajax->registerFunction(
 
         return $Tax->isActive();
     },
-    array('taxId'),
+    ['taxId'],
     'Permission::checkAdminUser'
 );

@@ -24,7 +24,7 @@ class TaxGroup
     /**
      * @var array
      */
-    protected $taxTypes = array();
+    protected $taxTypes = [];
 
     /**
      * tax Handler
@@ -44,10 +44,10 @@ class TaxGroup
         $Config  = $Handler->getConfig();
 
         if ($Config->get('taxgroups', $taxGroupId) === false) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxgroup.not.found'
-            ));
+            ]);
         };
 
         $this->id      = (int)$taxGroupId;
@@ -117,13 +117,13 @@ class TaxGroup
      *
      * @param array $types - [typeId, typeId, typeId]
      */
-    public function setTaxTypes($types = array())
+    public function setTaxTypes($types = [])
     {
         if (!is_array($types)) {
             return;
         }
 
-        $list = array();
+        $list = [];
 
         foreach ($types as $taxTypeId) {
             try {
@@ -154,18 +154,18 @@ class TaxGroup
      */
     public function toArray()
     {
-        $types = array();
+        $types = [];
 
         /* @var $TaxType TaxType */
         foreach ($this->taxTypes as $TaxType) {
             $types[] = $TaxType->getId();
         }
 
-        return array(
+        return [
             'id'       => $this->getId(),
             'title'    => $this->getTitle(),
             'taxtypes' => implode(',', $types)
-        );
+        ];
     }
 
     /**
@@ -184,6 +184,8 @@ class TaxGroup
 
     /**
      * Delete the tax group
+     *
+     * @throws QUI\Exception
      */
     public function delete()
     {

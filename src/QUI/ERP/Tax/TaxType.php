@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\TaxType
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -41,10 +42,10 @@ class TaxType
         $Config  = $Handler->getConfig();
 
         if (!$Config->getValue('taxtypes', $taxTypeId)) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
-            ));
+            ]);
         };
 
         $this->id      = (int)$taxTypeId;
@@ -68,7 +69,7 @@ class TaxType
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
-            'taxType.' . $this->getId() . '.title'
+            'taxType.'.$this->getId().'.title'
         );
     }
 
@@ -79,7 +80,13 @@ class TaxType
      */
     public function getGroup()
     {
-        $groups = $this->Handler->getTaxGroups();
+        try {
+            $groups = $this->Handler->getTaxGroups();
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeException($Exception);
+
+            return false;
+        }
 
         /* @var $Group TaxGroup */
         foreach ($groups as $Group) {
@@ -105,16 +112,18 @@ class TaxType
             $groupTitle = $this->getGroup()->getTitle();
         }
 
-        return array(
+        return [
             'id'         => $this->getId(),
             'title'      => $this->getTitle(),
             'groupId'    => $groupId,
             'groupTitle' => $groupTitle
-        );
+        ];
     }
 
     /**
      * Delete the tax type
+     *
+     * @throws QUI\Exception
      */
     public function delete()
     {

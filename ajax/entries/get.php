@@ -14,8 +14,9 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_get',
     function ($taxId) {
         $Handler = new QUI\ERP\Tax\Handler();
+
         return $Handler->getChild($taxId)->getAttributes();
     },
-    array('taxId'),
+    ['taxId'],
     'Permission::checkAdminUser'
 );

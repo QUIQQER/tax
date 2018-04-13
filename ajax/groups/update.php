@@ -16,6 +16,6 @@ QUI::$Ajax->registerFunction(
         $TaxGroup->setTaxTypes(json_decode($data, true));
         $TaxGroup->update();
     },
-    array('taxGroupId', 'data'),
+    ['taxGroupId', 'data'],
     'Permission::checkAdminUser'
 );

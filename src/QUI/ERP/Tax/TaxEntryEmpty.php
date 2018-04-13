@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\TaxEntry
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;

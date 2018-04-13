@@ -16,11 +16,11 @@ QUI::$Ajax->registerFunction(
         $Handler = new QUI\ERP\Tax\Handler();
         $Areas   = new QUI\ERP\Areas\Handler();
 
-        $result = $Handler->getChildrenData(array(
-            'where' => array(
+        $result = $Handler->getChildrenData([
+            'where' => [
                 'taxTypeId' => $taxTypeId
-            )
-        ));
+            ]
+        ]);
 
         foreach ($result as $key => $entry) {
             try {
@@ -32,6 +32,6 @@ QUI::$Ajax->registerFunction(
 
         return $result;
     },
-    array('taxTypeId'),
+    ['taxTypeId'],
     'Permission::checkAdminUser'
 );

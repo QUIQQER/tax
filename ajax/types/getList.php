@@ -14,7 +14,7 @@ QUI::$Ajax->registerFunction(
     function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
         $groups  = $Handler->getTaxTypes(json_decode($ids, true));
-        $result  = array();
+        $result  = [];
 
         /* @var $TaxType \QUI\ERP\Tax\TaxType */
         foreach ($groups as $TaxType) {
@@ -23,6 +23,6 @@ QUI::$Ajax->registerFunction(
 
         return $result;
     },
-    array('ids'),
+    ['ids'],
     'Permission::checkAdminUser'
 );

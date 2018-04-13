@@ -20,7 +20,7 @@ class Utils
      *
      * @var array
      */
-    protected static $userTaxes = array();
+    protected static $userTaxes = [];
 
     /**
      * Return the shop tax tapx
@@ -149,17 +149,17 @@ class Utils
     public static function getTaxTypeByArea(Area $Area)
     {
         $Taxes  = new Handler();
-        $result = $Taxes->getChildren(array(
-            'where' => array(
+        $result = $Taxes->getChildren([
+            'where' => [
                 'areaId' => $Area->getId()
-            )
-        ));
+            ]
+        ]);
 
         if (!isset($result[0])) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
-            ));
+            ]);
         }
 
         if (count($result) == 1) {
@@ -182,10 +182,10 @@ class Utils
             }
         }
 
-        throw new QUI\Exception(array(
+        throw new QUI\Exception([
             'quiqqer/tax',
             'exception.taxtype.not.found'
-        ));
+        ]);
     }
 
     /**
@@ -198,13 +198,13 @@ class Utils
     {
         $Handler = new QUI\ERP\Tax\Handler();
         $Areas   = new QUI\ERP\Areas\Handler();
-        $result  = array();
+        $result  = [];
 
-        $data = $Handler->getChildrenData(array(
-            'where' => array(
+        $data = $Handler->getChildrenData([
+            'where' => [
                 'taxTypeId' => $taxTypeId
-            )
-        ));
+            ]
+        ]);
 
         foreach ($data as $key => $entry) {
             try {
@@ -231,25 +231,25 @@ class Utils
         $Group = $TaxType->getGroup();
 
         if (!$Group) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxentry.not.found'
-            ));
+            ]);
         }
 
-        $result = $Taxes->getChildren(array(
-            'where' => array(
+        $result = $Taxes->getChildren([
+            'where' => [
                 'areaId'     => $Area->getId(),
                 'taxTypeId'  => $TaxType->getId(),
                 'taxGroupId' => $Group->getId()
-            )
-        ));
+            ]
+        ]);
 
         if (!isset($result[0])) {
-            throw new QUI\Exception(array(
+            throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxentry.not.found'
-            ));
+            ]);
         }
 
         return $result[0];
@@ -263,7 +263,7 @@ class Utils
      */
     public static function cleanupVatId($vatId)
     {
-        return str_replace(array(' ', '.', '-', ',', ', '), '', trim($vatId));
+        return str_replace([' ', '.', '-', ',', ', '], '', trim($vatId));
     }
 
     /**
@@ -301,11 +301,11 @@ class Utils
         $second = mb_substr($vatId, 1, 1);
 
         if (!ctype_alpha($first) || !ctype_alpha($second)) {
-            throw new QUI\ERP\Tax\Exception(array(
+            throw new QUI\ERP\Tax\Exception([
                 'quiqqer/tax',
                 'exception.invalid.vatid',
-                array('vatid' => $vatId)
-            ));
+                ['vatid' => $vatId]
+            ]);
         }
 
         $cc = substr($vatId, 0, 2);
@@ -324,20 +324,20 @@ class Utils
 
         if (!$Client) {
             throw new QUI\ERP\Tax\Exception(
-                array(
+                [
                     'quiqqer/tax',
                     'exception.vatid.validate.no.client',
-                    array('vatid' => $vatId)
-                ),
+                    ['vatid' => $vatId]
+                ],
                 503
             );
         }
 
         try {
-            $Response = $Client->checkVat(array(
+            $Response = $Client->checkVat([
                 'countryCode' => $cc,
                 'vatNumber'   => $vn
-            ));
+            ]);
 
             if ($Response->valid == true) {
                 return $vatId;
@@ -345,22 +345,22 @@ class Utils
 
             // USt-ID ist ungültig
             throw new QUI\ERP\Tax\Exception(
-                array(
+                [
                     'quiqqer/tax',
                     'exception.invalid.vatid',
-                    array('vatid' => $vatId)
-                ),
+                    ['vatid' => $vatId]
+                ],
                 403
             );
         } catch (\SoapFault $Exception) {
             switch ($Exception->getMessage()) {
                 case 'INVALID_INPUT':
                     throw new QUI\ERP\Tax\Exception(
-                        array(
+                        [
                             'quiqqer/tax',
                             'exception.invalid.vatid',
-                            array('vatid' => $vatId)
-                        ),
+                            ['vatid' => $vatId]
+                        ],
                         403
                     );
 
@@ -369,11 +369,11 @@ class Utils
                 case 'SERVICE_UNAVAILABLE':
                 case 'MS_UNAVAILABLE':
                     throw new QUI\ERP\Tax\Exception(
-                        array(
+                        [
                             'quiqqer/tax',
                             'exception.vatid.validate.no.connection',
-                            array('vatid' => $vatId)
-                        ),
+                            ['vatid' => $vatId]
+                        ],
                         503
                     );
             }
@@ -387,12 +387,12 @@ class Utils
      */
     public static function getMaxTax()
     {
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'select' => 'vat',
             'from'   => QUI::getDBTableName('tax'),
             'limit'  => 1,
             'order'  => 'vat DESC'
-        ));
+        ]);
 
         return isset($result[0]) ? (int)$result[0]['vat'] : 0;
     }
@@ -404,12 +404,12 @@ class Utils
      */
     public static function getMinTax()
     {
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'select' => 'vat',
             'from'   => QUI::getDBTableName('tax'),
             'limit'  => 1,
             'order'  => 'vat ASC'
-        ));
+        ]);
 
         return isset($result[0]) ? (int)$result[0]['vat'] : 0;
     }

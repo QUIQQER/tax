@@ -3,6 +3,7 @@
 /**
  * This file contains QUI\ERP\Tax\TaxEntry
  */
+
 namespace QUI\ERP\Tax;
 
 use QUI;
@@ -40,7 +41,7 @@ class TaxEntry extends QUI\CRUD\Child
         $this->Events->addEvent('onDeleteEnd', function () {
             QUI\Translator::delete(
                 'quiqqer/tax',
-                'tax.' . $this->getId() . '.title'
+                'tax.'.$this->getId().'.title'
             );
         });
 
@@ -50,13 +51,13 @@ class TaxEntry extends QUI\CRUD\Child
 
             $Area      = $this->getArea();
             $children  = $this->Factory->getChildrenData();
-            $usedAreas = array();
+            $usedAreas = [];
 
             if (!$Area) {
-                throw new QUI\Exception(array(
+                throw new QUI\Exception([
                     'quiqqer/tax',
                     'exception.area.not.found'
-                ));
+                ]);
             }
 
             // we can use only unused areas
@@ -78,14 +79,14 @@ class TaxEntry extends QUI\CRUD\Child
             }
 
             if (in_array($this->getArea()->getId(), $usedAreas)) {
-                throw new QUI\Exception(array(
+                throw new QUI\Exception([
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',
-                    array(
+                    [
                         'area'  => $this->getArea()->getId(),
                         'title' => $this->getArea()->getTitle(),
-                    )
-                ));
+                    ]
+                ]);
             }
         });
     }

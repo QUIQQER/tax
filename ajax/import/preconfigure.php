@@ -16,6 +16,6 @@ QUI::$Ajax->registerFunction(
     function ($importName) {
         QUI\ERP\Tax\Import::importPreconfigureAreas($importName);
     },
-    array('importName'),
+    ['importName'],
     'Permission::checkAdminUser'
 );
