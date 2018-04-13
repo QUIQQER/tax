@@ -159,6 +159,9 @@ class Import
 
             $TaxGroup->update();
         }
+
+        // publish locale
+        QUI\Translator::publish('quiqqer/tax');
     }
 
     /**
