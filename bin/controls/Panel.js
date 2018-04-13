@@ -92,7 +92,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * @returns {Promise}
          */
         checkImport: function () {
-
             var self = this;
 
             return new Promise(function (resolve, reject) {
@@ -101,7 +100,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                     'package/quiqqer/tax/bin/classes/TaxGroups',
                     'package/quiqqer/tax/bin/classes/TaxTypes'
                 ], function (TaxEntries, TaxGroups, TaxTypes) {
-
                     Promise.all([
                         new TaxEntries().getList(),
                         new TaxGroups().getList(),
@@ -127,6 +125,9 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                                     )
                                 );
                             });
+
+                            resolve();
+                            return;
                         }
 
                         if (!taxGroups.length) {
@@ -138,6 +139,9 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                                     )
                                 );
                             });
+
+                            resolve();
+                            return;
                         }
 
                         if (!taxTypes.length) {
@@ -149,6 +153,9 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                                     )
                                 );
                             });
+
+                            resolve();
+                            return;
                         }
 
                         resolve();
@@ -173,18 +180,17 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 return;
             }
 
-            require([
-                'package/quiqqer/tax/bin/controls/Import'
-            ], function (Import) {
+            require(['package/quiqqer/tax/bin/controls/Import'], function (Import) {
                 new Import({
                     events: {
-                        onImport     : function () {
+                        onImport: function () {
                             if (self.$View) {
                                 self.$View.refresh().then(function () {
                                     self.Loader.hide();
                                 });
                             }
                         },
+
                         onImportBegin: function () {
                             self.Loader.show();
                         }
@@ -234,9 +240,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             Prom.then(function () {
                 Content.set('html', '');
 
-                require([
-                    'package/quiqqer/tax/bin/controls/TaxEntries'
-                ], function (TaxEntries) {
+                require(['package/quiqqer/tax/bin/controls/TaxEntries'], function (TaxEntries) {
                     self.$View = new TaxEntries({
                         Panel : self,
                         events: {
@@ -290,9 +294,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             Prom.then(function () {
                 Content.set('html', '');
 
-                require([
-                    'package/quiqqer/tax/bin/controls/TaxTypes'
-                ], function (TaxTypes) {
+                require(['package/quiqqer/tax/bin/controls/TaxTypes'], function (TaxTypes) {
 
                     self.$View = new TaxTypes({
                         Panel : self,
@@ -347,9 +349,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
             Prom.then(function () {
                 Content.set('html', '');
 
-                require([
-                    'package/quiqqer/tax/bin/controls/TaxGroups'
-                ], function (TaxGroups) {
+                require(['package/quiqqer/tax/bin/controls/TaxGroups'], function (TaxGroups) {
                     self.$View = new TaxGroups({
                         Panel : self,
                         events: {

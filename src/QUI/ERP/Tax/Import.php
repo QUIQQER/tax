@@ -97,10 +97,8 @@ class Import
 
             $taxGroupLocaleData = self::getLocaleDataFromNode($Group);
 
-            QUI\Translator::edit(
-                'quiqqer/tax',
+            self::updateLocale(
                 'taxGroup.'.$TaxGroup->getId().'.title',
-                'quiqqer/tax',
                 $taxGroupLocaleData
             );
 
@@ -111,14 +109,13 @@ class Import
 
                 $TaxType = $TaxHandler->createTaxType();
 
-                QUI\Translator::edit(
-                    'quiqqer/tax',
+                self::updateLocale(
                     'taxType.'.$TaxType->getId().'.title',
-                    'quiqqer/tax',
                     $taxTypeLocaleData
                 );
 
                 $TaxGroup->addTaxType($TaxType);
+                $TaxGroup->update();
 
                 // import taxes
                 foreach ($taxList as $Tax) {
@@ -139,7 +136,14 @@ class Import
                     }
 
                     try {
-                        $TaxEntry = $TaxHandler->createChild();
+                        $TaxEntry = $TaxHandler->createChild([
+                            'areaId'     => $Area->getId(),
+                            'taxTypeId'  => $TaxType->getId(),
+                            'taxGroupId' => $TaxGroup->getId(),
+                            'vat'        => $Tax->getAttribute('vat'),
+                            'euvat'      => (int)$Tax->getAttribute('euvat'),
+                            'active'     => 1
+                        ]);
 
                         $TaxEntry->setAttribute('areaId', $Area->getId());
                         $TaxEntry->setAttribute('taxTypeId', $TaxType->getId());
@@ -162,6 +166,16 @@ class Import
 
         // publish locale
         QUI\Translator::publish('quiqqer/tax');
+    }
+
+    /**
+     * @param $var
+     * @param $data
+     * @throws QUI\Exception
+     */
+    protected static function updateLocale($var, $data)
+    {
+        QUI\Translator::edit('quiqqer/tax', $var, '', $data);
     }
 
     /**

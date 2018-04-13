@@ -35,7 +35,7 @@ define('package/quiqqer/tax/bin/controls/Import', [
             this.setAttributes({
                 maxHeight: 460,
                 maxWidth : 690,
-                title    : 'Noch keine Steuersätze vorhanden',
+                title    : QUILocale.get('quiqqer/tax', 'control.import.no.tax.entry'),
                 icon     : 'fa fa-upload',
                 autoclose: false
             });
@@ -118,7 +118,6 @@ define('package/quiqqer/tax/bin/controls/Import', [
             this.fireEvent('importBegin');
 
             if (!selectValue || selectValue === '') {
-
                 this.$Upload.addEvent('onComplete', function () {
                     self.Loader.hide();
                     self.close();
@@ -130,10 +129,7 @@ define('package/quiqqer/tax/bin/controls/Import', [
             }
 
             QUIAjax.get('package_quiqqer_tax_ajax_import_preconfigure', function () {
-
-                require([
-                    'package/quiqqer/translator/bin/classes/Translator'
-                ], function (Translator) {
+                require(['package/quiqqer/translator/bin/classes/Translator'], function (Translator) {
                     var Trans = new Translator();
 
                     Trans.publish().then(function () {
@@ -143,7 +139,6 @@ define('package/quiqqer/tax/bin/controls/Import', [
                         self.fireEvent('import');
                     });
                 });
-
             }, {
                 'package' : 'quiqqer/tax',
                 importName: selectValue
