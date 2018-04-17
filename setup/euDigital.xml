@@ -19,7 +19,6 @@
             <tax countries="DE" vat="19.00" euvat="0"/>
             <tax countries="GR" vat="23.00" euvat="1"/>
             <tax countries="AT" vat="20.00" euvat="1"/>
-            <tax countries="CH" vat="0" euvat="0"/>
             <tax countries="LU" vat="15.00" euvat="1"/>
             <tax countries="MT" vat="18.00" euvat="1"/>
             <tax countries="CY" vat="19.00" euvat="1"/>
@@ -45,8 +44,6 @@
             <tax countries="HR" vat="25.00" euvat="1"/>
             <tax countries="DK" vat="25.00" euvat="1"/>
             <tax countries="HU" vat="27.00" euvat="1"/>
-
-            <tax countries="*" vat="0" euvat="0"/>
         </type>
 
         <type>
@@ -56,6 +53,5 @@
 
             <tax countries="DE" vat="7.00" euvat="0"/>
         </type>
-
     </group>
 </quiqqer>
