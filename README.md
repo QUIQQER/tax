@@ -1,3 +1,5 @@
+![QUIQQER Tax](bin/images/Readme.png)
+
 QUIQQER TAX
 ========
 
