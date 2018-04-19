@@ -43,6 +43,16 @@ class TaxEntry extends QUI\CRUD\Child
                 'quiqqer/tax',
                 'tax.'.$this->getId().'.title'
             );
+
+            QUI\Translator::delete(
+                'quiqqer/tax',
+                'tax.'.$this->getId().'.workingTitle'
+            );
+
+            QUI\Translator::delete(
+                'quiqqer/tax',
+                'tax.'.$this->getId().'.description'
+            );
         });
 
         // Update check
