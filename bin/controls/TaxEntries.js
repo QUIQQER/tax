@@ -515,8 +515,10 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                             if (!taxData) {
                                 var usedAreas = allEntries.map(function (o) {
-                                    return o.areaId;
+                                    return parseInt(o.areaId);
                                 }).unique();
+
+                                areas = areas.data;
 
                                 for (var i = 0, len = areas.length; i < len; i++) {
                                     if (usedAreas.contains(areas[i].id)) {
@@ -525,10 +527,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                                     new Element('option', {
                                         value: areas[i].id,
-                                        html : QUILocale.get(
-                                            areas[i].title[0],
-                                            areas[i].title[1]
-                                        )
+                                        html : areas[i].title
                                     }).inject(Select);
                                 }
                             } else {
@@ -536,7 +535,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                                 // areaid is defined
                                 new Element('div', {
-                                    text: QUILocale.get(
+                                    'class': 'field-container-field',
+                                    text   : QUILocale.get(
                                         'quiqqer/areas',
                                         'area.' + taxData.areaId + '.title'
                                     )

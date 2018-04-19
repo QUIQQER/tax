@@ -105,7 +105,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                         new TaxGroups().getList(),
                         new TaxTypes().getList()
                     ]).then(function (result) {
-
                         var taxEntries = result[0],
                             taxGroups  = result[1],
                             taxTypes   = result[2];
@@ -295,7 +294,6 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 Content.set('html', '');
 
                 require(['package/quiqqer/tax/bin/controls/TaxTypes'], function (TaxTypes) {
-
                     self.$View = new TaxTypes({
                         Panel : self,
                         events: {

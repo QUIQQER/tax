@@ -40,7 +40,10 @@
                     </text>
                     <icon>fa fa-percent</icon>
 
-                    <settings title="vat_settings" name="vat_settings">
+                    <settings name="vat_settings">
+                        <title>
+                            <locale group="quiqqer/tax" var="tax.settings.title"/>
+                        </title>
                         <input conf="shop.vat" type="string"
                                data-qui="package/quiqqer/products/bin/controls/fields/types/Vat"
                         >
