@@ -1,49 +1,61 @@
-<table class="data-table">
+<table class="data-table data-table-flexbox">
     <thead>
     <tr>
-        <th colspan="2">
+        <th>
             Eigenschaften
         </th>
     </tr>
     </thead>
 
     <tbody>
-    <tr class="odd">
-        <td style="width:120px">Mehrwertsteuer</td>
+    <tr>
         <td>
-            <input type="text" style="width: 50px" value="" name="vat"> %
+            <label class="field-container">
+                <span class="field-container-item">Mehrwertsteuer</span>
+                <input type="text" value="" name="vat" class="field-container-field"/>
+                <span class="field-container-item" style="text-align: center; width: 50px;">
+                    <span class="fa fa-percent"></span>
+                </span>
+            </label>
         </td>
     </tr>
-    <tr class="even">
-        <td>Titel</td>
+    <tr>
         <td>
-            <input type="text" style="width: 150px" value="" name="title">
+            <label class="field-container">
+                <span class="field-container-item">Titel</span>
+                <input type="text" value="" name="title" class="field-container-field"/>
+            </label>
         </td>
     </tr>
-    <tr class="odd">
-        <td>Zone</td>
+    <tr>
         <td>
-            <select style="width: 150px" name="area">
-            </select>
+            <label class="field-container">
+                <span class="field-container-item">Zone</span>
+                <select name="area" class="field-container-field"></select>
+            </label>
         </td>
     </tr>
     </tbody>
 </table>
 
-<table class="data-table">
+<table class="data-table data-table-flexbox">
     <thead>
     <tr>
-        <th colspan="2">
+        <th>
             EU-Umsatzsteuer
         </th>
     </tr>
     </thead>
 
     <tbody>
-    <tr class="odd">
+    <tr>
         <td>
-            <label style="width: 100%;">
-                <input type="checkbox" style="float: left; margin-right: 10px;" id="eu_vat" name="eu_vat" />
+            <label class="field-container">
+                <input type="checkbox"
+                       style="float: left; margin-right: 10px;"
+                       id="eu_vat"
+                       name="eu_vat"
+                />
                 <p style="width: calc(100% - 40px); clear: none;">
                     Beim Export in ein anderes Land der EU wird keine Umsatzsteuer
                     berechnet (steuerfreie innergemeinschaftliche Lieferung),

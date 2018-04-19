@@ -36,6 +36,10 @@
             <de><![CDATA[Steuern]]></de>
             <en><![CDATA[Tax]]></en>
         </locale>
+        <locale name="tax.settings.title">
+            <de><![CDATA[Allgemeine Steuer Einstellungen]]></de>
+            <en><![CDATA[General Tax Settings]]></en>
+        </locale>
 
         <locale name="menu.erp.tax.panel.title">
             <de><![CDATA[Steuergruppen]]></de>
