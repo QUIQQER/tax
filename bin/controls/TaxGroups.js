@@ -16,13 +16,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
     'package/quiqqer/tax/bin/controls/TaxGroupsEdit',
     'Locale'
 
-], function (QUI,
-             QUIControl,
-             QUIConfirm,
-             Grid,
-             TaxGroups,
-             TaxGroupsEdit,
-             QUILocale) {
+], function (QUI, QUIControl, QUIConfirm, Grid, TaxGroups, TaxGroupsEdit, QUILocale) {
 
     "use strict";
 
@@ -294,16 +288,12 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                         Win.Loader.show();
 
                         Handler.createChild().then(function (childId) {
-
                             var currentLang = QUILocale.getCurrent(),
                                 data        = {};
 
                             data[currentLang] = Input.value;
 
-                            require([
-                                'package/quiqqer/translator/bin/classes/Translator'
-                            ], function (Translator) {
-
+                            require(['package/quiqqer/translator/bin/classes/Translator'], function (Translator) {
                                 new Translator().setTranslation(
                                     'quiqqer/tax',
                                     'taxGroup.' + childId + '.title',
@@ -340,6 +330,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
             this.$Panel.Loader.show();
 
             this.$Panel.createSheet({
+                icon  : 'fa fa-percent',
                 title : QUILocale.get(lg, 'taxgroup.edit.title', {
                     taxGroupId: taxGroupId
                 }),

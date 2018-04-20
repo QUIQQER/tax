@@ -278,8 +278,8 @@
         </locale>
 
         <locale name="taxgroup.edit.title">
-            <de><![CDATA[Steuergruppe #[taxGroupdId]]]></de>
-            <en><![CDATA[Tax group #[taxGroupdId]]]></en>
+            <de><![CDATA[Steuergruppe #[taxGroupId]]]></de>
+            <en><![CDATA[Tax group #[taxGroupId]]]></en>
         </locale>
 
         <locale name="control.addEdit.tax">
@@ -304,6 +304,11 @@
                 When exporting to another EU country, no sales tax is charged (tax-free intra-Community delivery)
                 if the commercial customer in the recipient country taxes sales at the tax rate of the destination country.
             ]]></en>
+        </locale>
+
+        <locale name="tax.group.edit.prio">
+            <de><![CDATA[Zugewiesene Steuertypen Priorisierung]]></de>
+            <en><![CDATA[Assigned tax types prioritization]]></en>
         </locale>
 
         <!-- tax types -->
@@ -364,8 +369,8 @@
         </locale>
 
         <locale name="taxgroup.edit.title">
-            <de><![CDATA[Steuertyp #[taxGroupdId]]]></de>
-            <en><![CDATA[Tax type #[taxGroupdId]]]></en>
+            <de><![CDATA[Steuertyp #[taxGroupId]]]></de>
+            <en><![CDATA[Tax type #[taxGroupId]]]></en>
         </locale>
     </groups>
 

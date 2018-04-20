@@ -31,7 +31,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 
         initialize: function (options) {
             this.setAttributes({
-                title: QUILocale.get(lg, 'panel.title')
+                title: QUILocale.get(lg, 'panel.title'),
+                icon : 'fa fa-percent'
             });
 
             this.parent(options);

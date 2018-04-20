@@ -13,12 +13,12 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
     'controls/grid/Grid',
     'package/quiqqer/tax/bin/classes/TaxGroups',
     'package/quiqqer/translator/bin/controls/Update',
+    'Mustache',
 
     'text!package/quiqqer/tax/bin/controls/TaxGroupsEdit.html',
     'css!package/quiqqer/tax/bin/controls/TaxGroupsEdit.css'
 
-], function (QUI, QUIControl, QUILocale, QUIAjax,
-             Grid, Handler, Translation, template) {
+], function (QUI, QUIControl, QUILocale, QUIAjax, Grid, Handler, Translation, Mustache, template) {
     "use strict";
 
     return new Class({
@@ -62,7 +62,11 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
         create: function () {
             var Elm = this.parent();
 
-            Elm.set('html', template);
+            Elm.set('html', Mustache.render(template, {
+                header: QUILocale.get('quiqqer/system', 'settings'),
+                title : QUILocale.get('quiqqer/system', 'title'),
+                prio  : QUILocale.get('quiqqer/tax', 'tax.group.edit.prio')
+            }));
 
             return Elm;
         },
@@ -135,11 +139,9 @@ define('package/quiqqer/tax/bin/controls/TaxGroupsEdit', [
             this.$Grid.resize();
 
             this.$Handler.getTaxTypesFromGroup(this.getAttribute('taxGroupId')).then(function (result) {
-
                 self.$Grid.setData({
                     data: result
                 });
-
             }).then(function () {
                 self.fireEvent('loaded');
 
