@@ -252,10 +252,14 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                 text       : QUILocale.get(lg, 'taxgroup.window.create.text'),
                 information: QUILocale.get(lg, 'taxgroup.window.create.information'),
                 icon       : 'fa fa-plus',
-                textimage  : 'fa fa-plus',
+                texticon   : false,
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,
+                ok_button  : {
+                    text     : QUILocale.get('quiqqer/quiqqer', 'create'),
+                    textimage: 'fa fa-plus'
+                },
                 events     : {
                     onOpen: function (Win) {
                         var Content     = Win.getContent(),
@@ -270,9 +274,15 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                                 }
                             },
                             styles: {
-                                marginTop: 10
+                                marginTop: 10,
+                                width    : '100%'
                             }
                         }).inject(Information, 'after');
+
+                        Content.getElement('.textbody').setStyles({
+                            'float': 'none',
+                            margin : '15px auto 0'
+                        });
 
                         Input.focus();
                     },

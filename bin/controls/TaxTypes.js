@@ -248,10 +248,14 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 text       : QUILocale.get(lg, 'taxtype.window.create.text'),
                 information: QUILocale.get(lg, 'taxtype.window.create.information'),
                 icon       : 'fa fa-plus',
-                textimage  : 'fa fa-plus',
+                texticon   : false,
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,
+                ok_button  : {
+                    text     : QUILocale.get('quiqqer/quiqqer', 'create'),
+                    textimage: 'fa fa-plus'
+                },
                 events     : {
                     onOpen: function (Win) {
                         var Content     = Win.getContent(),
@@ -266,9 +270,15 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                                 }
                             },
                             styles: {
-                                marginTop: 10
+                                marginTop: 10,
+                                width    : '100%'
                             }
                         }).inject(Information, 'after');
+
+                        Content.getElement('.textbody').setStyles({
+                            'float': 'none',
+                            margin : '15px auto 0'
+                        });
 
                         Input.focus();
                     },
@@ -286,12 +296,8 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                         );
 
                         Handler.createChild().then(function (childId) {
-
                             Win.Loader.show(
-                                QUILocale.get(
-                                    lg,
-                                    'taxtype.message.translationvars.create'
-                                )
+                                QUILocale.get(lg, 'taxtype.message.translationvars.create')
                             );
 
                             var currentLang = QUILocale.getCurrent(),
@@ -302,7 +308,6 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                             require([
                                 'package/quiqqer/translator/bin/classes/Translator'
                             ], function (Translator) {
-
                                 new Translator({
                                     'package': 'quiqqer/tax'
                                 }).setTranslation(
@@ -311,22 +316,15 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                                     data
                                 ).then(function () {
                                     Win.Loader.show(
-                                        QUILocale.get(
-                                            lg,
-                                            'taxtype.message.translation.publish'
-                                        )
+                                        QUILocale.get(lg, 'taxtype.message.translation.publish')
                                     );
 
                                     return new Translator().publish();
-
                                 }).then(function () {
                                     return new Translator().refreshLocale();
-
                                 }).then(function () {
                                     return self.refresh();
-
                                 }).then(function () {
-
                                     self.updateChild(childId);
                                     Win.close();
                                 });
