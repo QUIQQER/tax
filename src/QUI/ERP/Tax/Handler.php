@@ -145,7 +145,8 @@ class Handler extends QUI\CRUD\Factory
                 'taxGroup.'.$newId.'.title',
                 [
                     $current   => '',
-                    'datatype' => 'php,js'
+                    'datatype' => 'php,js',
+                    'package'  => 'quiqqer/tax'
                 ]
             );
         } catch (QUI\Exception $Exception) {
@@ -294,7 +295,8 @@ class Handler extends QUI\CRUD\Factory
         try {
             QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], [
                 $current   => '',
-                'datatype' => 'php,js'
+                'datatype' => 'php,js',
+                'package'  => 'quiqqer/tax'
             ]);
         } catch (QUI\Exception $Exception) {
             QUI::getMessagesHandler()->addAttention(
