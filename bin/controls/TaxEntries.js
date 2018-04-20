@@ -19,12 +19,12 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
     'package/quiqqer/tax/bin/classes/TaxTypes',
     'package/quiqqer/areas/bin/classes/Handler',
     'Locale',
+    'Mustache',
 
     'text!package/quiqqer/tax/bin/controls/TaxEntriesCreate.html'
 
-], function (QUI, QUIControl, QUIConfirm, QUISelect,
-             Grid, TaxEntries, TaxGroups, TaxTypes, Areas,
-             QUILocale, createTemplate) {
+], function (QUI, QUIControl, QUIConfirm, QUISelect, Grid, TaxEntries, TaxGroups, TaxTypes, Areas,
+             QUILocale, Mustache, createTemplate) {
     "use strict";
 
     var lg          = 'quiqqer/tax',
@@ -475,27 +475,40 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @param {number} [taxEntryId] - update
          */
         childWindow: function (taxEntryId) {
-            var self  = this,
-                title = QUILocale.get(lg, 'tax.window.create.title');
+            var self       = this,
+                title      = QUILocale.get(lg, 'tax.window.create.title'),
+                buttonText = QUILocale.get('quiqqer/quiqqer', 'create'),
+                buttonIcon = 'fa fa-plus';
 
             if (typeof taxEntryId !== 'undefined') {
-                title = QUILocale.get(lg, 'tax.window.update.title');
+                title      = QUILocale.get(lg, 'tax.window.update.title');
+                buttonText = QUILocale.get('quiqqer/quiqqer', 'edit');
+                buttonIcon = 'fa fa-edit';
             }
 
             new QUIConfirm({
                 title    : title,
-                icon     : 'fa fa-plus',
+                icon     : buttonIcon,
                 maxHeight: 600,
                 maxWidth : 800,
                 autoclose: false,
+                ok_button: {
+                    text     : buttonText,
+                    textimage: buttonIcon
+                },
                 events   : {
                     onOpen: function (Win) {
-
                         var Content = Win.getContent();
 
                         Win.Loader.show();
 
-                        Content.set('html', createTemplate);
+                        Content.set('html', Mustache.render(createTemplate, {
+                            settings     : QUILocale.get('quiqqer/system', 'settings'),
+                            taxValue     : QUILocale.get(lg, 'control.addEdit.tax'),
+                            taxArea      : QUILocale.get(lg, 'control.addEdit.area'),
+                            euTitle      : QUILocale.get(lg, 'control.addEdit.eu'),
+                            euDescription: QUILocale.get(lg, 'control.addEdit.eu.description')
+                        }));
 
                         var Select = Content.getElement('[name="area"]'),
                             Data   = Promise.resolve(false);

@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>
-            Eigenschaften
+            {{settings}}
         </th>
     </tr>
     </thead>
@@ -11,7 +11,9 @@
     <tr>
         <td>
             <label class="field-container">
-                <span class="field-container-item">Mehrwertsteuer</span>
+                <span class="field-container-item">
+                    {{taxValue}}
+                </span>
                 <input type="text" value="" name="vat" class="field-container-field"/>
                 <span class="field-container-item" style="text-align: center; width: 50px;">
                     <span class="fa fa-percent"></span>
@@ -22,15 +24,9 @@
     <tr>
         <td>
             <label class="field-container">
-                <span class="field-container-item">Titel</span>
-                <input type="text" value="" name="title" class="field-container-field"/>
-            </label>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label class="field-container">
-                <span class="field-container-item">Zone</span>
+                <span class="field-container-item">
+                    {{taxArea}}
+                </span>
                 <select name="area" class="field-container-field"></select>
             </label>
         </td>
@@ -42,7 +38,7 @@
     <thead>
     <tr>
         <th>
-            EU-Umsatzsteuer
+            {{euTitle}}
         </th>
     </tr>
     </thead>
@@ -57,10 +53,7 @@
                        name="eu_vat"
                 />
                 <p style="width: calc(100% - 40px); clear: none;">
-                    Beim Export in ein anderes Land der EU wird keine Umsatzsteuer
-                    berechnet (steuerfreie innergemeinschaftliche Lieferung),
-                    wenn der gewerbliche Abnehmer im Empfängerland eine
-                    Umsatzbesteuerung mit dem Steuersatz des Ziellandes vornimmt.
+                    {{euDescription}}
                 </p>
             </label>
         </td>
