@@ -12,18 +12,20 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
     'package/quiqqer/tax/bin/classes/TaxGroups',
     'package/quiqqer/tax/bin/classes/TaxTypes',
     'Locale',
+    'Mustache',
     'package/quiqqer/translator/bin/controls/Update',
 
     'text!package/quiqqer/tax/bin/controls/TaxTypesEdit.html'
 
 ], function (QUI, QUIControl, QUISelect,
-             TaxGroups, TaxTypes, QUILocale, Translation, template) {
+             TaxGroups, TaxTypes, QUILocale, Mustache, Translation, template) {
     "use strict";
 
     var GroupHandler = new TaxGroups();
     var TypesHandler = new TaxTypes();
 
     return new Class({
+
         Extends: QUIControl,
         Type   : 'package/quiqqer/tax/bin/controls/TaxTypesEdit',
 
@@ -38,6 +40,9 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
         initialize: function (options) {
             this.parent(options);
 
+            this.$Title  = null;
+            this.$Select = null;
+
             this.addEvents({
                 onInject: this.$onInject
             });
@@ -49,7 +54,11 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
         create: function () {
             var Elm = this.parent();
 
-            Elm.set('html', template);
+            Elm.set('html', Mustache.render(template, {
+                header: QUILocale.get('quiqqer/tax', 'taxtype.edit.header'),
+                title : QUILocale.get('quiqqer/system', 'title'),
+                group : QUILocale.get('quiqqer/tax', 'taxtype.edit.taxGroup')
+            }));
 
             return Elm;
         },
@@ -58,22 +67,23 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
          * event : on inject
          */
         $onInject: function () {
-            var Elm    = this.getElm(),
-                id     = this.getAttribute('taxTypeId'),
-                Groups = Elm.getElement(
-                    '.quiqqer-taxtype-setting-table-group'
-                );
+            var Elm         = this.getElm(),
+                id          = this.getAttribute('taxTypeId'),
+                TitleParent = Elm.getElement('.quiqqer-taxtype-setting-table-title'),
+                Groups      = Elm.getElement('.quiqqer-taxtype-setting-table-group');
 
-            new Translation({
+            this.$Title = new Translation({
                 'group'  : 'quiqqer/tax',
                 'var'    : 'taxType.' + id + '.title',
                 'package': 'quiqqer/tax'
-            }).inject(
-                Elm.getElement('.quiqqer-taxtype-setting-table-title')
-            );
+            }).imports(TitleParent);
 
             this.$Select = new QUISelect({
-                showIcons: false
+                showIcons: false,
+                styles   : {
+                    border: 'none',
+                    width : '100%'
+                }
             }).inject(Groups);
 
             Promise.all([
@@ -94,8 +104,9 @@ define('package/quiqqer/tax/bin/controls/TaxTypesEdit', [
                     this.$Select.setValue(type.groupId);
                 }
 
-                this.fireEvent('loaded');
+                TitleParent.destroy();
 
+                this.fireEvent('loaded');
             }.bind(this));
         },
 

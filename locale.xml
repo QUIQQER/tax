@@ -369,9 +369,22 @@
         </locale>
 
         <locale name="taxgroup.edit.title">
-            <de><![CDATA[Steuertyp #[taxGroupId]]]></de>
-            <en><![CDATA[Tax type #[taxGroupId]]]></en>
+            <de><![CDATA[Steuergruppe #[taxGroupId]]]></de>
+            <en><![CDATA[Tax group #[taxGroupId]]]></en>
         </locale>
+        <locale name="taxtype.edit.title">
+            <de><![CDATA[Steuertyp #[taxTypeId]]]></de>
+            <en><![CDATA[Tax type #[taxTypeId]]]></en>
+        </locale>
+        <locale name="taxtype.edit.header">
+            <de><![CDATA[Steuerart]]></de>
+            <en><![CDATA[Tax type]]></en>
+        </locale>
+        <locale name="taxtype.edit.taxGroup">
+            <de><![CDATA[Steuergruppe]]></de>
+            <en><![CDATA[Tax group]]></en>
+        </locale>
+
     </groups>
 
     <groups name="quiqqer/tax" datatype="php">

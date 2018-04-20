@@ -349,6 +349,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
             this.$Panel.Loader.show();
 
             this.$Panel.createSheet({
+                icon  : 'fa fa-edit',
                 title : QUILocale.get(lg, 'taxtype.edit.title', {
                     taxTypeId: taxTypeId
                 }),
