@@ -641,8 +641,12 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 information: QUILocale.get(lg, 'tax.window.delete.information', {
                     id: taxEntryId
                 }),
+                ok_button  : {
+                    text     : QUILocale.get('quiqqer/system', 'delete'),
+                    textimage: 'fa fa-trash'
+                },
                 icon       : 'fa fa-trash',
-                textimage  : 'fa fa-trash',
+                texticon   : 'fa fa-trash',
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,

@@ -406,8 +406,12 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                 information: QUILocale.get(lg, 'taxgroup.window.delete.information', {
                     taxGroupId: taxGroupId
                 }),
+                ok_button  : {
+                    text     : QUILocale.get('quiqqer/system', 'delete'),
+                    textimage: 'fa fa-trash'
+                },
                 icon       : 'fa fa-trash',
-                textimage  : 'fa fa-trash',
+                texticon   : 'fa fa-trash',
                 maxHeight  : 300,
                 maxWidth   : 450,
                 autoclose  : false,
