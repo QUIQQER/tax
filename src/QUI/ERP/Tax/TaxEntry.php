@@ -146,4 +146,12 @@ class TaxEntry extends QUI\CRUD\Child
     {
         return $this->getAttribute('active') ? true : false;
     }
+
+    /**
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return true;
+    }
 }
