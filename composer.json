@@ -1,7 +1,7 @@
 {
   "name": "quiqqer/tax",
-  "type": "quiqqer-library",
-  "description": "",
+  "type": "quiqqer-module",
+  "description": "The QUIQQER Tax module adds TAX functionality to QUIQQER. Its possible to manage different tax rates for each country.",
   "version": "dev-master",
   "license": "GPL-3.0+",
   "authors": [

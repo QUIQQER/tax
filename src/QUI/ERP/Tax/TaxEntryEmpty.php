@@ -52,4 +52,12 @@ class TaxEntryEmpty extends QUI\QDOM
     {
         return true;
     }
+
+    /**
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return false;
+    }
 }

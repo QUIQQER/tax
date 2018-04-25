@@ -129,4 +129,12 @@ class TaxType
     {
         $this->Handler->deleteTaxType($this->getId());
     }
+
+    /**
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return true;
+    }
 }

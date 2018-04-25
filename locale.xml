@@ -58,6 +58,10 @@
             <de><![CDATA[Steuergruppe nicht gefunden]]></de>
             <en><![CDATA[Tax group not found]]></en>
         </locale>
+        <locale name="exception.taxentry.not.found">
+            <de><![CDATA[Steuersatz wurde nicht gefunden]]></de>
+            <en><![CDATA[Tax was not found]]></en>
+        </locale>
 
         <locale name="exception.area.not.found">
             <de><![CDATA[Zone wurde nicht gefunden]]></de>

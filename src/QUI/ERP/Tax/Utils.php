@@ -130,7 +130,7 @@ class Utils
                 self::$userTaxes[$uid] = $TaxEntry;
             }
         } catch (QUI\Exception $Exception) {
-            QUI\System\Log::addWarning($Exception->getMessage());
+            QUI\System\Log::writeDebugException($Exception);
         }
 
         return self::$userTaxes[$uid];
