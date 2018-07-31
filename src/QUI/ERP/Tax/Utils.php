@@ -92,19 +92,20 @@ class Utils
                 throw new QUI\Exception('Tax Entry not found');
             }
 
-
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
-            if ($TaxEntry->getAttribute('euvat') &&
-                $User->getAttribute('quiqqer.erp.euVatId')
-            ) {
+
+            // If the user is EU VAT user and the user has entered a VAT ID, then VAT is 0 (it is no error)
+            if ($TaxEntry->getAttribute('euvat') && $User->getAttribute('quiqqer.erp.euVatId')) {
                 self::$userTaxes[$uid] = new TaxEntryEmpty();
+                self::$userTaxes[$uid]->setAttribute('euvat', 1);
             } else {
                 self::$userTaxes[$uid] = $TaxEntry;
             }
 
             return self::$userTaxes[$uid];
         } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
         }
 
         // if for user cant be found a VAT, use the shop settings
@@ -137,7 +138,7 @@ class Utils
     }
 
     /**
-     * Use the user EU vat?
+     * Is the user an EU VAT user?
      *
      * @param User $User
      * @return boolean
@@ -145,8 +146,13 @@ class Utils
     public static function isUserEuVatUser(User $User)
     {
         try {
-            return self::getTaxByUser($User)->getAttribute('euvat');
+//            QUI\System\Log::writeRecursive('######');
+//            QUI\System\Log::writeRecursive(get_class(self::getTaxByUser($User)));
+
+            return self::getTaxByUser($User)->getAttribute('euvat')
+                   && $User->getAttribute('quiqqer.erp.euVatId');
         } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
         }
 
         return false;
