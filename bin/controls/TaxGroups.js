@@ -175,7 +175,6 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
 
             this.refresh().then(function () {
                 return self.resize();
-
             }).then(function () {
                 return new Promise(function (resolve) {
                     moofx(self.getElm()).animate({
@@ -381,6 +380,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                     onClose: function (Sheet) {
                         Sheet.Edit.destroy();
                         Sheet.destroy();
+                        self.refresh();
                     },
 
                     onResize: function (Sheet) {
