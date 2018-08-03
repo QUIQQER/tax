@@ -84,7 +84,7 @@ class Utils
 
             $TaxType = self::getTaxTypeByArea($Area);
 
-            if ($TaxType instanceof TaxGroup) {
+            if ($TaxType instanceof TaxType) {
                 $TaxEntry = self::getTaxEntry($TaxType, $Area);
             } elseif ($TaxType instanceof TaxEntry) {
                 $TaxEntry = $TaxType;
@@ -145,7 +145,9 @@ class Utils
      */
     public static function isUserEuVatUser(User $User)
     {
-        if ($User->getAttribute('quiqqer.erp.euVatId') === false) {
+        $euVatId = $User->getAttribute('quiqqer.erp.euVatId');
+
+        if (empty($euVatId)) {
             return false;
         }
 
