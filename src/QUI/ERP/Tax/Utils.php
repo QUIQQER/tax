@@ -84,14 +84,13 @@ class Utils
 
             $TaxType = self::getTaxTypeByArea($Area);
 
-            if ($TaxType instanceof TaxGroup) {
+            if ($TaxType instanceof TaxType) {
                 $TaxEntry = self::getTaxEntry($TaxType, $Area);
             } elseif ($TaxType instanceof TaxEntry) {
                 $TaxEntry = $TaxType;
             } else {
                 throw new QUI\Exception('Tax Entry not found');
             }
-
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
@@ -144,7 +143,9 @@ class Utils
      */
     public static function isUserEuVatUser(User $User)
     {
-        if ($User->getAttribute('quiqqer.erp.euVatId') === false) {
+        $euVatId = $User->getAttribute('quiqqer.erp.euVatId');
+
+        if (empty($euVatId)) {
             return false;
         }
 
