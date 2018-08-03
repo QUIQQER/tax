@@ -145,6 +145,10 @@ class Utils
      */
     public static function isUserEuVatUser(User $User)
     {
+        if ($User->getAttribute('quiqqer.erp.euVatId') === false) {
+            return false;
+        }
+
         try {
 //            QUI\System\Log::writeRecursive('######');
 //            QUI\System\Log::writeRecursive(get_class(self::getTaxByUser($User)));
