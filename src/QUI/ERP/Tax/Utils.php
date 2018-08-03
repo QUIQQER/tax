@@ -144,6 +144,10 @@ class Utils
      */
     public static function isUserEuVatUser(User $User)
     {
+        if ($User->getAttribute('quiqqer.erp.euVatId') === false) {
+            return false;
+        }
+
         try {
             return self::getTaxByUser($User)->getAttribute('euvat');
         } catch (QUI\Exception $Exception) {
