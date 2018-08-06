@@ -1,0 +1,18 @@
+.quiqqer-tax-availableTax-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.quiqqer-tax-availableTax-list-entry {
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.quiqqer-tax-availableTax-list-entry-selected {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.quiqqer-tax-availableTax-list-entry:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
