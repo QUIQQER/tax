@@ -389,6 +389,11 @@
             <en><![CDATA[Tax group]]></en>
         </locale>
 
+        <locale name="window.availableTaxList.title">
+            <de><![CDATA[Verfügbare Steuersätze]]></de>
+            <en><![CDATA[Available tax rates]]></en>
+        </locale>
+
     </groups>
 
     <groups name="quiqqer/tax" datatype="php">

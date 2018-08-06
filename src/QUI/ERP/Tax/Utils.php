@@ -23,6 +23,20 @@ class Utils
     protected static $userTaxes = [];
 
     /**
+     * Returns all available vat / tax list
+     *
+     * @return array
+     */
+    public static function getAvailableTaxList()
+    {
+        return QUI::getDataBase()->fetch([
+            'select' => 'vat',
+            'from'   => QUI::getDBTableName('tax'),
+            'group'  => 'vat'
+        ]);
+    }
+
+    /**
      * Return the shop tax tax
      *
      * @return TaxType|false
