@@ -194,10 +194,6 @@ class Utils
             ]);
         }
 
-        if (count($result) == 1) {
-            return $result[0];
-        }
-
         /* @var $TaxEntry QUI\ERP\Tax\TaxEntry */
         $TaxEntry = $result[0];
 

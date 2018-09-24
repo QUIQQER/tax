@@ -596,18 +596,25 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         }
 
                         if (typeof taxEntryId === 'undefined') {
-
                             Handler.createChild(
                                 self.$Select.getValue(),
                                 Area.value
                             ).then(function (newId) {
                                 return Handler.updateChild(newId, data);
-
                             }).then(function () {
                                 return self.refresh();
-
                             }).then(function () {
                                 Win.close();
+                            }).catch(function (Exception) {
+                                if (typeof Exception.getMessage === 'function') {
+                                    QUI.getMessageHandler().then(function (MH) {
+                                        MH.addError(Exception.getMessage());
+                                    });
+
+                                    console.error(Exception.getMessage());
+                                } else {
+                                    console.error(Exception);
+                                }
                             });
 
                             return;
