@@ -66,11 +66,17 @@ define('package/quiqqer/tax/bin/controls/taxList/AvailableTaxListWindow', [
                 return;
             }
 
-            if (!this.$List.getValue()) {
+            var value = this.$List.getValue();
+
+            var isNumeric = function (value) {
+                return !isNaN(parseFloat(value)) && isFinite(value)
+            };
+
+            if (!isNumeric(value)) {
                 return;
             }
 
-            this.fireEvent('submit', [this, this.$List.getValue()]);
+            this.fireEvent('submit', [this, value]);
 
             if (this.getAttribute('autoclose')) {
                 this.close();

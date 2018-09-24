@@ -45,8 +45,28 @@ class Handler extends QUI\CRUD\Factory
     {
         parent::__construct();
 
-        $this->Events->addEvent('onCreateBegin', function () {
+        $this->Events->addEvent('onCreateBegin', function (&$childData) {
             Permission::checkPermission('quiqqer.tax.create');
+
+            if (empty($childData['taxGroupId'])) {
+                $childData['taxGroupId'] = 0;
+            }
+
+            if (empty($childData['taxGroupId'])) {
+                $childData['vat'] = 0;
+            }
+
+            if (empty($childData['areaId'])) {
+                $childData['areaId'] = 0;
+            }
+
+            if (empty($childData['active'])) {
+                $childData['active'] = 0;
+            }
+
+            if (empty($childData['euvat'])) {
+                $childData['euvat'] = 0;
+            }
         });
 
         // create new translation var for the tax
