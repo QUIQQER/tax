@@ -13,7 +13,7 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_types_getList',
     function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $groups  = $Handler->getTaxTypes(json_decode($ids, true));
+        $groups  = $Handler->getTaxTypes(\json_decode($ids, true));
         $result  = [];
 
         /* @var $TaxType \QUI\ERP\Tax\TaxType */

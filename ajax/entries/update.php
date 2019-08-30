@@ -14,7 +14,7 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_update',
     function ($taxId, $data) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $data    = json_decode($data, true);
+        $data    = \json_decode($data, true);
 
         if (!isset($data['taxTypeId'])) {
             throw new QUI\Exception([

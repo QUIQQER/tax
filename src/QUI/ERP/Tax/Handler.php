@@ -144,8 +144,8 @@ class Handler extends QUI\CRUD\Factory
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
 
-        if (is_array($groups) && count($groups)) {
-            $newId = max(array_keys($groups)) + 1;
+        if (\is_array($groups) && \count($groups)) {
+            $newId = \max(\array_keys($groups)) + 1;
         } else {
             $groups = [];
             $newId  = 0;
@@ -192,16 +192,16 @@ class Handler extends QUI\CRUD\Factory
         $groups = $Config->getSection('taxgroups');
         $result = [];
 
-        if (!is_array($ids)) {
+        if (!\is_array($ids)) {
             $ids = false;
         }
 
-        if (!$groups || !is_array($groups)) {
+        if (!$groups || !\is_array($groups)) {
             $groups = [];
         }
 
         foreach ($groups as $key => $var) {
-            if ($ids && !in_array($key, $ids)) {
+            if ($ids && !\in_array($key, $ids)) {
                 continue;
             }
 
@@ -297,8 +297,8 @@ class Handler extends QUI\CRUD\Factory
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
 
-        if (is_array($types) && count($types)) {
-            $newId = max(array_keys($types)) + 1;
+        if (\is_array($types) && \count($types)) {
+            $newId = \max(\array_keys($types)) + 1;
         } else {
             $types = [];
             $newId = 0;
@@ -341,7 +341,7 @@ class Handler extends QUI\CRUD\Factory
         $types  = $Config->getSection('taxtypes');
         $result = [];
 
-        if (!is_array($ids)) {
+        if (!\is_array($ids)) {
             $ids = false;
         }
 
@@ -350,7 +350,7 @@ class Handler extends QUI\CRUD\Factory
         }
 
         foreach ($types as $key => $var) {
-            if ($ids && !in_array($key, $ids)) {
+            if ($ids && !\in_array($key, $ids)) {
                 continue;
             }
 

@@ -88,7 +88,7 @@ class TaxEntry extends QUI\CRUD\Child
                 $usedAreas[] = $child['areaId'];
             }
 
-            if (in_array($this->getArea()->getId(), $usedAreas)) {
+            if (\in_array($this->getArea()->getId(), $usedAreas)) {
                 throw new QUI\Exception([
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',

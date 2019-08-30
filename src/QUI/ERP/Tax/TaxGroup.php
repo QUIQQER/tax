@@ -54,7 +54,7 @@ class TaxGroup
         $this->Handler = $Handler;
 
         $taxTypes = $Config->get('taxgroups', $taxGroupId);
-        $taxTypes = explode(',', $taxTypes);
+        $taxTypes = \explode(',', $taxTypes);
 
         foreach ($taxTypes as $taxTypeId) {
             try {
@@ -119,7 +119,7 @@ class TaxGroup
      */
     public function setTaxTypes($types = [])
     {
-        if (!is_array($types)) {
+        if (!\is_array($types)) {
             return;
         }
 
@@ -164,7 +164,7 @@ class TaxGroup
         return [
             'id'       => $this->getId(),
             'title'    => $this->getTitle(),
-            'taxtypes' => implode(',', $types)
+            'taxtypes' => \implode(',', $types)
         ];
     }
 

@@ -13,7 +13,7 @@ QUI::$Ajax->registerFunction(
         $Handler  = new QUI\ERP\Tax\Handler();
         $TaxGroup = $Handler->getTaxGroup($taxGroupId);
 
-        $TaxGroup->setTaxTypes(json_decode($data, true));
+        $TaxGroup->setTaxTypes(\json_decode($data, true));
         $TaxGroup->update();
     },
     ['taxGroupId', 'data'],
