@@ -13,7 +13,7 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_getList',
     function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $groups  = $Handler->getTaxGroups(json_decode($ids, true));
+        $groups  = $Handler->getTaxGroups(\json_decode($ids, true));
         $result  = [];
 
         /* @var $TaxGroup \QUI\ERP\Tax\TaxGroup */
@@ -27,7 +27,7 @@ QUI::$Ajax->registerFunction(
                 $taxTypeNames[] = $TaxType->getTitle();
             }
 
-            $attributes['taxTypeNames'] = implode(', ', $taxTypeNames);
+            $attributes['taxTypeNames'] = \implode(', ', $taxTypeNames);
 
             $result[] = $attributes;
         }

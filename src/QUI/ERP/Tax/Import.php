@@ -128,7 +128,7 @@ class Import
                         continue;
                     }
 
-                    $countries = explode(',', $countries);
+                    $countries = \explode(',', $countries);
                     $Area      = self::getAreaByCountries($countries);
 
                     if (!$Area) {
@@ -229,7 +229,7 @@ class Import
             return [];
         }
 
-        if (is_string($localeData)) {
+        if (\is_string($localeData)) {
             foreach ($availableLanguages as $lang) {
                 $result[$lang] = $localeData;
             }
@@ -269,7 +269,7 @@ class Import
 
         foreach ($areas as $area) {
             foreach ($countries as $country) {
-                if (strpos($area['countries'], $country) !== false) {
+                if (\strpos($area['countries'], $country) !== false) {
                     /* @var $Area QUI\ERP\Areas\Area */
                     $Area = $AreaHandler->getChild((int)$area['id']);
 

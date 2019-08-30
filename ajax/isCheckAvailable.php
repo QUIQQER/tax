@@ -10,7 +10,7 @@
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_isCheckAvailable',
     function () {
-        return class_exists('\SoapClient');
+        return \class_exists('\SoapClient');
     },
     false,
     'Permission::checkAdminUser'

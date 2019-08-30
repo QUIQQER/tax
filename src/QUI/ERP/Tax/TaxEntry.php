@@ -70,6 +70,11 @@ class TaxEntry extends QUI\CRUD\Child
                 ]);
             }
 
+            // params
+            $this->setAttribute('vat', \floatval($this->getAttribute('vat')));
+            $this->setAttribute('active', (int)$this->getAttribute('active'));
+            $this->setAttribute('euvat', (int)$this->getAttribute('euvat'));
+
             // we can use only unused areas
             foreach ($children as $child) {
                 // ignore me
@@ -88,7 +93,7 @@ class TaxEntry extends QUI\CRUD\Child
                 $usedAreas[] = $child['areaId'];
             }
 
-            if (in_array($this->getArea()->getId(), $usedAreas)) {
+            if (\in_array($this->getArea()->getId(), $usedAreas)) {
                 throw new QUI\Exception([
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',
