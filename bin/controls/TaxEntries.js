@@ -297,7 +297,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                 return new Promise(function (res2) {
                     if (value && value !== '') {
-                        return this.loadTaxByTaxType(value);
+                        return self.loadTaxByTaxType(value).then(res2, reject);
                     }
 
                     TypeHandler.getList().then(function (list) {
