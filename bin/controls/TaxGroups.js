@@ -384,7 +384,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                     },
 
                     onResize: function (Sheet) {
-                        if (Sheet.Edit) {
+                        if (typeof Sheet.Edit !== 'undefined' && Sheet.Edit) {
                             Sheet.Edit.resize();
                         }
                     }
