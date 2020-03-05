@@ -2,6 +2,7 @@
     "name": "quiqqer\/tax",
     "type": "quiqqer-module",
     "description": "The QUIQQER Tax module adds TAX functionality to QUIQQER. Its possible to manage different tax rates for each country.",
+    "version": "1.2.0",
     "license": "GPL-3.0+",
     "authors": [
         {
