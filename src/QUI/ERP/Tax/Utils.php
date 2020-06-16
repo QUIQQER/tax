@@ -87,7 +87,13 @@ class Utils
         self::$userTaxes[$uid] = new TaxEntryEmpty();
 
         try {
-            $Country = $User->getCountry();
+            if ($User->getAttribute('CurrentAddress')) {
+                /* @var QUI\ERP\Address $Address */
+                $Address = $User->getAttribute('CurrentAddress');
+                $Country = $Address->getCountry();
+            } else {
+                $Country = $User->getCountry();
+            }
 
             if (!$Country) {
                 throw new QUI\Exception('Country not found');
@@ -115,16 +121,18 @@ class Utils
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
             // dann ist VAT 0
-            if ($TaxEntry->getAttribute('euvat') &&
-                $User->getAttribute('quiqqer.erp.euVatId')
-            ) {
+
+            // If the user is EU VAT user and the user has entered a VAT ID, then VAT is 0 (it is no error)
+            if ($TaxEntry->getAttribute('euvat') && $User->getAttribute('quiqqer.erp.euVatId')) {
                 self::$userTaxes[$uid] = new TaxEntryEmpty();
+                self::$userTaxes[$uid]->setAttribute('euvat', 1);
             } else {
                 self::$userTaxes[$uid] = $TaxEntry;
             }
 
             return self::$userTaxes[$uid];
         } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
         }
 
         // if for user cant be found a VAT, use the shop settings
@@ -157,7 +165,19 @@ class Utils
     }
 
     /**
-     * Use the user EU vat?
+     * @param User $User
+     */
+    public static function cleanUpUserTaxCache(User $User)
+    {
+        $uid = $User->getId();
+
+        if (isset(self::$userTaxes[$uid])) {
+            unset(self::$userTaxes[$uid]);
+        }
+    }
+
+    /**
+     * Is the user an EU VAT user?
      *
      * @param User $User
      * @return boolean
@@ -171,8 +191,10 @@ class Utils
         }
 
         try {
-            return self::getTaxByUser($User)->getAttribute('euvat');
+            return self::getTaxByUser($User)->getAttribute('euvat')
+                   && $User->getAttribute('quiqqer.erp.euVatId');
         } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
         }
 
         return false;
