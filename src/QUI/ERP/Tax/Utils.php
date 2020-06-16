@@ -87,7 +87,13 @@ class Utils
         self::$userTaxes[$uid] = new TaxEntryEmpty();
 
         try {
-            $Country = $User->getCountry();
+            if ($User->getAttribute('CurrentAddress')) {
+                /* @var QUI\ERP\Address $Address */
+                $Address = $User->getAttribute('CurrentAddress');
+                $Country = $Address->getCountry();
+            } else {
+                $Country = $User->getCountry();
+            }
 
             if (!$Country) {
                 throw new QUI\Exception('Country not found');
@@ -159,6 +165,18 @@ class Utils
     }
 
     /**
+     * @param User $User
+     */
+    public static function cleanUpUserTaxCache(User $User)
+    {
+        $uid = $User->getId();
+
+        if (isset(self::$userTaxes[$uid])) {
+            unset(self::$userTaxes[$uid]);
+        }
+    }
+
+    /**
      * Is the user an EU VAT user?
      *
      * @param User $User
@@ -173,9 +191,6 @@ class Utils
         }
 
         try {
-//            QUI\System\Log::writeRecursive('######');
-//            QUI\System\Log::writeRecursive(get_class(self::getTaxByUser($User)));
-
             return self::getTaxByUser($User)->getAttribute('euvat')
                    && $User->getAttribute('quiqqer.erp.euVatId');
         } catch (QUI\Exception $Exception) {
