@@ -84,7 +84,10 @@ class Utils
             return self::$userTaxes[$uid];
         }
 
-        self::$userTaxes[$uid] = new TaxEntryEmpty();
+        $DefaultTaxType  = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
+        $DefaultTaxEntry = self::getTaxEntry($DefaultTaxType, QUI\ERP\Defaults::getArea());
+
+        self::$userTaxes[$uid] = $DefaultTaxEntry;
 
         try {
             if ($User->getAttribute('CurrentAddress')) {
@@ -117,6 +120,10 @@ class Utils
                 $TaxEntry = $TaxType;
             } else {
                 throw new QUI\Exception('Tax Entry not found');
+            }
+
+            if (!$TaxEntry->isActive()) {
+                return self::$userTaxes[$uid];
             }
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
