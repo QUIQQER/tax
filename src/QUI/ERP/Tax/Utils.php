@@ -131,7 +131,10 @@ class Utils
 
             // If the user is EU VAT user and the user has entered a VAT ID, then VAT is 0 (it is no error)
             if ($TaxEntry->getAttribute('euvat') && $User->getAttribute('quiqqer.erp.euVatId')) {
-                self::$userTaxes[$uid] = new TaxEntryEmpty();
+                self::$userTaxes[$uid] = new TaxEntryEmpty([
+                    'Area' => $Area
+                ]);
+
                 self::$userTaxes[$uid]->setAttribute('euvat', 1);
             } else {
                 self::$userTaxes[$uid] = $TaxEntry;
