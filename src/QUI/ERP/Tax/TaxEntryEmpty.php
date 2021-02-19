@@ -17,10 +17,21 @@ use QUI;
 class TaxEntryEmpty extends QUI\QDOM
 {
     /**
-     * Area constructor
+     * @var null
      */
-    public function __construct()
+    protected $Area = null;
+
+    /**
+     * Area constructor
+     *
+     * @param array $params - optionals
+     *  [Area]
+     */
+    public function __construct($params = [])
     {
+        if (isset($params['Area']) && $params['Area'] instanceof QUI\ERP\Areas\Area) {
+            $this->Area = $params['Area'];
+        }
     }
 
     /**
@@ -28,9 +39,9 @@ class TaxEntryEmpty extends QUI\QDOM
      *
      * @return null|QUI\ERP\Areas\Area
      */
-    public function getArea()
+    public function getArea(): ?QUI\ERP\Areas\Area
     {
-        return null;
+        return $this->Area;
     }
 
     /**
@@ -38,7 +49,7 @@ class TaxEntryEmpty extends QUI\QDOM
      *
      * @return integer
      */
-    public function getValue()
+    public function getValue(): int
     {
         return (int)0;
     }
@@ -48,7 +59,7 @@ class TaxEntryEmpty extends QUI\QDOM
      *
      * @return boolean
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return true;
     }
@@ -56,7 +67,7 @@ class TaxEntryEmpty extends QUI\QDOM
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return false;
     }

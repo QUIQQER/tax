@@ -52,6 +52,43 @@ define('package/quiqqer/tax/bin/controls/taxList/AvailableTaxListWindow', [
                     events: {
                         onLoad: function () {
                             self.Loader.hide();
+
+                            var Content = self.getContent();
+
+                            Content.getElement('.quiqqer-tax-availableTax-list-entry').click();
+                            Content.set('tabindex', -1);
+
+                            Content.addEvents({
+                                keydown: function (event) {
+                                    var ActiveNode = Content.getElement('.quiqqer-tax-availableTax-list-entry-selected');
+
+                                    if (event.key === 'up') {
+                                        var PreviousNode = ActiveNode.getPrevious('.quiqqer-tax-availableTax-list-entry');
+
+                                        if (PreviousNode) {
+                                            PreviousNode.click();
+                                        }
+
+                                        return;
+                                    }
+
+                                    if (event.key === 'down') {
+                                        var NextNode = ActiveNode.getNext('.quiqqer-tax-availableTax-list-entry');
+
+                                        if (NextNode) {
+                                            NextNode.click();
+                                        }
+
+                                        return;
+                                    }
+
+                                    if (event.key === 'enter') {
+                                        self.submit();
+                                    }
+                                },
+                            });
+
+                            Content.focus();
                         }
                     }
                 }).inject(self.getContent());
