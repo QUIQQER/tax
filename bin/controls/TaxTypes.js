@@ -21,6 +21,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
         Handler = new TaxTypes();
 
     return new Class({
+
         Extends: QUIControl,
         Type   : 'package/quiqqer/tax/bin/controls/TaxTypes',
 
@@ -250,7 +251,7 @@ define('package/quiqqer/tax/bin/controls/TaxTypes', [
                 icon       : 'fa fa-plus',
                 texticon   : false,
                 maxHeight  : 300,
-                maxWidth   : 450,
+                maxWidth   : 500,
                 autoclose  : false,
                 ok_button  : {
                     text     : QUILocale.get('quiqqer/quiqqer', 'create'),
