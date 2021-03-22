@@ -222,7 +222,8 @@ class Utils
         $Taxes  = new Handler();
         $result = $Taxes->getChildren([
             'where' => [
-                'areaId' => $Area->getId()
+                'areaId' => $Area->getId(),
+                'active' => 1
             ]
         ]);
 
