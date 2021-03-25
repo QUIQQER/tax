@@ -55,6 +55,14 @@ class TaxEntryEmpty extends QUI\QDOM
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return -1;
+    }
+
+    /**
      * Is the tax active?
      *
      * @return boolean
