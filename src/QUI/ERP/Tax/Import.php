@@ -18,7 +18,7 @@ class Import
     /**
      * @return array
      */
-    public static function getAvailableImports()
+    public static function getAvailableImports(): array
     {
         $dir      = OPT_DIR.'quiqqer/tax/setup/';
         $xmlFiles = QUI\Utils\System\File::readDir($dir);
@@ -46,7 +46,7 @@ class Import
      * @param string $fileName - file.xml
      * @throws QUI\Exception
      */
-    public static function importPreconfigureAreas($fileName)
+    public static function importPreconfigureAreas(string $fileName)
     {
         if (self::existPreconfigure($fileName) === false) {
             throw new QUI\Exception(
@@ -64,7 +64,7 @@ class Import
      * @param string $file
      * @return boolean
      */
-    public static function existPreconfigure($file)
+    public static function existPreconfigure(string $file): bool
     {
         $availableImports = QUI\ERP\Tax\Import::getAvailableImports();
 
@@ -83,7 +83,7 @@ class Import
      * @param string $xmlFile - XML File, path to the xml file
      * @throws QUI\Exception
      */
-    public static function import($xmlFile)
+    public static function import(string $xmlFile)
     {
         $Document   = XML::getDomFromXml($xmlFile);
         $TaxHandler = new QUI\ERP\Tax\Handler();
@@ -184,7 +184,7 @@ class Import
      * @param \DOMElement $Parent
      * @return string|array
      */
-    protected static function getTextNodeParamsFromNode($Parent)
+    protected static function getTextNodeParamsFromNode(\DOMElement $Parent)
     {
         /* @var $Child \DOMElement */
         foreach ($Parent->childNodes as $Child) {
@@ -202,7 +202,6 @@ class Import
                 }
 
                 return $Child->nodeValue;
-                break;
             }
         }
 
@@ -216,18 +215,12 @@ class Import
      * @param \DOMElement $Parent
      * @return array
      */
-    protected static function getLocaleDataFromNode($Parent)
+    protected static function getLocaleDataFromNode(\DOMElement $Parent): array
     {
         $result     = [];
         $localeData = self::getTextNodeParamsFromNode($Parent);
 
-        try {
-            $availableLanguages = QUI\Translator::getAvailableLanguages();
-        } catch (QUI\Exception $Exception) {
-            QUI\System\Log::writeException($Exception);
-
-            return [];
-        }
+        $availableLanguages = QUI\Translator::getAvailableLanguages();
 
         if (\is_string($localeData)) {
             foreach ($availableLanguages as $lang) {

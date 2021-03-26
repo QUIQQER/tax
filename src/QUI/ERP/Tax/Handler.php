@@ -79,7 +79,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @return Handler
      */
-    public static function getInstance()
+    public static function getInstance(): Handler
     {
         if (self::$Instance === null) {
             self::$Instance = new self();
@@ -93,7 +93,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @return string
      */
-    public function getDataBaseTableName()
+    public function getDataBaseTableName(): string
     {
         return QUI::getDBTableName('tax');
     }
@@ -103,7 +103,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @return string
      */
-    public function getChildClass()
+    public function getChildClass(): string
     {
         return 'QUI\ERP\Tax\TaxEntry';
     }
@@ -113,7 +113,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @return array
      */
-    public function getChildAttributes()
+    public function getChildAttributes(): array
     {
         return [
             'taxTypeId',
@@ -137,7 +137,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function createTaxGroup()
+    public function createTaxGroup(): TaxGroup
     {
         Permission::checkPermission('quiqqer.tax.create');
 
@@ -186,7 +186,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function getTaxGroups($ids = false)
+    public function getTaxGroups($ids = false): array
     {
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
@@ -214,12 +214,12 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return a tax group
      *
-     * @param integer $taxGroupId - Tax Group ID
+     * @param integer|string $taxGroupId - Tax Group ID
      * @return TaxGroup
      *
      * @throws QUI\Exception
      */
-    public function getTaxGroup($taxGroupId)
+    public function getTaxGroup($taxGroupId): TaxGroup
     {
         if (!isset($this->taxGroups[$taxGroupId])) {
             $this->taxGroups[$taxGroupId] = new TaxGroup($taxGroupId);
@@ -231,7 +231,7 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Delete a tax group
      *
-     * @param integer $taxGroupId - Tax Group ID
+     * @param integer|string $taxGroupId - Tax Group ID
      * @throws QUI\Exception
      */
     public function deleteTaxGroup($taxGroupId)
@@ -266,12 +266,12 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Update a group
      *
-     * @param integer $taxGroupId - Group-ID
+     * @param integer|string $taxGroupId - Group-ID
      * @param array $types - array of types eq: - [typeId, typeId, typeId]
      *
      * @throws QUI\Exception
      */
-    public function updateTaxGroup($taxGroupId, $types)
+    public function updateTaxGroup($taxGroupId, $types = [])
     {
         $TaxGroup = $this->getTaxGroup($taxGroupId);
         $TaxGroup->setTaxTypes($types);
@@ -290,7 +290,7 @@ class Handler extends QUI\CRUD\Factory
      * @throws QUI\Exception
      * @throws QUI\Permissions\Exception
      */
-    public function createTaxType()
+    public function createTaxType(): TaxType
     {
         Permission::checkPermission('quiqqer.tax.create');
 
@@ -335,7 +335,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function getTaxTypes($ids = false)
+    public function getTaxTypes($ids = false): array
     {
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
@@ -363,12 +363,12 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return a tax type
      *
-     * @param integer $taxTypeId - Tax Type ID
+     * @param integer|string $taxTypeId - Tax Type ID
      * @return TaxType
      *
      * @throws QUI\Exception
      */
-    public function getTaxType($taxTypeId)
+    public function getTaxType($taxTypeId): TaxType
     {
         if (!isset($this->taxTypes[$taxTypeId])) {
             $this->taxTypes[$taxTypeId] = new TaxType($taxTypeId);
@@ -380,7 +380,7 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Delete a tax type
      *
-     * @param integer $taxTypeId - Tax Type ID
+     * @param integer|string $taxTypeId - Tax Type ID
      *
      * @throws QUI\Exception
      */
@@ -424,7 +424,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function getConfig()
+    public function getConfig(): QUI\Config
     {
         return QUI::getPackage('quiqqer/tax')->getConfig();
     }
