@@ -28,7 +28,7 @@ class TaxEntry extends QUI\CRUD\Child
      * @param int $id
      * @param QUI\CRUD\Factory $Factory
      */
-    public function __construct($id, QUI\CRUD\Factory $Factory)
+    public function __construct(int $id, QUI\CRUD\Factory $Factory)
     {
         parent::__construct($id, $Factory);
 
@@ -111,7 +111,7 @@ class TaxEntry extends QUI\CRUD\Child
      *
      * @return null|QUI\ERP\Areas\Area
      */
-    public function getArea()
+    public function getArea(): ?QUI\ERP\Areas\Area
     {
         if ($this->Area) {
             return $this->Area;
@@ -135,19 +135,19 @@ class TaxEntry extends QUI\CRUD\Child
     /**
      * Return the vat value
      *
-     * @return integer
+     * @return float
      */
-    public function getValue()
+    public function getValue(): float
     {
-        return (int)$this->getAttribute('vat');
+        return (float)$this->getAttribute('vat');
     }
 
     /**
      * Is the tax active?
      *
-     * @return boolean
+     * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->getAttribute('active') ? true : false;
     }
@@ -155,7 +155,7 @@ class TaxEntry extends QUI\CRUD\Child
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return true;
     }

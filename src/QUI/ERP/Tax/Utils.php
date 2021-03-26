@@ -27,7 +27,7 @@ class Utils
      *
      * @return array
      */
-    public static function getAvailableTaxList()
+    public static function getAvailableTaxList(): array
     {
         try {
             return QUI::getDataBase()->fetch([
@@ -84,8 +84,16 @@ class Utils
             return self::$userTaxes[$uid];
         }
 
-        $DefaultTaxType  = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
-        $DefaultTaxEntry = self::getTaxEntry($DefaultTaxType, QUI\ERP\Defaults::getArea());
+        try {
+            $DefaultTaxType  = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
+            $DefaultTaxEntry = self::getTaxEntry($DefaultTaxType, QUI\ERP\Defaults::getArea());
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::addError($Exception->getMessage(), [
+                'area' => QUI\ERP\Defaults::getArea()->getTitle()
+            ]);
+
+            $DefaultTaxEntry = new TaxEntryEmpty();
+        }
 
         self::$userTaxes[$uid] = $DefaultTaxEntry;
 
@@ -192,7 +200,7 @@ class Utils
      * @param User $User
      * @return boolean
      */
-    public static function isUserEuVatUser(User $User)
+    public static function isUserEuVatUser(User $User): bool
     {
         $euVatId = $User->getAttribute('quiqqer.erp.euVatId');
 
@@ -217,7 +225,7 @@ class Utils
      * @return QUI\ERP\Tax\TaxType
      * @throws QUI\Exception
      */
-    public static function getTaxTypeByArea(Area $Area)
+    public static function getTaxTypeByArea(Area $Area): TaxType
     {
         $Taxes  = new Handler();
         $result = $Taxes->getChildren([
@@ -262,7 +270,7 @@ class Utils
      * @param $taxTypeId
      * @return array
      */
-    public static function getTaxEntriesByTaxType($taxTypeId)
+    public static function getTaxEntriesByTaxType($taxTypeId): array
     {
         $Handler = new QUI\ERP\Tax\Handler();
         $Areas   = new QUI\ERP\Areas\Handler();
@@ -297,7 +305,7 @@ class Utils
      * @return TaxEntry
      * @throws QUI\Exception
      */
-    public static function getTaxEntry(TaxType $TaxType, Area $Area)
+    public static function getTaxEntry(TaxType $TaxType, Area $Area): TaxEntry
     {
         $Taxes = new Handler();
         $Group = $TaxType->getGroup();
@@ -333,7 +341,7 @@ class Utils
      * @param $vatId
      * @return string
      */
-    public static function cleanupVatId($vatId)
+    public static function cleanupVatId($vatId): string
     {
         return \str_replace([' ', '.', '-', ',', ', '], '', trim($vatId));
     }
@@ -343,7 +351,7 @@ class Utils
      *
      * @return bool
      */
-    public static function shouldVatIdValidationBeExecuted()
+    public static function shouldVatIdValidationBeExecuted(): bool
     {
         try {
             $Config = QUI::getPackage('quiqqer/tax')->getConfig();
@@ -363,9 +371,9 @@ class Utils
      * @param string $vatId
      * @return string
      *
-     * @throws QUI\ERP\Tax\Exception
+     * @throws Exception
      */
-    public static function validateVatId($vatId)
+    public static function validateVatId(string $vatId): string
     {
         $vatId = self::cleanupVatId($vatId);
 
@@ -456,9 +464,9 @@ class Utils
     /**
      * Return the highest tax
      *
-     * @return integer
+     * @return float
      */
-    public static function getMaxTax()
+    public static function getMaxTax(): float
     {
         try {
             $result = QUI::getDataBase()->fetch([
@@ -479,9 +487,9 @@ class Utils
     /**
      * Return the least tax
      *
-     * @return integer
+     * @return float
      */
-    public static function getMinTax()
+    public static function getMinTax(): float
     {
         try {
             $result = QUI::getDataBase()->fetch([

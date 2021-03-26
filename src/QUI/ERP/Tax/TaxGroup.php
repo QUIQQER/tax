@@ -35,7 +35,7 @@ class TaxGroup
     /**
      * TaxGroup constructor.
      *
-     * @param integer $taxGroupId
+     * @param integer|string $taxGroupId
      * @throws QUI\Exception
      */
     public function __construct($taxGroupId)
@@ -67,7 +67,7 @@ class TaxGroup
     /**
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -88,7 +88,7 @@ class TaxGroup
      *
      * @return array - [TaxType,TaxType,TaxType]
      */
-    public function getTaxTypes()
+    public function getTaxTypes(): array
     {
         return $this->taxTypes;
     }
@@ -99,7 +99,7 @@ class TaxGroup
      * @param TaxType $TaxType
      * @return boolean
      */
-    public function isTaxTypeInGroup(TaxType $TaxType)
+    public function isTaxTypeInGroup(TaxType $TaxType): bool
     {
         /* @var $Tax TaxType */
         foreach ($this->taxTypes as $Tax) {
@@ -152,7 +152,7 @@ class TaxGroup
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $types = [];
 

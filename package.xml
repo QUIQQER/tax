@@ -1,0 +1,38 @@
+<quiqqer>
+    <package>
+        <title>
+            <locale group="quiqqer/tax" var="package.title"/>
+        </title>
+
+        <description>
+            <locale group="quiqqer/tax" var="package.description"/>
+        </description>
+
+        <!-- Hauptbild -->
+        <image src="URL_OPT_DIR/quiqqer/tax/bin/images/Logo.jpg"/>
+
+       <preview>
+           <image src="URL_OPT_DIR/quiqqer/tax/bin/images/preview/Backend_TaxGroups.png"/>
+           <image src="URL_OPT_DIR/quiqqer/tax/bin/images/preview/Backend_Settings.png"/>
+       </preview>
+
+        <support>
+            <email><![CDATA[support@pcsg.de]]></email>
+            <forum><![CDATA[https://community.quiqqer.com]]></forum>
+            <source><![CDATA[https://dev.quiqqer.com/quiqqer/tax]]></source>
+            <issues><![CDATA[https://dev.quiqqer.com/quiqqer/tax/issues]]></issues>
+            <wiki><![CDATA[https://dev.quiqqer.com/quiqqer/tax/wikis/home]]></wiki>
+        </support>
+
+        <copyright>
+            <name><![CDATA[PCSG - Computer & Internet Service OHG]]></name>
+            <license><![CDATA[GPL-3.0+]]></license>
+        </copyright>
+
+        <languages>
+            <language>de</language>
+            <language>en</language>
+        </languages>
+
+    </package>
+</quiqqer>

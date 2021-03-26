@@ -33,7 +33,7 @@ class TaxType
     /**
      * TaxGroup constructor.
      *
-     * @param integer $taxTypeId
+     * @param integer|string $taxTypeId
      * @throws QUI\Exception
      */
     public function __construct($taxTypeId)
@@ -46,7 +46,7 @@ class TaxType
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
             ]);
-        };
+        }
 
         $this->id      = (int)$taxTypeId;
         $this->Handler = $Handler;
@@ -55,7 +55,7 @@ class TaxType
     /**
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -102,7 +102,7 @@ class TaxType
      * Return the tax type as array
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $groupId    = '';
         $groupTitle = '';
@@ -133,7 +133,7 @@ class TaxType
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return true;
     }
