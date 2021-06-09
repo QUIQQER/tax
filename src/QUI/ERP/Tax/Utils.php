@@ -150,7 +150,11 @@ class Utils
 
             return self::$userTaxes[$uid];
         } catch (QUI\Exception $Exception) {
-            QUI\System\Log::writeDebugException($Exception);
+            if ($Exception->getCode() === 404) {
+                return self::$userTaxes[$uid];
+            } else {
+                QUI\System\Log::writeDebugException($Exception);
+            }
         }
 
         // if for user cant be found a VAT, use the shop settings
@@ -239,7 +243,7 @@ class Utils
             throw new QUI\Exception([
                 'quiqqer/tax',
                 'exception.taxtype.not.found'
-            ]);
+            ], 404);
         }
 
         /* @var $TaxEntry QUI\ERP\Tax\TaxEntry */
@@ -261,7 +265,7 @@ class Utils
         throw new QUI\Exception([
             'quiqqer/tax',
             'exception.taxtype.not.found'
-        ]);
+        ], 404);
     }
 
     /**
