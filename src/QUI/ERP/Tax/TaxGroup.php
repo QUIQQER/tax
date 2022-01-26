@@ -8,6 +8,9 @@ namespace QUI\ERP\Tax;
 
 use QUI;
 
+use function explode;
+use function is_array;
+
 /**
  * Class TaxGroup
  * Steuergruppe
@@ -19,18 +22,18 @@ class TaxGroup
     /**
      * @var integer
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var array
      */
-    protected $taxTypes = [];
+    protected array $taxTypes = [];
 
     /**
      * tax Handler
      * @var QUI\ERP\Tax\Handler
      */
-    protected $Handler;
+    protected Handler $Handler;
 
     /**
      * TaxGroup constructor.
@@ -48,13 +51,13 @@ class TaxGroup
                 'quiqqer/tax',
                 'exception.taxgroup.not.found'
             ]);
-        };
+        }
 
         $this->id      = (int)$taxGroupId;
         $this->Handler = $Handler;
 
         $taxTypes = $Config->get('taxgroups', $taxGroupId);
-        $taxTypes = \explode(',', $taxTypes);
+        $taxTypes = explode(',', $taxTypes);
 
         foreach ($taxTypes as $taxTypeId) {
             try {
@@ -79,7 +82,7 @@ class TaxGroup
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
-            'taxGroup.'.$this->getId().'.title'
+            'taxGroup.' . $this->getId() . '.title'
         );
     }
 
@@ -117,9 +120,9 @@ class TaxGroup
      *
      * @param array $types - [typeId, typeId, typeId]
      */
-    public function setTaxTypes($types = [])
+    public function setTaxTypes(array $types = [])
     {
-        if (!\is_array($types)) {
+        if (!is_array($types)) {
             return;
         }
 

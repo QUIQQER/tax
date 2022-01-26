@@ -17,9 +17,9 @@ use QUI;
 class TaxEntryEmpty extends QUI\QDOM
 {
     /**
-     * @var null
+     * @var null|QUI\ERP\Areas\Area
      */
-    protected $Area = null;
+    protected ?QUI\ERP\Areas\Area $Area = null;
 
     /**
      * Area constructor
@@ -27,7 +27,7 @@ class TaxEntryEmpty extends QUI\QDOM
      * @param array $params - optionals
      *  [Area]
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         if (isset($params['Area']) && $params['Area'] instanceof QUI\ERP\Areas\Area) {
             $this->Area = $params['Area'];
@@ -51,7 +51,7 @@ class TaxEntryEmpty extends QUI\QDOM
      */
     public function getValue(): float
     {
-        return (int)0;
+        return 0;
     }
 
     /**

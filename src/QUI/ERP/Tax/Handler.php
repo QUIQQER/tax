@@ -9,6 +9,12 @@ namespace QUI\ERP\Tax;
 use QUI;
 use QUI\Permissions\Permission;
 
+use function array_keys;
+use function count;
+use function in_array;
+use function is_array;
+use function max;
+
 /**
  * Class Handler
  * Create and handles tax
@@ -20,23 +26,23 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Handler instance
      *
-     * @var null
+     * @var Handler|null
      */
-    protected static $Instance = null;
+    protected static ?Handler $Instance = null;
 
     /**
      * List of tax groups
      *
      * @var array
      */
-    protected $taxGroups = [];
+    protected array $taxGroups = [];
 
     /**
      * List of tax types
      *
      * @var array
      */
-    protected $taxTypes = [];
+    protected array $taxTypes = [];
 
     /**
      * Handler constructor.
@@ -144,8 +150,8 @@ class Handler extends QUI\CRUD\Factory
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
 
-        if (\is_array($groups) && \count($groups)) {
-            $newId = \max(\array_keys($groups)) + 1;
+        if (is_array($groups) && count($groups)) {
+            $newId = max(array_keys($groups)) + 1;
         } else {
             $groups = [];
             $newId  = 0;
@@ -162,7 +168,7 @@ class Handler extends QUI\CRUD\Factory
         try {
             QUI\Translator::addUserVar(
                 'quiqqer/tax',
-                'taxGroup.'.$newId.'.title',
+                'taxGroup.' . $newId . '.title',
                 [
                     $current   => '',
                     'datatype' => 'php,js',
@@ -192,16 +198,16 @@ class Handler extends QUI\CRUD\Factory
         $groups = $Config->getSection('taxgroups');
         $result = [];
 
-        if (!\is_array($ids)) {
+        if (!is_array($ids)) {
             $ids = false;
         }
 
-        if (!$groups || !\is_array($groups)) {
+        if (!$groups || !is_array($groups)) {
             $groups = [];
         }
 
         foreach ($groups as $key => $var) {
-            if ($ids && !\in_array($key, $ids)) {
+            if ($ids && !in_array($key, $ids)) {
                 continue;
             }
 
@@ -253,7 +259,7 @@ class Handler extends QUI\CRUD\Factory
         // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
-            'taxGroup.'.$taxGroupId.'.title'
+            'taxGroup.' . $taxGroupId . '.title'
         );
 
 
@@ -271,7 +277,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function updateTaxGroup($taxGroupId, $types = [])
+    public function updateTaxGroup($taxGroupId, array $types = [])
     {
         $TaxGroup = $this->getTaxGroup($taxGroupId);
         $TaxGroup->setTaxTypes($types);
@@ -297,14 +303,14 @@ class Handler extends QUI\CRUD\Factory
         $Config = $this->getConfig();
         $types  = $Config->getSection('taxtypes');
 
-        if (\is_array($types) && \count($types)) {
-            $newId = \max(\array_keys($types)) + 1;
+        if (is_array($types) && count($types)) {
+            $newId = max(array_keys($types)) + 1;
         } else {
             $types = [];
             $newId = 0;
         }
 
-        $types[$newId] = 'taxType.'.$newId.'.title';
+        $types[$newId] = 'taxType.' . $newId . '.title';
 
         $Config->setSection('taxtypes', $types);
         $Config->save();
@@ -341,7 +347,7 @@ class Handler extends QUI\CRUD\Factory
         $types  = $Config->getSection('taxtypes');
         $result = [];
 
-        if (!\is_array($ids)) {
+        if (!is_array($ids)) {
             $ids = false;
         }
 
@@ -350,7 +356,7 @@ class Handler extends QUI\CRUD\Factory
         }
 
         foreach ($types as $key => $var) {
-            if ($ids && !\in_array($key, $ids)) {
+            if ($ids && !in_array($key, $ids)) {
                 continue;
             }
 
@@ -403,7 +409,7 @@ class Handler extends QUI\CRUD\Factory
         // translation is no longer used
         QUI\Translator::delete(
             'quiqqer/tax',
-            'taxType.'.$taxTypeId.'.title'
+            'taxType.' . $taxTypeId . '.title'
         );
 
         // delete all tax entries

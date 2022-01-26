@@ -22,13 +22,13 @@ class TaxType
     /**
      * @var integer
      */
-    protected $id;
+    protected int $id;
 
     /**
      * tax Handler
      * @var QUI\ERP\Tax\Handler
      */
-    protected $Handler;
+    protected Handler $Handler;
 
     /**
      * TaxGroup constructor.
@@ -69,7 +69,7 @@ class TaxType
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
-            'taxType.'.$this->getId().'.title'
+            'taxType.' . $this->getId() . '.title'
         );
     }
 

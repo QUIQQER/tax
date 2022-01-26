@@ -1,0 +1,113 @@
+<quiqqer>
+    <!--
+        Steuergruppen für digitale Güter in der EU
+    -->
+
+    <!-- TAX: alle TAX aktivieren -->
+    <!-- Tax import -> is euvat=0 von Land was ausgewählt ist, alle anderen EU länder auf 1 -->
+
+    <title>
+        <locale group="quiqqer/tax" var="tax.import.euTaxRates"/>
+    </title>
+
+    <group>
+        <title>
+            <locale group="quiqqer/tax" var="tax.import.eu.group.tax.title"/>
+        </title>
+
+        <type>
+            <title>
+                <locale group="quiqqer/tax" var="tax.import.eu.type.tax.title"/>
+            </title>
+
+            <tax countries="AT" vat="20.0000" euvat="0"/>
+            <tax countries="BE" vat="21.0000"/>
+            <tax countries="BG" vat="20.0000"/>
+            <tax countries="HR" vat="25.0000"/>
+            <tax countries="CY" vat="19.0000"/>
+            <tax countries="CZ" vat="19.0000"/>
+            <tax countries="DK" vat="25.0000"/>
+            <tax countries="EE" vat="20.0000"/>
+            <tax countries="FI" vat="24.0000"/>
+            <tax countries="FR" vat="20.0000"/>
+            <tax countries="DE" vat="19.0000"/>
+            <tax countries="GR" vat="24.0000"/>
+            <tax countries="HU" vat="27.0000"/>
+            <tax countries="IE" vat="23.0000"/>
+            <tax countries="IT" vat="22.0000"/>
+            <tax countries="LV" vat="21.0000"/>
+            <tax countries="LT" vat="21.0000"/>
+            <tax countries="LU" vat="17.0000"/>
+            <tax countries="MT" vat="18.0000"/>
+            <tax countries="NL" vat="27.0000"/>
+            <tax countries="PL" vat="23.0000"/>
+            <tax countries="PT" vat="23.0000"/>
+            <tax countries="RO" vat="19.0000"/>
+            <tax countries="SK" vat="20.0000"/>
+            <tax countries="SI" vat="22.0000"/>
+            <tax countries="ES" vat="21.0000"/>
+            <tax countries="SE" vat="25.0000"/>
+        </type>
+
+        <type>
+            <title>
+                <locale group="quiqqer/tax" var="tax.import.eu.type.reduced.food.title"/>
+            </title>
+
+            <tax countries="AT" vat="10.0000"/>
+            <tax countries="BE" vat="6.0000"/>
+            <tax countries="HR" vat="5.0000"/>
+            <tax countries="CY" vat="5.0000"/>
+            <tax countries="CZ" vat="15.0000"/>
+            <tax countries="FI" vat="14.0000"/>
+            <tax countries="FR" vat="5.5000"/>
+            <tax countries="DE" vat="7.0000"/>
+            <tax countries="GR" vat="13.0000"/>
+            <tax countries="HU" vat="18.0000"/>
+            <tax countries="IE" vat="4.8000"/>
+            <tax countries="IT" vat="4.0000"/>
+            <tax countries="LU" vat="3.0000"/>
+            <tax countries="MT" vat="0.0000"/>
+            <tax countries="NL" vat="9.0000"/>
+            <tax countries="PL" vat="5.0000"/>
+            <tax countries="PT" vat="6.0000"/>
+            <tax countries="SK" vat="10.0000"/>
+            <tax countries="SI" vat="9.5000"/>
+            <tax countries="ES" vat="4.0000"/>
+            <tax countries="SE" vat="12.0000"/>
+        </type>
+
+        <type>
+            <title>
+                <locale group="quiqqer/tax" var="tax.import.eu.type.reduced.pharmaHotels.title"/>
+            </title>
+
+            <tax countries="AT" vat="10.0000"/>
+            <tax countries="BE" vat="12.0000"/>
+            <tax countries="BG" vat="9.0000"/>
+            <tax countries="HR" vat="13.0000"/>
+            <tax countries="CY" vat="5.0000"/>
+            <tax countries="CZ" vat="15.0000"/>
+            <tax countries="EE" vat="9.0000"/>
+            <tax countries="FI" vat="14.0000"/>
+            <tax countries="FR" vat="10.0000"/>
+            <tax countries="DE" vat="7.0000"/>
+            <tax countries="GR" vat="6.5000"/>
+            <tax countries="HU" vat="5.0000"/>
+            <tax countries="IE" vat="13.5000"/>
+            <tax countries="IT" vat="10.0000"/>
+            <tax countries="LV" vat="12.0000"/>
+            <tax countries="LT" vat="5.0000"/>
+            <tax countries="LU" vat="3.0000"/>
+            <tax countries="MT" vat="5.0000"/>
+            <tax countries="NL" vat="9.0000"/>
+            <tax countries="PL" vat="8.0000"/>
+            <tax countries="PT" vat="6.0000"/>
+            <tax countries="RO" vat="9.0000"/>
+            <tax countries="SK" vat="10.0000"/>
+            <tax countries="SI" vat="9.5000"/>
+            <tax countries="ES" vat="10.0000"/>
+            <tax countries="SE" vat="0.0000"/>
+        </type>
+    </group>
+</quiqqer>
