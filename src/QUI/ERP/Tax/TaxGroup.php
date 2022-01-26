@@ -89,7 +89,7 @@ class TaxGroup
     /**
      * Return the taxtypes from the group
      *
-     * @return array - [TaxType,TaxType,TaxType]
+     * @return TaxType[]
      */
     public function getTaxTypes(): array
     {

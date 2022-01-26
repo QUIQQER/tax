@@ -188,7 +188,7 @@ class Handler extends QUI\CRUD\Factory
      * Return all tax groups
      *
      * @param array|boolean $ids - optional, list of wanted ids, default = all
-     * @return array
+     * @return TaxGroup[]
      *
      * @throws QUI\Exception
      */

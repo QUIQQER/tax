@@ -13,6 +13,7 @@ use QUI\Utils\Text\XML;
 
 use function explode;
 use function is_string;
+use function strpos;
 
 /**
  * Class Import
@@ -284,7 +285,11 @@ class Import
 
         foreach ($areas as $area) {
             foreach ($countries as $country) {
-                if (\strpos($area['countries'], $country) !== false) {
+                if ($country === '{$currentCountry}') {
+                    $country = QUI\ERP\Defaults::getCountry()->getCode();
+                }
+
+                if (strpos($area['countries'], $country) !== false) {
                     /* @var $Area QUI\ERP\Areas\Area */
                     $Area = $AreaHandler->getChild((int)$area['id']);
 

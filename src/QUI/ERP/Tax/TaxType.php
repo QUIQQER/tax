@@ -12,7 +12,7 @@ use QUI;
  * Class TaxType
  * - Steuerart
  *
- * Is not realy editable, it makes no sence to edit a type
+ * Is not really editable, it makes no sense to edit a type
  * A type has only a title, the title is stored in the translator
  *
  * @package QUI\ERP\Tax
