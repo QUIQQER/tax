@@ -49,6 +49,10 @@
             <de><![CDATA[Steuersätze für digitale Güter in der EU]]></de>
             <en><![CDATA[Tax for digital goods in the EU]]></en>
         </locale>
+        <locale name="tax.import.euTaxRates">
+            <de><![CDATA[Steuersätze für in der EU]]></de>
+            <en><![CDATA[Tax for the EU]]></en>
+        </locale>
 
         <locale name="exception.taxtype.not.found">
             <de><![CDATA[Steuertyp nicht gefunden]]></de>
@@ -410,6 +414,27 @@
     </groups>
 
     <groups name="quiqqer/tax" datatype="php">
+        <locale name="tax.import.group.vat.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="tax.import.type.vat.title">
+            <de><![CDATA[Mehrwertsteuer]]></de>
+            <en><![CDATA[VAT]]></en>
+        </locale>
+        <locale name="tax.import.type.reduced.title">
+            <de><![CDATA[Mehrwertsteuer verminderte]]></de>
+            <en><![CDATA[VAT reduced]]></en>
+        </locale>
+        <locale name="tax.import.type.reduced.food.title">
+            <de><![CDATA[Mehrwertsteuer verminderte (Essen)]]></de>
+            <en><![CDATA[VAT reduced (food)]]></en>
+        </locale>
+        <locale name="tax.import.type.reduced.pharmaHotels.title">
+            <de><![CDATA[Mehrwertsteuer verminderte (z.B: Pharma + Hotel)]]></de>
+            <en><![CDATA[VAT reduced  (e.q: pharma + hotel)]]></en>
+        </locale>
+
         <locale name="tax.import.euDigital.group.mwst.title">
             <de><![CDATA[Mehrwertsteuer]]></de>
             <en><![CDATA[VAT]]></en>

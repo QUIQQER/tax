@@ -10,6 +10,13 @@ use QUI;
 use QUI\ERP\Areas\Area;
 use QUI\Interfaces\Users\User;
 
+use function class_exists;
+use function ctype_alpha;
+use function explode;
+use function mb_substr;
+use function str_replace;
+use function substr;
+
 /**
  * Class Utils
  */
@@ -20,7 +27,7 @@ class Utils
      *
      * @var array
      */
-    protected static $userTaxes = [];
+    protected static array $userTaxes = [];
 
     /**
      * Returns all available vat / tax list
@@ -59,7 +66,7 @@ class Utils
             return false;
         }
 
-        $standardTax = \explode(':', $standardTax);
+        $standardTax = explode(':', $standardTax);
 
         if (!isset($standardTax[1])) {
             return false;
@@ -214,7 +221,7 @@ class Utils
 
         try {
             return self::getTaxByUser($User)->getAttribute('euvat')
-                   && $User->getAttribute('quiqqer.erp.euVatId');
+                && $User->getAttribute('quiqqer.erp.euVatId');
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::writeDebugException($Exception);
         }
@@ -290,7 +297,7 @@ class Utils
             return [];
         }
 
-        foreach ($data as $key => $entry) {
+        foreach ($data as $entry) {
             try {
                 $result[] = $Areas->getChild($entry['areaId']);
             } catch (QUI\Exception $Exception) {
@@ -347,7 +354,7 @@ class Utils
      */
     public static function cleanupVatId($vatId): string
     {
-        return \str_replace([' ', '.', '-', ',', ', '], '', trim($vatId));
+        return str_replace([' ', '.', '-', ',', ', '], '', trim($vatId));
     }
 
     /**
@@ -382,10 +389,10 @@ class Utils
         $vatId = self::cleanupVatId($vatId);
 
         // UST-ID oder Vat-Id
-        $first  = \mb_substr($vatId, 0, 1);
-        $second = \mb_substr($vatId, 1, 1);
+        $first  = mb_substr($vatId, 0, 1);
+        $second = mb_substr($vatId, 1, 1);
 
-        if (!\ctype_alpha($first) || !\ctype_alpha($second)) {
+        if (!ctype_alpha($first) || !ctype_alpha($second)) {
             throw new QUI\ERP\Tax\Exception([
                 'quiqqer/tax',
                 'exception.invalid.vatid',
@@ -393,10 +400,10 @@ class Utils
             ]);
         }
 
-        $cc = \substr($vatId, 0, 2);
-        $vn = \substr($vatId, 2);
+        $cc = substr($vatId, 0, 2);
+        $vn = substr($vatId, 2);
 
-        if (!\class_exists('SoapClient')) {
+        if (!class_exists('SoapClient')) {
             QUI\System\Log::addWarning('SoapClient is not available');
 
             return $vatId;

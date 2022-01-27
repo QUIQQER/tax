@@ -12,7 +12,7 @@ use QUI;
  * Class TaxType
  * - Steuerart
  *
- * Is not realy editable, it makes no sence to edit a type
+ * Is not really editable, it makes no sense to edit a type
  * A type has only a title, the title is stored in the translator
  *
  * @package QUI\ERP\Tax
@@ -22,13 +22,13 @@ class TaxType
     /**
      * @var integer
      */
-    protected $id;
+    protected int $id;
 
     /**
      * tax Handler
      * @var QUI\ERP\Tax\Handler
      */
-    protected $Handler;
+    protected Handler $Handler;
 
     /**
      * TaxGroup constructor.
@@ -69,7 +69,7 @@ class TaxType
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
-            'taxType.'.$this->getId().'.title'
+            'taxType.' . $this->getId() . '.title'
         );
     }
 

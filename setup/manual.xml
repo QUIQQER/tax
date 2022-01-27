@@ -1,0 +1,22 @@
+<quiqqer>
+    <!-- TAX: alle TAX aktivieren -->
+    <!-- Tax import -> is euvat=0 von Land was ausgewählt ist, alle anderen EU länder auf 1 -->
+
+    <title>
+        <locale group="quiqqer/tax" var="tax.import.manual"/>
+    </title>
+
+    <group>
+        <title>
+            <locale group="quiqqer/tax" var="tax.import.group.vat.title"/>
+        </title>
+
+        <type>
+            <title>
+                <locale group="quiqqer/tax" var="tax.import.type.vat.title"/>
+            </title>
+
+            <tax countries="{$currentCountry}" vat="0" euvat="{$currentCountry}"/>
+        </type>
+    </group>
+</quiqqer>

@@ -9,6 +9,9 @@ namespace QUI\ERP\Tax;
 use QUI;
 use QUI\Permissions\Permission;
 
+use function floatval;
+use function in_array;
+
 /**
  * Class Tax
  * Steuersatz
@@ -20,7 +23,7 @@ class TaxEntry extends QUI\CRUD\Child
     /**
      * @var null|QUI\ERP\Areas\Area
      */
-    protected $Area = null;
+    protected ?QUI\ERP\Areas\Area $Area = null;
 
     /**
      * Area constructor.
@@ -41,17 +44,17 @@ class TaxEntry extends QUI\CRUD\Child
         $this->Events->addEvent('onDeleteEnd', function () {
             QUI\Translator::delete(
                 'quiqqer/tax',
-                'tax.'.$this->getId().'.title'
+                'tax.' . $this->getId() . '.title'
             );
 
             QUI\Translator::delete(
                 'quiqqer/tax',
-                'tax.'.$this->getId().'.workingTitle'
+                'tax.' . $this->getId() . '.workingTitle'
             );
 
             QUI\Translator::delete(
                 'quiqqer/tax',
-                'tax.'.$this->getId().'.description'
+                'tax.' . $this->getId() . '.description'
             );
         });
 
@@ -71,7 +74,7 @@ class TaxEntry extends QUI\CRUD\Child
             }
 
             // params
-            $this->setAttribute('vat', \floatval($this->getAttribute('vat')));
+            $this->setAttribute('vat', floatval($this->getAttribute('vat')));
             $this->setAttribute('active', (int)$this->getAttribute('active'));
             $this->setAttribute('euvat', (int)$this->getAttribute('euvat'));
 
@@ -93,7 +96,7 @@ class TaxEntry extends QUI\CRUD\Child
                 $usedAreas[] = $child['areaId'];
             }
 
-            if (\in_array($this->getArea()->getId(), $usedAreas)) {
+            if (in_array($this->getArea()->getId(), $usedAreas)) {
                 throw new QUI\Exception([
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',
@@ -149,7 +152,7 @@ class TaxEntry extends QUI\CRUD\Child
      */
     public function isActive(): bool
     {
-        return $this->getAttribute('active') ? true : false;
+        return (bool)$this->getAttribute('active');
     }
 
     /**

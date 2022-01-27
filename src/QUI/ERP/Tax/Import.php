@@ -6,8 +6,14 @@
 
 namespace QUI\ERP\Tax;
 
+use DOMElement;
+use DOMXPath;
 use QUI;
 use QUI\Utils\Text\XML;
+
+use function explode;
+use function is_string;
+use function strpos;
 
 /**
  * Class Import
@@ -20,13 +26,13 @@ class Import
      */
     public static function getAvailableImports(): array
     {
-        $dir      = OPT_DIR.'quiqqer/tax/setup/';
+        $dir      = OPT_DIR . 'quiqqer/tax/setup/';
         $xmlFiles = QUI\Utils\System\File::readDir($dir);
         $result   = [];
 
         foreach ($xmlFiles as $xmlFile) {
-            $Document = XML::getDomFromXml($dir.$xmlFile);
-            $Path     = new \DOMXPath($Document);
+            $Document = XML::getDomFromXml($dir . $xmlFile);
+            $Path     = new DOMXPath($Document);
             $title    = $Path->query("//quiqqer/title");
 
             if ($title->item(0)) {
@@ -55,7 +61,7 @@ class Import
             );
         }
 
-        self::import(OPT_DIR.'quiqqer/tax/setup/'.$fileName);
+        self::import(OPT_DIR . 'quiqqer/tax/setup/' . $fileName);
     }
 
     /**
@@ -87,39 +93,40 @@ class Import
     {
         $Document   = XML::getDomFromXml($xmlFile);
         $TaxHandler = new QUI\ERP\Tax\Handler();
-        $Path       = new \DOMXPath($Document);
+        $Path       = new DOMXPath($Document);
         $groups     = $Path->query("//quiqqer/group");
 
         foreach ($groups as $Group) {
-            /* @var $Group \DOMElement */
+            /* @var $Group DOMElement */
             $types    = $Group->getElementsByTagName('type');
             $TaxGroup = $TaxHandler->createTaxGroup();
 
             $taxGroupLocaleData = self::getLocaleDataFromNode($Group);
 
             self::updateLocale(
-                'taxGroup.'.$TaxGroup->getId().'.title',
+                'taxGroup.' . $TaxGroup->getId() . '.title',
                 $taxGroupLocaleData
             );
 
             foreach ($types as $Type) {
-                /* @var $Type \DOMElement */
+                /* @var $Type DOMElement */
                 $taxTypeLocaleData = self::getLocaleDataFromNode($Type);
                 $taxList           = $Type->getElementsByTagName('tax');
-
-                $TaxType = $TaxHandler->createTaxType();
+                $TaxType           = $TaxHandler->createTaxType();
 
                 self::updateLocale(
-                    'taxType.'.$TaxType->getId().'.title',
+                    'taxType.' . $TaxType->getId() . '.title',
                     $taxTypeLocaleData
                 );
 
                 $TaxGroup->addTaxType($TaxType);
                 $TaxGroup->update();
 
+                $CurrentCountry = QUI\Countries\Manager::getDefaultCountry();
+
                 // import taxes
                 foreach ($taxList as $Tax) {
-                    /* @var $Tax \DOMElement */
+                    /* @var $Tax DOMElement */
 
                     // search area
                     $countries = $Tax->getAttribute('countries');
@@ -128,7 +135,7 @@ class Import
                         continue;
                     }
 
-                    $countries = \explode(',', $countries);
+                    $countries = explode(',', $countries);
                     $Area      = self::getAreaByCountries($countries);
 
                     if (!$Area) {
@@ -136,12 +143,28 @@ class Import
                     }
 
                     try {
+                        $euVat = 0;
+
+                        if ($Tax->hasAttribute('euvat')) {
+                            $euVat = $Tax->getAttribute('euvat');
+
+                            if ($euVat === '{$currentCountry}') {
+                                if ($Area->contains($CurrentCountry)) {
+                                    $euVat = 0;
+                                } else {
+                                    $euVat = 1;
+                                }
+                            } else {
+                                $euVat = (int)$euVat;
+                            }
+                        }
+
                         $TaxEntry = $TaxHandler->createChild([
                             'areaId'     => $Area->getId(),
                             'taxTypeId'  => $TaxType->getId(),
                             'taxGroupId' => $TaxGroup->getId(),
                             'vat'        => $Tax->getAttribute('vat'),
-                            'euvat'      => (int)$Tax->getAttribute('euvat'),
+                            'euvat'      => $euVat,
                             'active'     => 1
                         ]);
 
@@ -181,18 +204,18 @@ class Import
     /**
      * Return text params from <title>
      *
-     * @param \DOMElement $Parent
+     * @param DOMElement $Parent
      * @return string|array
      */
-    protected static function getTextNodeParamsFromNode(\DOMElement $Parent)
+    protected static function getTextNodeParamsFromNode(DOMElement $Parent)
     {
-        /* @var $Child \DOMElement */
+        /* @var $Child DOMElement */
         foreach ($Parent->childNodes as $Child) {
             if ($Child->nodeName == 'title') {
                 $Locale = $Child->getElementsByTagName('locale');
 
                 if ($Locale->item(0)) {
-                    /* @var $LocaleItem \DOMElement */
+                    /* @var $LocaleItem DOMElement */
                     $LocaleItem = $Locale->item(0);
 
                     return [
@@ -212,17 +235,17 @@ class Import
      * Return locale data from \DOMElement
      * Search <title> and return the locale translation data
      *
-     * @param \DOMElement $Parent
+     * @param DOMElement $Parent
      * @return array
      */
-    protected static function getLocaleDataFromNode(\DOMElement $Parent): array
+    protected static function getLocaleDataFromNode(DOMElement $Parent): array
     {
         $result     = [];
         $localeData = self::getTextNodeParamsFromNode($Parent);
 
         $availableLanguages = QUI\Translator::getAvailableLanguages();
 
-        if (\is_string($localeData)) {
+        if (is_string($localeData)) {
             foreach ($availableLanguages as $lang) {
                 $result[$lang] = $localeData;
             }
@@ -255,14 +278,18 @@ class Import
      *
      * @throws QUI\Exception
      */
-    protected static function getAreaByCountries($countries)
+    protected static function getAreaByCountries(array $countries)
     {
         $AreaHandler = new QUI\ERP\Areas\Handler();
         $areas       = $AreaHandler->getChildrenData();
 
         foreach ($areas as $area) {
             foreach ($countries as $country) {
-                if (\strpos($area['countries'], $country) !== false) {
+                if ($country === '{$currentCountry}') {
+                    $country = QUI\ERP\Defaults::getCountry()->getCode();
+                }
+
+                if (strpos($area['countries'], $country) !== false) {
                     /* @var $Area QUI\ERP\Areas\Area */
                     $Area = $AreaHandler->getChild((int)$area['id']);
 
