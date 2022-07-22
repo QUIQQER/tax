@@ -45,13 +45,13 @@
             <de><![CDATA[Steuergruppen]]></de>
             <en><![CDATA[Tax groups]]></en>
         </locale>
-        <locale name="tax.import.euDigital">
-            <de><![CDATA[Steuersätze für digitale Güter in der EU]]></de>
-            <en><![CDATA[Tax for digital goods in the EU]]></en>
-        </locale>
         <locale name="tax.import.euTaxRates">
-            <de><![CDATA[Steuersätze für in der EU]]></de>
+            <de><![CDATA[Steuersätze der EU-Länder]]></de>
             <en><![CDATA[Tax for the EU]]></en>
+        </locale>
+        <locale name="tax.import.manual">
+            <de><![CDATA[Manueller import]]></de>
+            <en><![CDATA[Manuel import]]></en>
         </locale>
 
         <locale name="exception.taxtype.not.found">
