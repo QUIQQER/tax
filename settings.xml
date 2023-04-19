@@ -44,8 +44,10 @@
                         <title>
                             <locale group="quiqqer/tax" var="tax.settings.title"/>
                         </title>
-                        <input conf="shop.vat" type="string"
-                               data-qui="package/quiqqer/products/bin/controls/fields/types/Vat"
+                        <!--data-qui="package/quiqqer/products/bin/controls/fields/types/Vat"-->
+                        <input conf="shop.vat"
+                               type="string"
+                               data-qui="package/quiqqer/tax/bin/controls/Select"
                         >
                             <text>
                                 <locale group="quiqqer/tax" var="settings.window.vat.shopVat"/>
