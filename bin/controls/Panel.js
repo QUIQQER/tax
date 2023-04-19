@@ -14,7 +14,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
 ], function (QUI, QUIPanel, QUIAjax, QUILocale) {
     "use strict";
 
-    var lg = 'quiqqer/tax';
+    const lg = 'quiqqer/tax';
 
     return new Class({
         Extends: QUIPanel,
@@ -93,7 +93,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * @returns {Promise}
          */
         checkImport: function () {
-            var self = this;
+            const self = this;
 
             return new Promise(function (resolve, reject) {
                 require([
@@ -106,9 +106,9 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                         new TaxGroups().getList(),
                         new TaxTypes().getList()
                     ]).then(function (result) {
-                        var taxEntries = result[0],
-                            taxGroups  = result[1],
-                            taxTypes   = result[2];
+                        const taxEntries = result[0],
+                              taxGroups  = result[1],
+                              taxTypes   = result[2];
 
                         if (!taxEntries.length && !taxGroups.length && !taxTypes.length) {
                             self.openImport();
@@ -169,9 +169,9 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * Opens the import
          */
         openImport: function () {
-            var self = this;
+            const self = this;
 
-            var windows = QUI.Controls.getByType(
+            const windows = QUI.Controls.getByType(
                 'package/quiqqer/tax/bin/controls/Import'
             );
 
@@ -203,8 +203,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxEntries: function () {
-            var self    = this,
-                Content = this.getContent();
+            const self    = this,
+                  Content = this.getContent();
 
             this.Loader.show();
 
@@ -220,7 +220,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 return;
             }
 
-            var Prom = Promise.resolve();
+            let Prom = Promise.resolve();
 
             if (this.$View) {
                 Prom = new Promise(function (resolve) {
@@ -257,8 +257,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxTypes: function () {
-            var self    = this,
-                Content = this.getContent();
+            const self    = this,
+                  Content = this.getContent();
 
             this.Loader.show();
 
@@ -274,7 +274,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 return;
             }
 
-            var Prom = Promise.resolve();
+            let Prom = Promise.resolve();
 
             if (this.$View) {
                 Prom = new Promise(function (resolve) {
@@ -311,8 +311,8 @@ define('package/quiqqer/tax/bin/controls/Panel', [
          * open the tax groups
          */
         openTaxGroups: function () {
-            var self    = this,
-                Content = this.getContent();
+            const self    = this,
+                  Content = this.getContent();
 
             this.Loader.show();
 
@@ -328,7 +328,7 @@ define('package/quiqqer/tax/bin/controls/Panel', [
                 return;
             }
 
-            var Prom = Promise.resolve();
+            let Prom = Promise.resolve();
 
             if (this.$View) {
                 Prom = new Promise(function (resolve) {

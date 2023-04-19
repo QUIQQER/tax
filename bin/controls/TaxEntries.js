@@ -27,10 +27,10 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
              QUILocale, Mustache, createTemplate) {
     "use strict";
 
-    var lg          = 'quiqqer/tax',
-        Handler     = new TaxEntries(),
-        TypeHandler = new TaxTypes(),
-        AreaHandler = new Areas();
+    const lg          = 'quiqqer/tax',
+          Handler     = new TaxEntries(),
+          TypeHandler = new TaxTypes(),
+          AreaHandler = new Areas();
 
     return new Class({
         Extends: QUIControl,
@@ -54,7 +54,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
         initialize: function (options) {
             this.parent(options);
 
-            this.$Select  = null;
+            this.$Select = null;
             this.$current = false;
 
             this.addEvents({
@@ -72,8 +72,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * event : on create
          */
         create: function () {
-            var self = this,
-                Elm  = this.parent();
+            const self = this,
+                  Elm  = this.parent();
 
             Elm.setStyles({
                 height : '100%',
@@ -82,13 +82,24 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             });
 
 
-            var SelectContainer = new Element('div', {
+            const SelectContainer = new Element('div', {
                 styles: {
                     'float'      : 'left',
                     paddingBottom: 20,
                     width        : '100%'
                 }
             }).inject(Elm);
+
+            const Label = new Element('label').inject(SelectContainer);
+
+            new Element('span', {
+                html  : QUILocale.get(lg, 'panel.category.taxentries.text') + ': ',
+                styles: {
+                    'float'     : 'left',
+                    lineHeight  : 30,
+                    paddingRight: 10
+                }
+            }).inject(Label);
 
             this.$Select = new QUISelect({
                 showIcons: false,
@@ -97,10 +108,10 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         self.loadTaxByTaxType(value);
                     }
                 }
-            }).inject(SelectContainer);
+            }).inject(Label);
 
 
-            var Container = new Element('div', {
+            const Container = new Element('div', {
                 styles: {
                     width: '100%'
                 }
@@ -108,81 +119,92 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
             this.$Grid = new Grid(Container, {
                 multipleSelection: false,
-                columnModel      : [{
-                    header   : QUILocale.get(lg, 'tax.grid.taxentries.active.title'),
-                    dataIndex: 'activeButton',
-                    dataType : 'button',
-                    width    : 60
-                }, {
-                    header   : QUILocale.get('quiqqer/system', 'id'),
-                    dataIndex: 'id',
-                    dataType : 'number',
-                    width    : 60
-                }, {
-                    header   : QUILocale.get(lg, 'tax.grid.taxentries.area.title'),
-                    dataIndex: 'area',
-                    dataType : 'string',
-                    width    : 200
-                }, {
-                    header   : QUILocale.get(lg, 'tax.grid.taxentries.vat.title'),
-                    dataIndex: 'vat',
-                    dataType : 'string',
-                    width    : 80
-                }, {
-                    header   : QUILocale.get(lg, 'tax.grid.taxentries.euvat.title'),
-                    dataIndex: 'euvatIcon',
-                    dataType : 'node',
-                    width    : 60
-                }],
-                buttons          : [{
-                    name     : 'add',
-                    text     : QUILocale.get('quiqqer/system', 'add'),
-                    textimage: 'fa fa-plus',
-                    events   : {
-                        click: this.createChild
+                columnModel      : [
+                    {
+                        header   : QUILocale.get(lg, 'tax.grid.taxentries.active.title'),
+                        dataIndex: 'activeButton',
+                        dataType : 'button',
+                        width    : 60
+                    },
+                    {
+                        header   : QUILocale.get('quiqqer/system', 'id'),
+                        dataIndex: 'id',
+                        dataType : 'number',
+                        width    : 60
+                    },
+                    {
+                        header   : QUILocale.get(lg, 'tax.grid.taxentries.area.title'),
+                        dataIndex: 'area',
+                        dataType : 'string',
+                        width    : 200
+                    },
+                    {
+                        header   : QUILocale.get(lg, 'tax.grid.taxentries.vat.title'),
+                        dataIndex: 'vat',
+                        dataType : 'string',
+                        width    : 80
+                    },
+                    {
+                        header   : QUILocale.get(lg, 'tax.grid.taxentries.euvat.title'),
+                        dataIndex: 'euvatIcon',
+                        dataType : 'node',
+                        width    : 60
                     }
-                }, {
-                    name     : 'edit',
-                    text     : QUILocale.get('quiqqer/system', 'edit'),
-                    textimage: 'fa fa-edit',
-                    disabled : true,
-                    events   : {
-                        click: function () {
-                            this.updateChild(
-                                this.$Grid.getSelectedData()[0].id
-                            );
-                        }.bind(this)
+                ],
+                buttons          : [
+                    {
+                        name     : 'add',
+                        text     : QUILocale.get('quiqqer/system', 'add'),
+                        textimage: 'fa fa-plus',
+                        events   : {
+                            click: this.createChild
+                        }
+                    },
+                    {
+                        name     : 'edit',
+                        text     : QUILocale.get('quiqqer/system', 'edit'),
+                        textimage: 'fa fa-edit',
+                        disabled : true,
+                        events   : {
+                            click: function () {
+                                this.updateChild(
+                                    this.$Grid.getSelectedData()[0].id
+                                );
+                            }.bind(this)
+                        }
+                    },
+                    {
+                        name     : 'delete',
+                        text     : QUILocale.get('quiqqer/system', 'delete'),
+                        textimage: 'fa fa-trash',
+                        disabled : true,
+                        styles   : {
+                            'float': 'right'
+                        },
+                        events   : {
+                            click: function () {
+                                this.deleteChild(
+                                    this.$Grid.getSelectedData()[0].id
+                                );
+                            }.bind(this)
+                        }
                     }
-                }, {
-                    type: 'separator'
-                }, {
-                    name     : 'delete',
-                    text     : QUILocale.get('quiqqer/system', 'delete'),
-                    textimage: 'fa fa-trash',
-                    disabled : true,
-                    events   : {
-                        click: function () {
-                            this.deleteChild(
-                                this.$Grid.getSelectedData()[0].id
-                            );
-                        }.bind(this)
-                    }
-                }]
+                ]
             });
 
             this.$Grid.addEvents({
                 onClick: function () {
-                    var selecteData = self.$Grid.getSelectedData(),
-                        buttons     = self.$Grid.getButtons();
+                    const selecteData = self.$Grid.getSelectedData(),
+                          buttons     = self.$Grid.getButtons();
 
-                    var Edit = buttons.find(function (Button) {
+                    const Edit = buttons.find(function (Button) {
                         if (Button.getAttribute('name') === 'edit') {
                             return Button;
                         }
                         return false;
                     });
 
-                    var Delete = buttons.find(function (Button) {
+                    const Delete = buttons.find(function (Button) {
                         if (Button.getAttribute('name') === 'delete') {
                             return Button;
                         }
@@ -220,14 +242,12 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * event : on inject
          */
         $onInject: function () {
-            var self = this;
+            const self = this;
 
             this.refresh().then(function () {
                 self.$Select.setValue(self.$current);
                 self.resize();
-
             }).then(function () {
-
                 return new Promise(function (resolve) {
                     moofx(self.getElm()).animate({
                         opacity: 1
@@ -248,7 +268,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @return {Promise}
          */
         resize: function () {
-            var self = this;
+            const self = this;
 
             return new Promise(function (resolve) {
                 self.$Grid.setHeight(
@@ -267,16 +287,16 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          */
         refresh: function () {
             return new Promise(function (resolve, reject) {
-                var buttons = this.$Grid.getButtons();
+                const buttons = this.$Grid.getButtons();
 
-                var Edit = buttons.find(function (Button) {
+                const Edit = buttons.find(function (Button) {
                     if (Button.getAttribute('name') === 'edit') {
                         return Button;
                     }
                     return false;
                 });
 
-                var Delete = buttons.find(function (Button) {
+                const Delete = buttons.find(function (Button) {
                     if (Button.getAttribute('name') === 'delete') {
                         return Button;
                     }
@@ -292,8 +312,8 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 }
 
 
-                var self  = this,
-                    value = this.$Select.getValue();
+                const self = this;
+                let value = this.$Select.getValue();
 
                 return new Promise(function (res2) {
                     if (value && value !== '') {
@@ -307,7 +327,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                         self.$Select.clear();
 
-                        for (var i = 0, len = list.length; i < len; i++) {
+                        for (let i = 0, len = list.length; i < len; i++) {
                             self.$Select.appendChild(
                                 list[i].title,
                                 list[i].id
@@ -321,7 +341,6 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                     }).then(res2, reject);
                 }).then(resolve, reject);
-
 
             }.bind(this));
         },
@@ -342,7 +361,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                         return;
                     }
 
-                    var i, len, entry;
+                    let i, len, entry;
 
                     for (i = 0, len = result.length; i < len; i++) {
                         entry = result[i];
@@ -475,13 +494,14 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @param {number} [taxEntryId] - update
          */
         childWindow: function (taxEntryId) {
-            var self       = this,
-                title      = QUILocale.get(lg, 'tax.window.create.title'),
+            const self = this;
+
+            let title      = QUILocale.get(lg, 'tax.window.create.title'),
                 buttonText = QUILocale.get('quiqqer/quiqqer', 'create'),
                 buttonIcon = 'fa fa-plus';
 
             if (typeof taxEntryId !== 'undefined') {
-                title      = QUILocale.get(lg, 'tax.window.update.title');
+                title = QUILocale.get(lg, 'tax.window.update.title');
                 buttonText = QUILocale.get('quiqqer/quiqqer', 'edit');
                 buttonIcon = 'fa fa-edit';
             }
@@ -498,7 +518,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                 },
                 events   : {
                     onOpen: function (Win) {
-                        var Content = Win.getContent();
+                        const Content = Win.getContent();
 
                         Win.Loader.show();
 
@@ -510,7 +530,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             euDescription: QUILocale.get(lg, 'control.addEdit.eu.description')
                         }));
 
-                        var Select = Content.getElement('[name="area"]'),
+                        let Select = Content.getElement('[name="area"]'),
                             Data   = Promise.resolve(false);
 
                         if (typeof taxEntryId !== 'undefined') {
@@ -522,18 +542,18 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             AreaHandler.getList(),
                             Data
                         ]).then(function (data) {
-                            var allEntries = data[0],
+                            let allEntries = data[0],
                                 areas      = data[1],
                                 taxData    = data[2];
 
                             if (!taxData) {
-                                var usedAreas = allEntries.map(function (o) {
+                                const usedAreas = allEntries.map(function (o) {
                                     return parseInt(o.areaId);
                                 }).unique();
 
                                 areas = areas.data;
 
-                                for (var i = 0, len = areas.length; i < len; i++) {
+                                for (const i = 0, len = areas.length; i < len; i++) {
                                     if (usedAreas.contains(areas[i].id)) {
                                         continue;
                                     }
@@ -557,9 +577,9 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
                             }
 
                             if (taxData) {
-                                var Vat   = Content.getElement('[name="vat"]');
-                                var Area  = Content.getElement('[name="area"]');
-                                var EuVat = Content.getElement('[name="eu_vat"]');
+                                const Vat = Content.getElement('[name="vat"]');
+                                const Area = Content.getElement('[name="area"]');
+                                const EuVat = Content.getElement('[name="eu_vat"]');
 
                                 if (parseInt(taxData.euvat)) {
                                     EuVat.checked = true;
@@ -578,12 +598,12 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                     onSubmit: function (Win) {
                         // fields
-                        var Content = Win.getContent(),
-                            Vat     = Content.getElement('[name="vat"]'),
-                            Area    = Content.getElement('[name="area"]'),
-                            EUvat   = Content.getElement('[name="eu_vat"]');
+                        const Content = Win.getContent(),
+                              Vat     = Content.getElement('[name="vat"]'),
+                              Area    = Content.getElement('[name="area"]'),
+                              EUvat   = Content.getElement('[name="eu_vat"]');
 
-                        var data = {
+                        const data = {
                             vat      : Vat.value,
                             euvat    : EUvat.checked ? 1 : 0,
                             taxTypeId: self.$Select.getValue()
@@ -638,7 +658,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
          * @param {number} taxEntryId
          */
         deleteChild: function (taxEntryId) {
-            var self = this;
+            const self = this;
 
             new QUIConfirm({
                 title      : QUILocale.get(lg, 'tax.window.delete.title'),
