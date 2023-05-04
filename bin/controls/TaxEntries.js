@@ -553,7 +553,7 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
 
                                 areas = areas.data;
 
-                                for (const i = 0, len = areas.length; i < len; i++) {
+                                for (let i = 0, len = areas.length; i < len; i++) {
                                     if (usedAreas.contains(areas[i].id)) {
                                         continue;
                                     }
