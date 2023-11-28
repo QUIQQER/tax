@@ -9,6 +9,7 @@ namespace QUI\ERP\Tax;
 use QUI;
 use QUI\ERP\Areas\Area;
 use QUI\Interfaces\Users\User;
+use SoapClient;
 
 use function class_exists;
 use function ctype_alpha;
@@ -30,6 +31,11 @@ class Utils
     protected static array $userTaxes = [];
 
     /**
+     * @var array $validated An empty array to hold the validated vat ids
+     */
+    protected static array $validated = [];
+
+    /**
      * Returns all available vat / tax list
      *
      * @return array
@@ -39,8 +45,8 @@ class Utils
         try {
             return QUI::getDataBase()->fetch([
                 'select' => 'vat',
-                'from'   => QUI::getDBTableName('tax'),
-                'group'  => 'vat'
+                'from' => QUI::getDBTableName('tax'),
+                'group' => 'vat'
             ]);
         } catch (QUI\DataBase\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
@@ -50,16 +56,16 @@ class Utils
     }
 
     /**
-     * Return the shop tax tax
+     * Return the tax type from the shop settings
      *
-     * @return TaxType|false
+     * @return false|QUI\ERP\Tax\TaxType
      *
      * @throws QUI\Exception
      */
     public static function getShopTaxType()
     {
-        $Package     = QUI::getPackage('quiqqer/tax');
-        $Config      = $Package->getConfig();
+        $Package = QUI::getPackage('quiqqer/tax');
+        $Config = $Package->getConfig();
         $standardTax = $Config->getValue('shop', 'vat');
 
         if (!$standardTax) {
@@ -92,7 +98,7 @@ class Utils
         }
 
         try {
-            $DefaultTaxType  = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
+            $DefaultTaxType = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
             $DefaultTaxEntry = self::getTaxEntry($DefaultTaxType, QUI\ERP\Defaults::getArea());
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::addError($Exception->getMessage(), [
@@ -122,9 +128,9 @@ class Utils
             // standard tax
             if (!$Area) {
                 $Config = QUI::getPackage('quiqqer/tax')->getConfig();
-                $Areas  = new QUI\ERP\Areas\Handler();
+                $Areas = new QUI\ERP\Areas\Handler();
                 $areaId = $Config->getValue('shop', 'area');
-                $Area   = $Areas->getChild($areaId);
+                $Area = $Areas->getChild($areaId);
             }
 
             $TaxType = self::getTaxTypeByArea($Area);
@@ -238,7 +244,7 @@ class Utils
      */
     public static function getTaxTypeByArea(Area $Area): TaxType
     {
-        $Taxes  = new Handler();
+        $Taxes = new Handler();
         $result = $Taxes->getChildren([
             'where' => [
                 'areaId' => $Area->getId(),
@@ -257,7 +263,7 @@ class Utils
         $TaxEntry = $result[0];
 
         $taxGroup = $TaxEntry->getAttribute('group');
-        $Group    = $Taxes->getTaxGroup($taxGroup);
+        $Group = $Taxes->getTaxGroup($taxGroup);
         $taxTypes = $Group->getTaxTypes();
 
         /* @var $TaxType TaxType */
@@ -284,8 +290,8 @@ class Utils
     public static function getTaxEntriesByTaxType($taxTypeId): array
     {
         $Handler = new QUI\ERP\Tax\Handler();
-        $Areas   = new QUI\ERP\Areas\Handler();
-        $result  = [];
+        $Areas = new QUI\ERP\Areas\Handler();
+        $result = [];
 
         try {
             $data = $Handler->getChildrenData([
@@ -330,8 +336,8 @@ class Utils
 
         $result = $Taxes->getChildren([
             'where' => [
-                'areaId'     => $Area->getId(),
-                'taxTypeId'  => $TaxType->getId(),
+                'areaId' => $Area->getId(),
+                'taxTypeId' => $TaxType->getId(),
                 'taxGroupId' => $Group->getId()
             ]
         ]);
@@ -386,10 +392,14 @@ class Utils
      */
     public static function validateVatId(string $vatId): string
     {
+        if (isset(self::$validated[$vatId])) {
+            return $vatId;
+        }
+
         $vatId = self::cleanupVatId($vatId);
 
         // UST-ID oder Vat-Id
-        $first  = mb_substr($vatId, 0, 1);
+        $first = mb_substr($vatId, 0, 1);
         $second = mb_substr($vatId, 1, 1);
 
         if (!ctype_alpha($first) || !ctype_alpha($second)) {
@@ -409,7 +419,7 @@ class Utils
             return $vatId;
         }
 
-        $Client = new \SoapClient(
+        $Client = new SoapClient(
             "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
         );
 
@@ -428,10 +438,12 @@ class Utils
         try {
             $Response = $Client->checkVat([
                 'countryCode' => $cc,
-                'vatNumber'   => $vn
+                'vatNumber' => $vn
             ]);
 
-            if ($Response->valid == true) {
+            if ($Response->valid) {
+                self::$validated[$vatId] = true;
+
                 return $vatId;
             }
 
@@ -460,6 +472,7 @@ class Utils
                 case 'TIMEOUT':
                 case 'SERVICE_UNAVAILABLE':
                 case 'MS_UNAVAILABLE':
+                case 'MS_MAX_CONCURRENT_REQ':
                     throw new QUI\ERP\Tax\Exception(
                         [
                             'quiqqer/tax',
@@ -482,9 +495,9 @@ class Utils
         try {
             $result = QUI::getDataBase()->fetch([
                 'select' => 'vat',
-                'from'   => QUI::getDBTableName('tax'),
-                'limit'  => 1,
-                'order'  => 'vat DESC'
+                'from' => QUI::getDBTableName('tax'),
+                'limit' => 1,
+                'order' => 'vat DESC'
             ]);
         } catch (QUI\DataBase\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
@@ -505,9 +518,9 @@ class Utils
         try {
             $result = QUI::getDataBase()->fetch([
                 'select' => 'vat',
-                'from'   => QUI::getDBTableName('tax'),
-                'limit'  => 1,
-                'order'  => 'vat ASC'
+                'from' => QUI::getDBTableName('tax'),
+                'limit' => 1,
+                'order' => 'vat ASC'
             ]);
         } catch (QUI\DataBase\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
