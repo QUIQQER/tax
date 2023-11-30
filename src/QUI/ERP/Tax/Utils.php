@@ -392,8 +392,17 @@ class Utils
      */
     public static function validateVatId(string $vatId): string
     {
+        // instance cache
         if (isset(self::$validated[$vatId])) {
             return $vatId;
+        }
+
+        // long time cache
+        $cache = 'quiqqer/package/quiqqer/tax/' . $vatId;
+
+        try {
+            return QUI\Cache\LongTermCache::get($cache);
+        } catch (\Exception $e) {
         }
 
         $vatId = self::cleanupVatId($vatId);
@@ -443,6 +452,7 @@ class Utils
 
             if ($Response->valid) {
                 self::$validated[$vatId] = true;
+                QUI\Cache\LongTermCache::set($cache, $vatId);
 
                 return $vatId;
             }
