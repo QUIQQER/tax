@@ -34,7 +34,7 @@
             </params>
 
             <categories>
-                <category name="vat" index="6">
+                <category name="vat">
                     <text>
                         <locale group="quiqqer/tax" var="menu.erp.tax.title"/>
                     </text>
