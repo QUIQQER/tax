@@ -62,8 +62,8 @@ class TaxEntry extends QUI\CRUD\Child
         $this->Events->addEvent('onUpdateBegin', function () {
             Permission::checkPermission('quiqqer.tax.edit');
 
-            $Area      = $this->getArea();
-            $children  = $this->Factory->getChildrenData();
+            $Area = $this->getArea();
+            $children = $this->Factory->getChildrenData();
             $usedAreas = [];
 
             if (!$Area) {
@@ -101,7 +101,7 @@ class TaxEntry extends QUI\CRUD\Child
                     'quiqqer/tax',
                     'exception.area.is.still.in.use',
                     [
-                        'area'  => $this->getArea()->getId(),
+                        'area' => $this->getArea()->getId(),
                         'title' => $this->getArea()->getTitle(),
                     ]
                 ]);
@@ -124,11 +124,11 @@ class TaxEntry extends QUI\CRUD\Child
 
         if ($areaId !== false) {
             try {
-                $Areas      = new QUI\ERP\Areas\Handler();
+                $Areas = new QUI\ERP\Areas\Handler();
                 $this->Area = $Areas->getChild($this->getAttribute('areaId'));
 
                 return $this->Area;
-            } catch (QUI\Exception $Exception) {
+            } catch (QUI\Exception) {
             }
         }
 

@@ -15,11 +15,11 @@
     "email": "support@pcsg.de"
   },
   "require": {
-    "quiqqer\/quiqqer": "*",
+    "quiqqer\/quiqqer": "^2",
     "quiqqer\/countries": "*",
     "quiqqer\/translator": "*",
     "quiqqer\/areas": "*",
-    "quiqqer\/utils": ">=1.4|dev-master|dev-dev"
+    "quiqqer\/utils": "^1.4"
   },
   "autoload": {
     "psr-4": {

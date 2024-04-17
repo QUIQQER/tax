@@ -62,7 +62,7 @@ class Utils
      *
      * @throws QUI\Exception
      */
-    public static function getShopTaxType()
+    public static function getShopTaxType(): bool|TaxType
     {
         $Package = QUI::getPackage('quiqqer/tax');
         $Config = $Package->getConfig();
@@ -82,14 +82,14 @@ class Utils
     }
 
     /**
-     * Return the taxtype from the user
+     * Return the tax type from the user
      *
      * @param User $User
      * @return QUI\ERP\Tax\TaxEntry|TaxEntryEmpty
      *
      * @throws QUI\Exception
      */
-    public static function getTaxByUser(User $User)
+    public static function getTaxByUser(User $User): TaxEntryEmpty|TaxEntry
     {
         $uid = $User->getId();
 

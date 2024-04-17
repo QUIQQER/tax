@@ -154,7 +154,7 @@ class Handler extends QUI\CRUD\Factory
             $newId = max(array_keys($groups)) + 1;
         } else {
             $groups = [];
-            $newId  = 0;
+            $newId = 0;
         }
 
         $groups[$newId] = '';
@@ -170,9 +170,9 @@ class Handler extends QUI\CRUD\Factory
                 'quiqqer/tax',
                 'taxGroup.' . $newId . '.title',
                 [
-                    $current   => '',
+                    $current => '',
                     'datatype' => 'php,js',
-                    'package'  => 'quiqqer/tax'
+                    'package' => 'quiqqer/tax'
                 ]
             );
         } catch (QUI\Exception $Exception) {
@@ -187,12 +187,12 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return all tax groups
      *
-     * @param array|boolean $ids - optional, list of wanted ids, default = all
+     * @param boolean|array $ids - optional, list of wanted ids, default = all
      * @return TaxGroup[]
      *
      * @throws QUI\Exception
      */
-    public function getTaxGroups($ids = false): array
+    public function getTaxGroups(bool|array $ids = false): array
     {
         $Config = $this->getConfig();
         $groups = $Config->getSection('taxgroups');
@@ -225,7 +225,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function getTaxGroup($taxGroupId): TaxGroup
+    public function getTaxGroup(int|string $taxGroupId): TaxGroup
     {
         if (!isset($this->taxGroups[$taxGroupId])) {
             $this->taxGroups[$taxGroupId] = new TaxGroup($taxGroupId);
@@ -240,7 +240,7 @@ class Handler extends QUI\CRUD\Factory
      * @param integer|string $taxGroupId - Tax Group ID
      * @throws QUI\Exception
      */
-    public function deleteTaxGroup($taxGroupId)
+    public function deleteTaxGroup(int|string $taxGroupId): void
     {
         if (isset($this->taxGroups[$taxGroupId])) {
             unset($this->taxGroups[$taxGroupId]);
@@ -277,7 +277,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function updateTaxGroup($taxGroupId, array $types = [])
+    public function updateTaxGroup(int|string $taxGroupId, array $types = []): void
     {
         $TaxGroup = $this->getTaxGroup($taxGroupId);
         $TaxGroup->setTaxTypes($types);
@@ -301,7 +301,7 @@ class Handler extends QUI\CRUD\Factory
         Permission::checkPermission('quiqqer.tax.create');
 
         $Config = $this->getConfig();
-        $types  = $Config->getSection('taxtypes');
+        $types = $Config->getSection('taxtypes');
 
         if (is_array($types) && count($types)) {
             $newId = max(array_keys($types)) + 1;
@@ -320,9 +320,9 @@ class Handler extends QUI\CRUD\Factory
         // create locale
         try {
             QUI\Translator::addUserVar('quiqqer/tax', $types[$newId], [
-                $current   => '',
+                $current => '',
                 'datatype' => 'php,js',
-                'package'  => 'quiqqer/tax'
+                'package' => 'quiqqer/tax'
             ]);
         } catch (QUI\Exception $Exception) {
             QUI::getMessagesHandler()->addAttention(
@@ -336,15 +336,15 @@ class Handler extends QUI\CRUD\Factory
     /**
      * Return all tax types
      *
-     * @param array|boolean $ids - optional, list of wanted ids, default = all
+     * @param boolean|array $ids - optional, list of wanted ids, default = all
      * @return array
      *
      * @throws QUI\Exception
      */
-    public function getTaxTypes($ids = false): array
+    public function getTaxTypes(bool|array $ids = false): array
     {
         $Config = $this->getConfig();
-        $types  = $Config->getSection('taxtypes');
+        $types = $Config->getSection('taxtypes');
         $result = [];
 
         if (!is_array($ids)) {
@@ -374,7 +374,7 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function getTaxType($taxTypeId): TaxType
+    public function getTaxType(int|string $taxTypeId): TaxType
     {
         if (!isset($this->taxTypes[$taxTypeId])) {
             $this->taxTypes[$taxTypeId] = new TaxType($taxTypeId);
@@ -390,14 +390,14 @@ class Handler extends QUI\CRUD\Factory
      *
      * @throws QUI\Exception
      */
-    public function deleteTaxType($taxTypeId)
+    public function deleteTaxType(int|string $taxTypeId): void
     {
         if (isset($this->taxTypes[$taxTypeId])) {
             unset($this->taxTypes[$taxTypeId]);
         }
 
         $Config = $this->getConfig();
-        $types  = $Config->getSection('taxtypes');
+        $types = $Config->getSection('taxtypes');
 
         if (isset($types[$taxTypeId])) {
             unset($types[$taxTypeId]);
