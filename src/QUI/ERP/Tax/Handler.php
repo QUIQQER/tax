@@ -81,20 +81,6 @@ class Handler extends QUI\CRUD\Factory
     }
 
     /**
-     * Return the global tax Handler
-     *
-     * @return Handler
-     */
-    public static function getInstance(): Handler
-    {
-        if (self::$Instance === null) {
-            self::$Instance = new self();
-        }
-
-        return self::$Instance;
-    }
-
-    /**
      * return the area db table name
      *
      * @return string
