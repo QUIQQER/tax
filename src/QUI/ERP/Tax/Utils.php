@@ -10,7 +10,6 @@ use QUI;
 use QUI\ERP\Areas\Area;
 use QUI\Interfaces\Users\User;
 use SoapClient;
-
 use SoapFault;
 
 use function class_exists;
