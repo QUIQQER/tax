@@ -202,9 +202,9 @@ class Utils
     /**
      * @param User $User
      */
-    public static function cleanUpUserTaxCache(User $User)
+    public static function cleanUpUserTaxCache(User $User): void
     {
-        $uid = $User->getId();
+        $uid = $User->getUUID();
 
         if (isset(self::$userTaxes[$uid])) {
             unset(self::$userTaxes[$uid]);
@@ -428,7 +428,7 @@ class Utils
         }
 
         $Client = new SoapClient(
-            "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
+            "https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
         );
 
 
