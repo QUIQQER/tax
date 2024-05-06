@@ -10,6 +10,7 @@ use QUI;
 use QUI\ERP\Areas\Area;
 use QUI\Interfaces\Users\User;
 use SoapClient;
+use SoapFault;
 
 use function class_exists;
 use function ctype_alpha;
@@ -49,7 +50,7 @@ class Utils
                 'from' => QUI::getDBTableName('tax'),
                 'group' => 'vat'
             ]);
-        } catch (QUI\DataBase\Exception $Exception) {
+        } catch (QUI\Database\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
 
             return [];
@@ -63,7 +64,7 @@ class Utils
      *
      * @throws QUI\Exception
      */
-    public static function getShopTaxType()
+    public static function getShopTaxType(): bool|TaxType
     {
         $Package = QUI::getPackage('quiqqer/tax');
         $Config = $Package->getConfig();
@@ -83,14 +84,14 @@ class Utils
     }
 
     /**
-     * Return the taxtype from the user
+     * Return the tax type from the user
      *
      * @param User $User
      * @return QUI\ERP\Tax\TaxEntry|TaxEntryEmpty
      *
      * @throws QUI\Exception
      */
-    public static function getTaxByUser(User $User)
+    public static function getTaxByUser(User $User): TaxEntryEmpty|TaxEntry
     {
         $uid = $User->getId();
 
@@ -187,9 +188,8 @@ class Utils
         // if for user cant be found a VAT, use the shop settings
         $Country = null;
 
-        try {
+        if ($User->getCountry()) {
             $Country = $User->getCountry();
-        } catch (QUI\Exception $Exception) {
         }
 
         try {
@@ -216,9 +216,9 @@ class Utils
     /**
      * @param User $User
      */
-    public static function cleanUpUserTaxCache(User $User)
+    public static function cleanUpUserTaxCache(User $User): void
     {
-        $uid = $User->getId();
+        $uid = $User->getUUID();
 
         if (isset(self::$userTaxes[$uid])) {
             unset(self::$userTaxes[$uid]);
@@ -280,7 +280,6 @@ class Utils
         $Group = $Taxes->getTaxGroup($taxGroup);
         $taxTypes = $Group->getTaxTypes();
 
-        /* @var $TaxType TaxType */
         foreach ($taxTypes as $TaxType) {
             foreach ($result as $TaxEntry) {
                 if ($TaxEntry->getAttribute('taxTypeId') == $TaxType->getId()) {
@@ -313,14 +312,14 @@ class Utils
                     'taxTypeId' => $taxTypeId
                 ]
             ]);
-        } catch (QUI\DataBase\Exception $Exception) {
+        } catch (QUI\Database\Exception) {
             return [];
         }
 
         foreach ($data as $entry) {
             try {
                 $result[] = $Areas->getChild($entry['areaId']);
-            } catch (QUI\Exception $Exception) {
+            } catch (QUI\Exception) {
             }
         }
 
@@ -390,7 +389,7 @@ class Utils
             if ($Config->get('shop', 'validateVatId')) {
                 return true;
             }
-        } catch (QUI\Exception $Exception) {
+        } catch (QUI\Exception) {
         }
 
         return false;
@@ -416,7 +415,7 @@ class Utils
 
         try {
             return QUI\Cache\LongTermCache::get($cache);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         $vatId = self::cleanupVatId($vatId);
@@ -443,7 +442,7 @@ class Utils
         }
 
         $Client = new SoapClient(
-            "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
+            "https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl"
         );
 
 
@@ -480,7 +479,7 @@ class Utils
                 ],
                 403
             );
-        } catch (\SoapFault $Exception) {
+        } catch (SoapFault $Exception) {
             switch ($Exception->getMessage()) {
                 case 'INVALID_INPUT':
                     throw new QUI\ERP\Tax\Exception(
@@ -523,7 +522,7 @@ class Utils
                 'limit' => 1,
                 'order' => 'vat DESC'
             ]);
-        } catch (QUI\DataBase\Exception $Exception) {
+        } catch (QUI\Database\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
 
             return 0;
@@ -546,7 +545,7 @@ class Utils
                 'limit' => 1,
                 'order' => 'vat ASC'
             ]);
-        } catch (QUI\DataBase\Exception $Exception) {
+        } catch (QUI\Database\Exception $Exception) {
             QUI\System\Log::writeException($Exception);
 
             return 0;

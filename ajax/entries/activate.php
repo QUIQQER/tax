@@ -9,13 +9,16 @@
  *
  * @param integer $taxId - Tax Entry ID
  */
+
+use QUI\ERP\Tax\TaxEntry;
+
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_activate',
     function ($taxId) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $Tax     = $Handler->getChild($taxId);
+        $Tax = $Handler->getChild($taxId);
 
-        /* @var $Tax \QUI\ERP\Tax\TaxEntry */
+        /* @var $Tax TaxEntry */
         $Tax->setAttribute('active', 1);
         $Tax->update();
 

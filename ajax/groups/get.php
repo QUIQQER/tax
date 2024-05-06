@@ -14,7 +14,6 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_get',
     function ($taxGroupId) {
         $Handler = new QUI\ERP\Tax\Handler();
-
         return $Handler->getTaxGroup($taxGroupId)->toArray();
     },
     ['taxGroupId'],
