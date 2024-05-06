@@ -47,7 +47,7 @@ class TaxEntryEmpty extends QUI\QDOM
     /**
      * Return the vat value
      *
-     * @return integer|float
+     * @return float
      */
     public function getValue(): float
     {

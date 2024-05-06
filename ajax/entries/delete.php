@@ -13,7 +13,7 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_delete',
     function ($taxId) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $Tax     = $Handler->getChild($taxId);
+        $Tax = $Handler->getChild($taxId);
         $Tax->delete();
     },
     ['taxId'],
