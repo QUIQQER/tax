@@ -16,6 +16,7 @@ use function class_exists;
 use function ctype_alpha;
 use function explode;
 use function mb_substr;
+use function method_exists;
 use function str_replace;
 use function substr;
 
@@ -98,6 +99,17 @@ class Utils
             return self::$userTaxes[$uid];
         }
 
+        $UserTaxEntry = null;
+
+        $writeUserTaxEntryToRuntimeCache = function () use ($uid, &$UserTaxEntry) {
+            if (
+                !method_exists(QUI::class, 'isRuntimeCacheEnabled') ||
+                QUI::isRuntimeCacheEnabled()
+            ) {
+                self::$userTaxes[$uid] = $UserTaxEntry;
+            }
+        };
+
         try {
             $DefaultTaxType = self::getTaxTypeByArea(QUI\ERP\Defaults::getArea());
             $DefaultTaxEntry = self::getTaxEntry($DefaultTaxType, QUI\ERP\Defaults::getArea());
@@ -109,7 +121,7 @@ class Utils
             $DefaultTaxEntry = new TaxEntryEmpty();
         }
 
-        self::$userTaxes[$uid] = $DefaultTaxEntry;
+        $UserTaxEntry = $DefaultTaxEntry;
 
         try {
             if ($User->getAttribute('CurrentAddress')) {
@@ -145,7 +157,8 @@ class Utils
             }
 
             if (!$TaxEntry->isActive()) {
-                return self::$userTaxes[$uid];
+                $writeUserTaxEntryToRuntimeCache();
+                return $UserTaxEntry;
             }
 
             // Wenn Benutzer EU VAT user ist und der Benutzer eine Umsatzsteuer-ID eingetragen hat
@@ -153,19 +166,20 @@ class Utils
 
             // If the user is EU VAT user and the user has entered a VAT ID, then VAT is 0 (it is no error)
             if ($TaxEntry->getAttribute('euvat') && $User->getAttribute('quiqqer.erp.euVatId')) {
-                self::$userTaxes[$uid] = new TaxEntryEmpty([
+                $UserTaxEntry = new TaxEntryEmpty([
                     'Area' => $Area
                 ]);
 
-                self::$userTaxes[$uid]->setAttribute('euvat', 1);
+                $UserTaxEntry->setAttribute('euvat', 1);
             } else {
-                self::$userTaxes[$uid] = $TaxEntry;
+                $UserTaxEntry = $TaxEntry;
             }
 
-            return self::$userTaxes[$uid];
+            $writeUserTaxEntryToRuntimeCache();
+            return $UserTaxEntry;
         } catch (QUI\Exception $Exception) {
             if ($Exception->getCode() === 404) {
-                return self::$userTaxes[$uid];
+                return $UserTaxEntry;
             } else {
                 QUI\System\Log::writeDebugException($Exception);
             }
@@ -189,14 +203,14 @@ class Utils
 
             if ($ShopTaxType) {
                 $TaxEntry = self::getTaxEntry($ShopTaxType, $Area);
-
-                self::$userTaxes[$uid] = $TaxEntry;
+                $UserTaxEntry = $TaxEntry;
             }
         } catch (QUI\Exception $Exception) {
             QUI\System\Log::writeDebugException($Exception);
         }
 
-        return self::$userTaxes[$uid];
+        $writeUserTaxEntryToRuntimeCache();
+        return $UserTaxEntry;
     }
 
     /**
