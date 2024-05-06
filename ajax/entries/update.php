@@ -13,9 +13,9 @@
 QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_entries_update',
     function ($taxId, $data) {
-        $taxId   = (int)$taxId;
+        $taxId = (int)$taxId;
         $Handler = new QUI\ERP\Tax\Handler();
-        $data    = \json_decode($data, true);
+        $data = json_decode($data, true);
 
         if (!isset($data['taxTypeId'])) {
             throw new QUI\Exception([
@@ -24,7 +24,7 @@ QUI::$Ajax->registerFunction(
             ]);
         }
 
-        $Tax     = $Handler->getChild($taxId);
+        $Tax = $Handler->getChild($taxId);
         $TaxType = $Handler->getTaxType($data['taxTypeId']);
 
         $Tax->setAttribute('taxTypeId', $TaxType->getId());

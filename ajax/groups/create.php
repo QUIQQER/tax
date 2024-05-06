@@ -13,7 +13,6 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_create',
     function () {
         $Handler = new QUI\ERP\Tax\Handler();
-
         return $Handler->createTaxGroup()->getId();
     },
     false,

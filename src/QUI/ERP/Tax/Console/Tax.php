@@ -15,18 +15,18 @@ class Tax extends Tool
         $this->systemTool = true;
 
         $this->setName('quiqqer:tax')
-            ->addArgument('--tax-id', 'Id of the tax', false, false)
-            ->addArgument('---vat', 'Vat as number', false, false)
+            ->addArgument('--tax-id', 'Id of the tax')
+            ->addArgument('---vat', 'Vat as number')
             ->setDescription('Tax / Vat Utils - Set the vat for specific tax');
     }
 
     /**
      * execute the tax utils
      */
-    public function execute()
+    public function execute(): void
     {
         $taxId = $this->getArgument('--tax-id');
-        $vat   = $this->getArgument('--vat');
+        $vat = $this->getArgument('--vat');
 
         if (empty($taxId)) {
             return;

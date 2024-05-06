@@ -17,7 +17,7 @@ QUI::$Ajax->registerFunction(
         $Handler = new QUI\ERP\Tax\Handler();
         $TaxType = $Handler->getTaxType($taxTypeId);
 
-        $Tax    = $Handler->createChild();
+        $Tax = $Handler->createChild();
         $areaId = (int)$areaId;
 
         $Tax->setAttribute('areaId', $areaId);

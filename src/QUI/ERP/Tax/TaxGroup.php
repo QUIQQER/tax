@@ -9,6 +9,7 @@ namespace QUI\ERP\Tax;
 use QUI;
 
 use function explode;
+use function implode;
 use function is_array;
 
 /**
@@ -41,10 +42,10 @@ class TaxGroup
      * @param integer|string $taxGroupId
      * @throws QUI\Exception
      */
-    public function __construct($taxGroupId)
+    public function __construct(int|string $taxGroupId)
     {
         $Handler = new QUI\ERP\Tax\Handler();
-        $Config  = $Handler->getConfig();
+        $Config = $Handler->getConfig();
 
         if ($Config->get('taxgroups', $taxGroupId) === false) {
             throw new QUI\Exception([
@@ -53,7 +54,7 @@ class TaxGroup
             ]);
         }
 
-        $this->id      = (int)$taxGroupId;
+        $this->id = (int)$taxGroupId;
         $this->Handler = $Handler;
 
         $taxTypes = $Config->get('taxgroups', $taxGroupId);
@@ -62,7 +63,7 @@ class TaxGroup
         foreach ($taxTypes as $taxTypeId) {
             try {
                 $this->taxTypes[] = $this->Handler->getTaxType($taxTypeId);
-            } catch (QUI\Exception $Exception) {
+            } catch (QUI\Exception) {
             }
         }
     }
@@ -76,9 +77,9 @@ class TaxGroup
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
@@ -87,7 +88,7 @@ class TaxGroup
     }
 
     /**
-     * Return the taxtypes from the group
+     * Return the tax types from the group
      *
      * @return TaxType[]
      */
@@ -120,7 +121,7 @@ class TaxGroup
      *
      * @param array $types - [typeId, typeId, typeId]
      */
-    public function setTaxTypes(array $types = [])
+    public function setTaxTypes(array $types = []): void
     {
         if (!is_array($types)) {
             return;
@@ -131,7 +132,7 @@ class TaxGroup
         foreach ($types as $taxTypeId) {
             try {
                 $list[] = $this->Handler->getTaxType($taxTypeId);
-            } catch (QUI\Exception $Exception) {
+            } catch (QUI\Exception) {
             }
         }
 
@@ -143,7 +144,7 @@ class TaxGroup
      *
      * @param TaxType $TaxType
      */
-    public function addTaxType(TaxType $TaxType)
+    public function addTaxType(TaxType $TaxType): void
     {
         if (!$this->isTaxTypeInGroup($TaxType)) {
             $this->taxTypes[] = $TaxType;
@@ -165,9 +166,9 @@ class TaxGroup
         }
 
         return [
-            'id'       => $this->getId(),
-            'title'    => $this->getTitle(),
-            'taxtypes' => \implode(',', $types)
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'taxtypes' => implode(',', $types)
         ];
     }
 
@@ -176,9 +177,9 @@ class TaxGroup
      *
      * @throws QUI\Exception
      */
-    public function update()
+    public function update(): void
     {
-        $data   = $this->toArray();
+        $data = $this->toArray();
         $Config = $this->Handler->getConfig();
 
         $Config->set('taxgroups', $this->getId(), $data['taxtypes']);
@@ -190,7 +191,7 @@ class TaxGroup
      *
      * @throws QUI\Exception
      */
-    public function delete()
+    public function delete(): void
     {
         $this->Handler->deleteTaxGroup($this->getId());
     }

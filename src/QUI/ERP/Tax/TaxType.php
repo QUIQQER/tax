@@ -13,7 +13,7 @@ use QUI;
  * - Steuerart
  *
  * Is not really editable, it makes no sense to edit a type
- * A type has only a title, the title is stored in the translator
+ * - A type has only a title, the title is stored in the translator
  *
  * @package QUI\ERP\Tax
  */
@@ -36,10 +36,10 @@ class TaxType
      * @param integer|string $taxTypeId
      * @throws QUI\Exception
      */
-    public function __construct($taxTypeId)
+    public function __construct(int|string $taxTypeId)
     {
         $Handler = new QUI\ERP\Tax\Handler();
-        $Config  = $Handler->getConfig();
+        $Config = $Handler->getConfig();
 
         if (!$Config->getValue('taxtypes', $taxTypeId)) {
             throw new QUI\Exception([
@@ -48,7 +48,7 @@ class TaxType
             ]);
         }
 
-        $this->id      = (int)$taxTypeId;
+        $this->id = (int)$taxTypeId;
         $this->Handler = $Handler;
     }
 
@@ -63,9 +63,9 @@ class TaxType
     /**
      * Return the tax type title
      *
-     * @return array|string
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return QUI::getLocale()->get(
             'quiqqer/tax',
@@ -78,7 +78,7 @@ class TaxType
      *
      * @return TaxGroup|boolean
      */
-    public function getGroup()
+    public function getGroup(): TaxGroup|bool
     {
         try {
             $groups = $this->Handler->getTaxGroups();
@@ -88,7 +88,6 @@ class TaxType
             return false;
         }
 
-        /* @var $Group TaxGroup */
         foreach ($groups as $Group) {
             if ($Group->isTaxTypeInGroup($this)) {
                 return $Group;
@@ -104,18 +103,18 @@ class TaxType
      */
     public function toArray(): array
     {
-        $groupId    = '';
+        $groupId = '';
         $groupTitle = '';
 
         if ($this->getGroup()) {
-            $groupId    = $this->getGroup()->getId();
+            $groupId = $this->getGroup()->getId();
             $groupTitle = $this->getGroup()->getTitle();
         }
 
         return [
-            'id'         => $this->getId(),
-            'title'      => $this->getTitle(),
-            'groupId'    => $groupId,
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'groupId' => $groupId,
             'groupTitle' => $groupTitle
         ];
     }
@@ -125,7 +124,7 @@ class TaxType
      *
      * @throws QUI\Exception
      */
-    public function delete()
+    public function delete(): void
     {
         $this->Handler->deleteTaxType($this->getId());
     }
