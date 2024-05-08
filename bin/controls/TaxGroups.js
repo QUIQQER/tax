@@ -256,7 +256,7 @@ define('package/quiqqer/tax/bin/controls/TaxGroups', [
                 maxWidth   : 450,
                 autoclose  : false,
                 ok_button  : {
-                    text     : QUILocale.get('quiqqer/quiqqer', 'create'),
+                    text     : QUILocale.get('quiqqer/core', 'create'),
                     textimage: 'fa fa-plus'
                 },
                 events     : {
