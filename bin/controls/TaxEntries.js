@@ -497,12 +497,12 @@ define('package/quiqqer/tax/bin/controls/TaxEntries', [
             const self = this;
 
             let title      = QUILocale.get(lg, 'tax.window.create.title'),
-                buttonText = QUILocale.get('quiqqer/quiqqer', 'create'),
+                buttonText = QUILocale.get('quiqqer/core', 'create'),
                 buttonIcon = 'fa fa-plus';
 
             if (typeof taxEntryId !== 'undefined') {
                 title = QUILocale.get(lg, 'tax.window.update.title');
-                buttonText = QUILocale.get('quiqqer/quiqqer', 'edit');
+                buttonText = QUILocale.get('quiqqer/core', 'edit');
                 buttonIcon = 'fa fa-edit';
             }
 
