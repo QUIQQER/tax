@@ -13,7 +13,13 @@ QUI::$Ajax->registerFunction(
     'package_quiqqer_tax_ajax_groups_getList',
     function ($ids) {
         $Handler = new QUI\ERP\Tax\Handler();
-        $groups = $Handler->getTaxGroups(json_decode($ids, true));
+        $groupIds = json_decode($ids, true);
+
+        if (!is_array($groupIds)) {
+            $groupIds = [];
+        }
+
+        $groups = $Handler->getTaxGroups($groupIds);
         $result = [];
 
         foreach ($groups as $TaxGroup) {
