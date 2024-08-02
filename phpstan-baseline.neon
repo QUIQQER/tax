@@ -1,0 +1,81 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method QUI\\\\CRUD\\\\Child\\:\\:isActive\\(\\)\\.$#"
+			count: 1
+			path: ajax/entries/activate.php
+
+		-
+			message: "#^Call to an undefined method QUI\\\\CRUD\\\\Child\\:\\:isActive\\(\\)\\.$#"
+			count: 1
+			path: ajax/entries/deactivate.php
+
+		-
+			message: "#^Call to an undefined method QUI\\\\CRUD\\\\Child\\:\\:getTitle\\(\\)\\.$#"
+			count: 1
+			path: ajax/entries/getTaxByType.php
+
+		-
+			message: "#^Call to an undefined method QUI\\\\CRUD\\\\Child\\:\\:isActive\\(\\)\\.$#"
+			count: 2
+			path: ajax/entries/toggle.php
+
+		-
+			message: "#^Call to an undefined method DOMNode\\:\\:getElementsByTagName\\(\\)\\.$#"
+			count: 2
+			path: src/QUI/ERP/Tax/Import.php
+
+		-
+			message: "#^Method QUI\\\\ERP\\\\Tax\\\\Import\\:\\:getAreaByCountries\\(\\) should return bool\\|QUI\\\\ERP\\\\Areas\\\\Area but returns QUI\\\\CRUD\\\\Child\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Import.php
+
+		-
+			message: "#^Parameter \\#1 \\$Parent of static method QUI\\\\ERP\\\\Tax\\\\Import\\:\\:getLocaleDataFromNode\\(\\) expects DOMElement, DOMNode given\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Import.php
+
+		-
+			message: "#^Method QUI\\\\ERP\\\\Tax\\\\TaxEntry\\:\\:getArea\\(\\) should return QUI\\\\ERP\\\\Areas\\\\Area\\|null but returns QUI\\\\CRUD\\\\Child\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/TaxEntry.php
+
+		-
+			message: "#^Property QUI\\\\ERP\\\\Tax\\\\TaxEntry\\:\\:\\$Area \\(QUI\\\\ERP\\\\Areas\\\\Area\\|null\\) does not accept QUI\\\\CRUD\\\\Child\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/TaxEntry.php
+
+		-
+			message: "#^Parameter \\#2 \\$key of method QUI\\\\Config\\:\\:set\\(\\) expects array\\|string\\|null, int given\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/TaxGroup.php
+
+		-
+			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
+
+		-
+			message: "#^Elseif branch is unreachable because previous condition is always true\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
+
+		-
+			message: "#^Instanceof between \\*NEVER\\* and QUI\\\\ERP\\\\Tax\\\\TaxEntry will always evaluate to false\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
+
+		-
+			message: "#^Parameter \\#1 \\$Area of static method QUI\\\\ERP\\\\Tax\\\\Utils\\:\\:getTaxTypeByArea\\(\\) expects QUI\\\\ERP\\\\Areas\\\\Area, QUI\\\\CRUD\\\\Child given\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
+
+		-
+			message: "#^Parameter \\#2 \\$Area of static method QUI\\\\ERP\\\\Tax\\\\Utils\\:\\:getTaxEntry\\(\\) expects QUI\\\\ERP\\\\Areas\\\\Area, QUI\\\\CRUD\\\\Child given\\.$#"
+			count: 1
+			path: src/QUI/ERP/Tax/Utils.php
