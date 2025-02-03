@@ -39,6 +39,11 @@ define('package/quiqqer/tax/bin/controls/Select', [
             this.$Select = new QUISelect({
                 styles: {
                     width: '100%'
+                },
+                events: {
+                    onChange: () => {
+                        this.$Input.value = this.$Select.getValue();
+                    }
                 }
             }).inject(this.$Elm);
 
