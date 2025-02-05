@@ -131,6 +131,19 @@
             <en><![CDATA[incl. [vat]% VAT]]></en>
         </locale>
 
+        <locale name="message.EUVAT.addition" html="true">
+            <de><![CDATA[
+            Steuerfreie innergemeinschaftliche Lieferung i. S. des § 6a UStG an [user]<br />
+            USt-ID-Nr. [vatId]<br />
+            Die Erwerber sind für die Versteuerung in ihrem Heimatland zuständig.
+            ]]></de>
+            <en><![CDATA[
+            Tax-free intra-community delivery to [user]<br />
+            VAT ID [vatId]<br />
+            The buyer is responsible for payment of tax in his or her home country.
+            ]]></en>
+        </locale>
+
         <locale name="exception.no.soap.client">
             <de><![CDATA[
             Die Überprüfung der USt-IdNr. kann nicht durchgeführt werden.<br />
