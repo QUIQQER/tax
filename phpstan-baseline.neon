@@ -46,11 +46,6 @@ parameters:
 			path: src/QUI/ERP/Tax/TaxEntry.php
 
 		-
-			message: "#^Parameter \\#2 \\$key of method QUI\\\\Config\\:\\:set\\(\\) expects array\\|string\\|null, int given\\.$#"
-			count: 1
-			path: src/QUI/ERP/Tax/TaxGroup.php
-
-		-
 			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
 			count: 1
 			path: src/QUI/ERP/Tax/Utils.php

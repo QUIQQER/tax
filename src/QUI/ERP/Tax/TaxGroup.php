@@ -42,7 +42,7 @@ class TaxGroup
      * @param integer|string $taxGroupId
      * @throws QUI\Exception
      */
-    public function __construct(int|string $taxGroupId)
+    public function __construct(int | string $taxGroupId)
     {
         $Handler = new QUI\ERP\Tax\Handler();
         $Config = $Handler->getConfig();
@@ -182,7 +182,7 @@ class TaxGroup
         $data = $this->toArray();
         $Config = $this->Handler->getConfig();
 
-        $Config->set('taxgroups', $this->getId(), $data['taxtypes']);
+        $Config->set('taxgroups', (string)$this->getId(), $data['taxtypes']);
         $Config->save();
     }
 
